@@ -1,0 +1,41 @@
+remote:
+    host: "markov",       # server name or ip or ssh host abbr in .ssh/config
+    user: "jpbehler",       # ssh username
+    path: "/home/jpbehler/projects/droppio"      # e.g. /home/someone/somewhere
+
+behaviour:
+    uploadOnSave: true      # Upload every time you save a file
+    syncDownOnOpen: true    # Download every time you open a file
+    forgetConsole: false    # Never show console panel even while syncing
+    autoHideConsole: true   # Hide console automatically after 1.5s
+    alwaysSyncAll: true    # Sync all files and folders under the project \
+                            # instead of syncing single file or folder
+option:
+    deleteFiles: true       # Delete files during syncing
+    autoHideDelay: 1500     # Time delay to hide console
+    exclude: [              # Excluding patterns
+        '.sync-config.cson'
+        '.git'
+        'node_modules'
+        'tmp'
+        'vendor'
+    ]
+    flags: 'avzpur'         # Advanced option: rsync flags
+    shell: 'ssh'
+trigger:                    # Triggers fire after uploading file successfully
+                            # which STARTS with following patterns
+
+    "*": "uptime"            # Wildcard trigger for any file uploaded
+
+    "resources/scripts/coffee": [   # Any file under %PROJECT_ROOT%/resources/scripts/coffee \
+                                    # being uploaded will fire this trigger
+
+        "echo Compile coffeescript to js ..."
+        "coffee -b --output js/ --compile coffee/"
+        "ls public/js/|xargs -I@ echo \\t@"       # You can also pipe commands but don't \
+                                                  # forget to escape special characters
+    ]
+    "resources/scripts/sass": [
+        "echo Compile sass to css ..."
+        "sass --update resources/scripts/sass:public/css"
+    ]
