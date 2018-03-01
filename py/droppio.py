@@ -81,8 +81,6 @@ class campaigns(tornado.web.RequestHandler):
         self.gatling_key = ("api", "key-ab4d563107f353b01e48937a9e6f934a")
         self.send = requests.post
 
-        PeriodicCallback(self.shooter,5000).start()
-
 
     def write_error(self,*args,**kw):
 
@@ -127,7 +125,7 @@ class createCampaign(tornado.web.RequestHandler):
             pass
 
         self.render("createCampaign.html")
-        
+
 
 if __name__ == '__main__':
 
