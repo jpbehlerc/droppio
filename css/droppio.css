@@ -1,0 +1,84 @@
+.card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+  margin-right:0px !important;
+  color: #ffab40 !important;
+}
+
+.card-action {
+    padding: 16px 24px 35px !important;
+}
+
+.droppioNav {
+  background-color: rgba(255, 255, 255, 0) !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.droppioBottomFixed {
+  position: absolute !important;
+  height: 48px;
+  z-index: 997;
+  bottom: 0 !important;
+}
+
+ .droppioNavElem{
+    color: #ef5181;
+ }
+
+ .droppioNavElem:hover{
+    color: #c91249;
+    -moz-transition: all 0.25s ease-in;
+    -webkit-transition: all 0.25s ease-in;
+    -o-transition: all 0.25s ease-in;
+    transition: all 0.25s ease-in;
+ }
+
+.droppioBottomNav{
+  bottom: 0 !important;
+  background-color: rgba(255, 255, 255, 100) !important;
+}
+body {
+	width: 100wh;
+	height: 90vh;
+	color: #fff;
+	background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
+	background-size: 2000px 2000px;
+	-webkit-animation: Gradient 15s ease infinite;
+	-moz-animation: Gradient 15s ease infinite;
+	animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
