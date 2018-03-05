@@ -73,7 +73,7 @@ class heart(tornado.web.RequestHandler):
 
         self.write("beat")
 
-class campaigns(tornado.web.RequestHandler):
+class home(tornado.web.RequestHandler):
 
     def initialize(self):
 
@@ -110,10 +110,10 @@ class campaigns(tornado.web.RequestHandler):
         except ValueError:
             pass
 
-        self.render("campaigns.html")
+        self.render("home.html")
 
 
-class createCampaign(tornado.web.RequestHandler):
+class campaign(tornado.web.RequestHandler):
 
     def get(self):
 
@@ -124,7 +124,7 @@ class createCampaign(tornado.web.RequestHandler):
         except ValueError:
             pass
 
-        self.render("createCampaign.html")
+        self.render("campaign.html")
 
 
 if __name__ == '__main__':
@@ -168,7 +168,8 @@ if __name__ == '__main__':
 
         args = parser.parse_args()
 
-        handlers.append((r"/", campaigns))
+        handlers.append((r"/", home))
+        handlers.append((r"/", campaign))
         handlers.append((r"/heart", heart))
 
         application = tornado.web.Application(handlers, **settings)
