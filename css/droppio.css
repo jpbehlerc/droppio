@@ -14,7 +14,19 @@
      border-bottom: 1px solid #fff;
      box-shadow: 0 1px 0 0 #fff;
     }
+    /* Selec input */
+    .select-dropdown {
+      color: #ccc;
+    }
+    .dropdown-content li > a, .dropdown-content li > span {
+      color: #c91249 ;
+    }
 
+/* Buttons */
+
+    .btn, .btn-large, .btn-small {
+      background-color: #ffab40 !important;
+    }
 
 /* Cards */
 
@@ -38,29 +50,37 @@
       box-shadow: none !important;
     }
 
-    .droppioBottomFixed {
-      position: absolute !important;
-      height: 48px;
-      z-index: 997;
-      bottom: 0 !important;
-    }
-
     .droppioNavElem{
-        color: #e7668d;
+      color: #e7668d;
      }
 
     .droppioNavElem:hover{
-        color: #c91249;
+        color: #c91249 !important;
         -moz-transition: all 0.25s ease-in;
         -webkit-transition: all 0.25s ease-in;
         -o-transition: all 0.25s ease-in;
         transition: all 0.25s ease-in;
      }
 
+    /*  Top Nav */
+
+
+    /* Bottom Nav */
+
     .droppioBottomNav{
-       bottom: 0 !important;
        background-color: rgba(255, 255, 255, 100) !important;
      }
+
+    .droppioBottomFixed {
+       position: absolute !important;
+       height: 48px;
+       z-index: 997;
+       bottom: 0px !important;
+     }
+
+    .indicator{
+      background-color: #c91249 !important;
+    }
 
 
 /* campaign section */
