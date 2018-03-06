@@ -1,6 +1,9 @@
 /* inputs fields */
 
-
+    /* Textarea */
+    input ,select , textarea{
+    color: #fff;
+    }
     /* label color */
     .input-field label {
      color: #fff;
@@ -13,10 +16,6 @@
     .input-field input[type=text]:focus {
      border-bottom: 1px solid #fff;
      box-shadow: 0 1px 0 0 #fff;
-    }
-    /* Selec input */
-    .select-dropdown {
-      color: #ccc;
     }
     .dropdown-content li > a, .dropdown-content li > span {
       color: #c91249 ;
