@@ -1,8 +1,9 @@
 /* inputs fields */
 
+
     /* label color */
     .input-field label {
-     color: #ccc;
+     color: #fff;
     }
     /* label focus color */
     .input-field input[type=text]:focus + label {
@@ -13,7 +14,6 @@
      border-bottom: 1px solid #fff;
      box-shadow: 0 1px 0 0 #fff;
     }
-
 
 
 /* Cards */
@@ -57,14 +57,23 @@
         transition: all 0.25s ease-in;
      }
 
+    .droppioBottomNav{
+       bottom: 0 !important;
+       background-color: rgba(255, 255, 255, 100) !important;
+     }
+
+
+/* campaign section */
+
+
+    .conteiner {
+      margin-bottom: 5em;
+    }
+
 
 /* background transition */
 
 
-    .droppioBottomNav{
-      bottom: 0 !important;
-      background-color: rgba(255, 255, 255, 100) !important;
-    }
     body {
     	width: 100wh;
     	height: 90vh;

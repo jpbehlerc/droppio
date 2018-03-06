@@ -49,10 +49,10 @@
   </section>
 
   <!-- submit -->
-  <section class="campaign">
+  <section class="conteiner">
     <div class="row">
       <form class="input-field col s12 m12 l12" action="#" method="post">
-
+        <!-- Name Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-user-circle"></i>
@@ -60,7 +60,7 @@
             <label for="name">Nombre</label>
           </div>
         </div>
-
+        <!-- DNI Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-id-card"></i>
@@ -68,7 +68,26 @@
             <label for="dni">DNI o Numero Pasaporte</label>
           </div>
         </div>
+        <!-- Tipo de SangreInput -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="fas prefix fa-tint"></i>
+            <select>
+            <option value="" disabled selected>Seleccione tipo de sangre</option>
+            <option value="1">A+</option>
+            <option value="2">B+</option>
+            <option value="3">AB+</option>
+            <option value="4">O+</option>
+            <option value="5">A-</option>
+            <option value="6">B-</option>
+            <option value="7">AB-</option>
+            <option value="8">O-</option>
 
+          </select>
+            <label>Estado de Salud</label>
+          </div>
+        </div>
+        <!-- Hospital Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-h-square"></i>
@@ -76,21 +95,29 @@
             <label for="hospital">Hospital</label>
           </div>
         </div>
+        <!-- Estado de Salud Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-heartbeat"></i>
             <select>
             <option value="" disabled selected>Seleccione el estado de salud</option>
             <option value="1">Estable</option>
-            <option value="2">Urgente</option>
             <option value="3">Critico</option>
           </select>
             <label>Estado de Salud</label>
           </div>
         </div>
       </form>
+
+      <!-- send button -->
+      <div class="row center">
+      <button class="btn waves-effect waves-light center" type="submit" name="action"> Subir <i class="fas fa-paper-plane"></i>
+      </button>
+      </div>
+
     </div>
   </section>
+
 </body>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
