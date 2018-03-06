@@ -1,127 +1,122 @@
 /* inputs fields */
 
+
     /* label color */
     .input-field label {
-     color: #000;
+     color: #fff;
     }
     /* label focus color */
     .input-field input[type=text]:focus + label {
-     color: #000;
+     color: #fff;
     }
     /* label underline focus color */
     .input-field input[type=text]:focus {
-     border-bottom: 1px solid #000;
-     box-shadow: 0 1px 0 0 #000;
+     border-bottom: 1px solid #fff;
+     box-shadow: 0 1px 0 0 #fff;
     }
-    /* valid color */
-    .input-field input[type=text].valid {
-     border-bottom: 1px solid #000;
-     box-shadow: 0 1px 0 0 #000;
-    }
-    /* invalid color */
-    .input-field input[type=text].invalid {
-     border-bottom: 1px solid #000;
-     box-shadow: 0 1px 0 0 #000;
-    }
-    /* icon prefix focus color */
-    .input-field .prefix.active {
-     color: #000;
-    }
-
 
 
 /* Cards */
 
 
-.card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
-  margin-right:0px !important;
-  color: #ffab40 !important;
-}
+    .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+      margin-right:0px !important;
+      color: #ffab40 !important;
+    }
 
-.card-action {
-    padding: 16px 24px 35px !important;
-}
+    .card-action {
+        padding: 16px 24px 35px !important;
+    }
 
 
 /* Navbar */
 
 
-.droppioNav {
-  background-color: rgba(255, 255, 255, 0) !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-}
+    .droppioNav {
+      background-color: rgba(255, 255, 255, 0) !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+    }
 
-.droppioBottomFixed {
-  position: absolute !important;
-  height: 48px;
-  z-index: 997;
-  bottom: 0 !important;
-}
+    .droppioBottomFixed {
+      position: absolute !important;
+      height: 48px;
+      z-index: 997;
+      bottom: 0 !important;
+    }
 
- .droppioNavElem{
-    color: #e7668d;
- }
+    .droppioNavElem{
+        color: #e7668d;
+     }
 
- .droppioNavElem:hover{
-    color: #c91249;
-    -moz-transition: all 0.25s ease-in;
-    -webkit-transition: all 0.25s ease-in;
-    -o-transition: all 0.25s ease-in;
-    transition: all 0.25s ease-in;
- }
+    .droppioNavElem:hover{
+        color: #c91249;
+        -moz-transition: all 0.25s ease-in;
+        -webkit-transition: all 0.25s ease-in;
+        -o-transition: all 0.25s ease-in;
+        transition: all 0.25s ease-in;
+     }
+
+    .droppioBottomNav{
+       bottom: 0 !important;
+       background-color: rgba(255, 255, 255, 100) !important;
+     }
+
+
+/* campaign section */
+
+
+    .conteiner {
+      margin-bottom: 5em;
+    }
 
 
 /* background transition */
 
 
-.droppioBottomNav{
-  bottom: 0 !important;
-  background-color: rgba(255, 255, 255, 100) !important;
-}
-body {
-	width: 100wh;
-	height: 90vh;
-	color: #fff;
-	background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
-	background-size: 2000px 2000px;
-	-webkit-animation: Gradient 15s ease infinite;
-	-moz-animation: Gradient 15s ease infinite;
-	animation: Gradient 15s ease infinite;
-}
+    body {
+    	width: 100wh;
+    	height: 90vh;
+    	color: #fff;
+    	background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
+    	background-size: 2000px 2000px;
+    	-webkit-animation: Gradient 15s ease infinite;
+    	-moz-animation: Gradient 15s ease infinite;
+    	animation: Gradient 15s ease infinite;
+    }
 
-@-webkit-keyframes Gradient {
-	0% {
-		background-position: 0% 50%
-	}
-	50% {
-		background-position: 100% 50%
-	}
-	100% {
-		background-position: 0% 50%
-	}
-}
+    @-webkit-keyframes Gradient {
+    	0% {
+    		background-position: 0% 50%
+    	}
+    	50% {
+    		background-position: 100% 50%
+    	}
+    	100% {
+    		background-position: 0% 50%
+    	}
+    }
 
-@-moz-keyframes Gradient {
-	0% {
-		background-position: 0% 50%
-	}
-	50% {
-		background-position: 100% 50%
-	}
-	100% {
-		background-position: 0% 50%
-	}
-}
+    @-moz-keyframes Gradient {
+    	0% {
+    		background-position: 0% 50%
+    	}
+    	50% {
+    		background-position: 100% 50%
+    	}
+    	100% {
+    		background-position: 0% 50%
+    	}
+    }
 
-@keyframes Gradient {
-	0% {
-		background-position: 0% 50%
-	}
-	50% {
-		background-position: 100% 50%
-	}
-	100% {
-		background-position: 0% 50%
-	}
-}
+    @keyframes Gradient {
+    	0% {
+    		background-position: 0% 50%
+    	}
+    	50% {
+    		background-position: 100% 50%
+    	}
+    	100% {
+    		background-position: 0% 50%
+    	}
+    }
