@@ -169,7 +169,7 @@ if __name__ == '__main__':
         args = parser.parse_args()
 
         handlers.append((r"/", home))
-        handlers.append((r"/", campaign))
+        handlers.append((r"/campaign", campaign))
         handlers.append((r"/heart", heart))
 
         application = tornado.web.Application(handlers, **settings)
