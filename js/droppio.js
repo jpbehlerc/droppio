@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('select').material_select();
+
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15, // Creates a dropdown of 15 years to control year,
@@ -7,7 +7,10 @@ $(document).ready(function() {
     clear: 'Clear',
     close: 'Ok',
     closeOnSelect: false // Close upon selecting a date,
-  })
+  });
+
+  $('select').material_select();
+
 
   $('.spread').click(function(e) {
 
@@ -42,9 +45,9 @@ $(document).ready(function() {
 
           console.log("Button value: " + result.value);
 
-          if (result.value) {
+          if (result.value)
             window.location = "https://www.google.com/maps?&z=10&mrt=yp&t=m&q=-32.9149469+-68.847456,17";
-          }
+
 
         });
         // For more information about handling dismissals please visit
