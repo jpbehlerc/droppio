@@ -139,3 +139,14 @@
     		background-position: 0% 50%
     	}
     }
+
+    .separator {
+
+    width: 100% !important;
+    font-size: 1px;
+    color: rgba(0, 0, 0, 0);
+    line-height: 1px;
+    background-color: rgba(0, 0, 0, 0.19);
+    margin: auto !important;
+
+  }

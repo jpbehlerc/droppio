@@ -29,6 +29,7 @@ $(document).ready(function() {
     }).then(function(result) {
 
       if (result.value) {
+
         swal({
           title: 'Genial!',
           text: 'Estás a un paso de salvar a esta persona, sólo debes ir a donar',
@@ -37,7 +38,9 @@ $(document).ready(function() {
           showCancelButton: true,
           cancelButtonText: 'Iré luego'
 
-        }).then(function() {
+        }).then(function(result) {
+
+          console.log("Button value: " + result.value);
 
           if (result.value) {
             window.location = "https://www.google.com/maps?&z=10&mrt=yp&t=m&q=-32.9149469+-68.847456,17";
