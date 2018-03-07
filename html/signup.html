@@ -13,7 +13,8 @@
 
 <body>
 
-  <!-- top navbar -->
+<!-- top navbar -->
+
   <section class="top-navbar">
     <nav class="droppioNav">
       <div class="nav-wrapper light-grey">
@@ -50,12 +51,61 @@
   </section>
   -->
 
-  <!-- content -->
-  <div class="row">
-    <div class="col s12 m12 l6">
+<!-- content -->
 
+  <!-- Title -->
+  <div class="row">
+    <div class="row center" style="margin-top:4em; margin-bottom:1em">
+      <div class="col  s12 m12 l6">
+        <h6 class="titleSignUp"style="font-size:1.5em;">Iniciar Sesión</h6>
+        <div class="separator">.</div>
+      </div>
     </div>
-  </div>
+
+    <div class="row">
+      <form class="input-field col s12 m12 l6" action="#" method="post">
+        <!-- Name Input -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="fas prefix fa-user-circle"></i>
+            <input type="text" id="name" class="validate" required>
+            <label for="name">Nombre</label>
+          </div>
+        </div>
+        <!-- Blood Input -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="fas prefix fa-tint"></i>
+            <select>
+                <option value="" disabled selected>Seleccione tipo de sangre</option>
+                <option value="1">A+</option>
+                <option value="2">B+</option>
+                <option value="3">AB+</option>
+                <option value="4">O+</option>
+                <option value="5">A-</option>
+                <option value="6">B-</option>
+                <option value="7">AB-</option>
+                <option value="8">O-</option>
+              </select>
+          </div>
+        </div>
+        <!-- DNI Input -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="fas prefix fa-id-card"></i>
+            <input type="number" id="dni" class="validate" required>
+            <label for="dni">DNI o Numero Pasaporte</label>
+          </div>
+        </div>
+        <!-- Mail Input -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="fas prefix fa-envelope"></i>
+            <input type="email" id="email" class="validate" required>
+            <label for="email">Email</label>
+          </div>
+        </div>
+    </div>
 
 </body>
 
