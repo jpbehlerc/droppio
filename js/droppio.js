@@ -23,15 +23,27 @@ $(document).ready(function() {
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       confirmButtonColor: '#ffab40',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      position: 'top-start'
 
     }).then(function(result) {
+
       if (result.value) {
-        swal(
-          'Listo!',
-          'Sólo debes asistir a donar y habrás salvado a esta persona!.',
-          'success'
-        )
+        swal({
+          title: 'Genial!',
+          text: 'Estás a un paso de salvar a esta persona, sólo debes ir a donar',
+          type: 'success',
+          confirmButtonText: 'Ir a donar',
+          showCancelButton: true,
+          cancelButtonText: 'Iré luego'
+
+        }).then(function() {
+
+          if (result.value) {
+            window.location = "https://www.google.com/maps?&z=10&mrt=yp&t=m&q=-32.9149469+-68.847456,17";
+          }
+
+        });
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === swal.DismissReason.cancel) {
