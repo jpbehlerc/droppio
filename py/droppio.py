@@ -113,11 +113,11 @@ class home(tornado.web.RequestHandler):
         self.render("home.html")
 
 
-class connect(tornado.web.RequestHandler):
+class profile(tornado.web.RequestHandler):
 
     def get(self):
 
-        self.render("connect.html")
+        self.render("profile.html")
 
 class campaign(tornado.web.RequestHandler):
 
@@ -176,7 +176,7 @@ if __name__ == '__main__':
 
         handlers.append((r"/", home))
         handlers.append((r"/campaign", campaign))
-        handlers.append((r"/connect", connect))
+        handlers.append((r"/profile", profile))
         handlers.append((r"/heart", heart))
 
         application = tornado.web.Application(handlers, **settings)
