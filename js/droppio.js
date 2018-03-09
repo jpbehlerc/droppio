@@ -7,7 +7,10 @@ $(document).ready(function() {
     today: 'Today',
     clear: 'Clear',
     close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
+    closeOnSelect: false, // Close upon selecting a date,
+    onClose: () => {
+      $(":focus").blur();
+    },
   });
 
 
