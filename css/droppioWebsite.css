@@ -1,9 +1,13 @@
+/* generals */
+
+    .shadown {
+    text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.8) !important;
+    }
+
 /* presentation */
 
     /* background transition */
     #presentation {
-      width: 100wh;
-      height: 90vh;
       color: #fff;
       background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
       background-size: 2000px 2000px;
@@ -50,4 +54,33 @@
       background-color: rgba(255, 255, 255, 0) !important;
       box-shadow: none !important;
       padding: 0em 1rem 0rem 1rem;
+    }
+
+    /* countdown */
+
+    h1 {
+      font-weight: normal;
+      font-size: 2em !important;
+    }
+    li {
+      display: inline-block;
+      font-size: 1.5em !important;
+      list-style-type: none;
+      padding: 1em;
+      text-transform: uppercase;
+    }
+    li span {
+      display: block;
+      font-size: 3rem;
+    }
+
+    /* phone presentation */
+
+    .phonePresentation img {
+      width: 100%;
+    }
+
+    /* presentatioCard */
+    .presentatioCard {
+
     }
