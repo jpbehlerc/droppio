@@ -1,49 +1,53 @@
-/* background transition */
+/* presentation */
 
-
-    .content1 {
-    	width: 100wh;
-    	height: 90vh;
-    	color: #fff;
-    	background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
-    	background-size: 2000px 2000px;
-    	-webkit-animation: Gradient 15s ease infinite;
-    	-moz-animation: Gradient 15s ease infinite;
-    	animation: Gradient 15s ease infinite;
+    /* background transition */
+    #presentation {
+      width: 100wh;
+      height: 90vh;
+      color: #fff;
+      background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
+      background-size: 2000px 2000px;
+      -webkit-animation: Gradient 15s ease infinite;
+      -moz-animation: Gradient 15s ease infinite;
+      animation: Gradient 15s ease infinite;
     }
-
     @-webkit-keyframes Gradient {
-    	0% {
-    		background-position: 0% 50%
-    	}
-    	50% {
-    		background-position: 100% 50%
-    	}
-    	100% {
-    		background-position: 0% 50%
-    	}
+      0% {
+        background-position: 0% 50%
+      }
+      50% {
+        background-position: 100% 50%
+      }
+      100% {
+        background-position: 0% 50%
+      }
     }
-
     @-moz-keyframes Gradient {
-    	0% {
-    		background-position: 0% 50%
-    	}
-    	50% {
-    		background-position: 100% 50%
-    	}
-    	100% {
-    		background-position: 0% 50%
-    	}
+      0% {
+        background-position: 0% 50%
+      }
+      50% {
+        background-position: 100% 50%
+      }
+      100% {
+        background-position: 0% 50%
+      }
+    }
+    @keyframes Gradient {
+      0% {
+        background-position: 0% 50%
+      }
+      50% {
+        background-position: 100% 50%
+      }
+      100% {
+        background-position: 0% 50%
+      }
     }
 
-    @keyframes Gradient {
-    	0% {
-    		background-position: 0% 50%
-    	}
-    	50% {
-    		background-position: 100% 50%
-    	}
-    	100% {
-    		background-position: 0% 50%
-    	}
+    /* navbar */
+    #presentation nav {
+      background-color: rgba(255, 255, 255, 0) !important;
+      box-shadow: none !important;
+      padding: 0em 1rem 0rem 1rem;
     }

@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/materialize.min.css">
-    <link rel="stylesheet" href="../css/sweetalert2.min.css">
-    <link rel="stylesheet" href="../css/droppioWebsite.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <title> Droppio Website - a Blood Campaign Community App </title>
-  </head>
-  <body>
-    <section class="content"></section>
-    <section class="content"></section>
-    <section class="content"></section>
-    <footer></footer>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../css/droppioWebsite.css">
+  <link rel="stylesheet" href="../css/materialize.min.css">
+  <link rel="stylesheet" href="../css/sweetalert2.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <title> Droppio Website - a Blood Campaign Community App </title>
+</head>
+
+<body>
+  <section id="presentation" class="content">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#presentation" class="brand-logo"><i class="fas fa-tint"></i> Droppio</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="#data">Data</a></li>
+          <li><a href="#signup">Sumarme</a></li>
+          <li><a href="#versions">Versiones</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="countdown">
+          <h1 id="head">Tiempo de lanzamiento</h1>
+            <ul>
+              <li><span id="days"></span>días</li>
+              <li><span id="hours"></span>Horas</li>
+              <li><span id="minutes"></span>Minutos</li>
+              <li><span id="seconds"></span>Segundos</li>
+            </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+  <section class="content" id="data"></section>
+  <section id="signup" class="content"></section>
+  <section id="versions" class="content"></section>
+</body>
+
 </html>
