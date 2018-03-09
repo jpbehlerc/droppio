@@ -52,7 +52,7 @@ $(document).ready(function() {
           console.log("Button value: " + result.value);
 
           if (result.value)
-            window.location = "https://www.google.com/maps?&z=10&mrt=yp&t=m&q=-32.9149469+-68.847456,17";
+            window.location = "https://www.google.com/maps?&z=10&mrt=yp&t=m&q=-32.8996453,-68.878869,13";
 
 
         });
