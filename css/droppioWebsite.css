@@ -7,6 +7,7 @@
       box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.8);
     }
 
+
 /* presentation */
 
     /* background transition */
@@ -81,9 +82,28 @@
 
     .phonePresentation img {
       width: 100%;
+
+    }
+    .parallax-container {
+      position: relative;
+      height: 500px;
+      /* fallback for older browsers */
+
+      height: 100vh;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+    }
+
+    .parallax-div {
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      transform: translate3d(-50%, -50%, 0);
+      z-index: -1;
     }
 
     /* presentatioCard */
     .presentatioCard {
 
     }
+
+
+    /* Parallax */
