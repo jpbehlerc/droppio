@@ -9,6 +9,8 @@
       -moz-box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.8);
       width: 100vw !important;
       height: 100vh !important;
+      overflow: hidden;
+      overflow: scroll;
     }
 
 
@@ -85,9 +87,5 @@
     /* phone presentation */
 
     .phonePresentation img {
-      width: 3em;
-
+      width: 100%;
     }
-
-
-    /* Parallax */
