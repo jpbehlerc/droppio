@@ -70,18 +70,16 @@
 
     h1 {
       font-weight: normal;
-      font-size: 2em !important;
     }
     li {
       display: inline-block;
-      font-size: 1.5em !important;
       list-style-type: none;
-      padding: 1em;
-      text-transform: uppercase;
+      padding: 0.5rem;
     }
     li span {
       display: block;
-      font-size: 3rem;
+      font-size: 2rem;
+      text-align: center;
     }
 
     /* phone presentation */
