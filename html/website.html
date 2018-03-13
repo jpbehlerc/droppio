@@ -6,13 +6,14 @@
 
   <link rel="stylesheet" href="../css/materialize.min.css">
   <link rel="stylesheet" href="../css/droppioWebsite.css">
+  <link rel="stylesheet" href="../css/timeline.css">
   <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
   <title> Droppio Website - a Blood Campaign Community App </title>
 </head>
 
 <body>
-  <section id="presentation" class="content">
+  <section id="presentation" class="content container">
     <nav>
       <div class="nav-wrapper">
         <a href="#presentation" class="brand-logo"><i class="fas fa-tint"></i> Droppio</a>
@@ -73,14 +74,14 @@
     </div>
   </section>
 
-  <section id="data" class="content">
+  <section id="data" class="content container">
     <div class="row paddingTop5 fadeInImage2">
       <div class="col s12 m12 l6 fadeInImage2">
         <img src="../assets/img/droppiolist.png" class="droppioList responsive-img">
       </div>
       <!-- card -->
       <div class="col s12 m12 l6 paddingTop">
-        <div class="col s12 m12 l10 offset-l2">
+        <div class=" offset--l2 col s12 m12 l10">
           <div class="card blue-grey darken-1">
             <div class="card-content white-text">
               <span class="card-title">Open Data</span>
@@ -95,7 +96,7 @@
     </div>
   </section>
 
-  <section id="signup" class="content">
+  <section id="signup" class="content container">
     <div class="row paddingTop5">
       <div class="col s12 m12 l6">
         <div class="row">
@@ -175,9 +176,62 @@
         </div>
         <div class="col s12 m12 l6"></div>
       </div>
+    </div>
   </section>
 
-  <section id="versions" class="content"></section>
+  <section id="versions" class="content container">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <!-- Timeline -->
+        <div class="timeline">
+          <!-- Timeline Card 1 -->
+          <div class="timeline-event">
+            <div class="card timeline-content">
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Tile<i class="material-icons right">more_vert</i></span>
+                <p>Content <a href="#">This is a link</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+              </div>
+            </div>
+            <div class="timeline-badge blue white-text"><i class="material-icons">language</i></div>
+          </div>
+          <!-- Timeline Card 2 -->
+          <div class="timeline-event">
+            <div class="card timeline-content">
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Tile<i class="material-icons right">more_vert</i></span>
+                <p>Content <a href="#">This is a link</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+              </div>
+            </div>
+            <div class="timeline-badge red white-text"><i class="material-icons">work</i></div>
+          </div>
+          <!-- Timeline Card 1 -->
+          <div class="timeline-event">
+            <div class="card timeline-content">
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Tile<i class="material-icons right">more_vert</i></span>
+                <p>Content <a href="#">This is a link</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+              </div>
+            </div>
+            <div class="timeline-badge green white-text"><i class="material-icons">person</i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer></footer>
 </body>
 <script src="../js/countdown.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
