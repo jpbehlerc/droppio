@@ -1,12 +1,11 @@
-
 // init
-$(document).ready(function(){
+$(document).ready(function() {
 
   $('select').material_select();
   $('.parallax').parallax();
   // Scrolly
   //this is where we apply opacity to the arrow
-  $(window).scroll( function(){
+  $(window).scroll(function() {
 
     //get scroll position
     var topWindow = $(window).scrollTop();
@@ -22,3 +21,18 @@ $(document).ready(function(){
     position = 1 - position;
   });
 });
+
+var options = [{
+  selector: '.fadeInImage1',
+  offset: 300,
+  callback: function(el) {
+    Materialize.fadeInImage($(el));
+  }
+}, {
+  selector: '.fadeInImage2',
+  offset: 500,
+  callback: function(el) {
+    Materialize.fadeInImage($(el));
+  }
+}];
+Materialize.scrollFire(options);
