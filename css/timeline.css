@@ -62,7 +62,6 @@
   top: calc(50% - 20px);
   right: calc(50% - 20px);
   border-radius: 50%;
-  text-align: center;
   cursor: default;
 }
 

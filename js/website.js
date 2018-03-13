@@ -3,6 +3,7 @@ $(document).ready(function() {
 
   $('select').material_select();
   $('.parallax').parallax();
+   $('.collapsible').collapsible();
   // Scrolly
   //this is where we apply opacity to the arrow
   $(window).scroll(function() {

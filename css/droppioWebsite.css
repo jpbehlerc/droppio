@@ -34,6 +34,11 @@ Buttons Color Class: #FFAB40 orange accent-2
 
     }
 
+    .droppioIcon {
+      margin: 1rem 1rem 1rem 1rem;
+      font-size: 2em;
+    }
+
 
 
 /* presentation */
@@ -127,6 +132,12 @@ Buttons Color Class: #FFAB40 orange accent-2
 
 /* Sign Up input fields */
 
+    /* background */
+    #signup {
+      background-color: rgb(217, 240, 255);
+    }
+
+
     /* Textarea */
     input ,select , textarea{
     color: #fff !important;
@@ -149,13 +160,37 @@ Buttons Color Class: #FFAB40 orange accent-2
     }
 
     .separator {
-    width: 80% !important;
+    width: 85% !important;
     font-size: 1px;
     color: rgba(0, 0, 0, 0);
     line-height: 1px;
     background-color: rgba(0, 0, 0, 0.19);
     margin: auto !important;
+    margin-top: 1rem !important;
     }
     .titleTransparent {
     color: rgba(255, 255, 255, 0.7);
+    }
+    #signup form .row {
+      margin-bottom: 0px !important;
+    }
+
+/* Versions */
+
+    #versions ul li {
+      width: 100%;
+      color: #000;
+    }
+
+    #versions ul li .card-title {
+      margin-top: 0.5rem;
+    }
+
+    #versions .textAlignCenter {
+      position: absolute;
+      padding: 10px 0px 0px 7px !important;
+    }
+
+    #versions {
+      background-color: rgba(0, 0, 0, 0.005);
     }
