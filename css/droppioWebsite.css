@@ -18,6 +18,12 @@ Buttons Color Class: #FFAB40 orange accent-2
       overflow: hidden;
       overflow: scroll;
     }
+    .paddingTop {
+      padding-top: 1em;
+    }
+    .paddingTop5 {
+      padding-top: 5em;
+    }
 
 
 
@@ -95,3 +101,19 @@ Buttons Color Class: #FFAB40 orange accent-2
     .phonePresentation img {
       width: 100%;
     }
+
+/* OpenData Content */
+
+    #data {
+      background-image: url(../assets/img/OpenDataBg.png);
+      background-repeat: repeat-x repeat-y;
+      background-size: 200px;
+    }
+    .droppioList{
+      max-width: 50% !important;
+      margin-top: 10%;
+      margin-left: 35%;
+      margin-bottom: 10%;
+      transform: rotate(-15deg);
+
+}
