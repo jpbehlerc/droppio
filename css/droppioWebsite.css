@@ -38,6 +38,19 @@ Buttons Color Class: #FFAB40 orange accent-2
       margin: 1rem 1rem 1rem 1rem;
       font-size: 2em;
     }
+    .card .droppioIcon{
+      margin: 0 0 0 0 !important;
+      font-size: 2.5rem !important;
+    }
+    li span {
+      display: block;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .leftBorder {
+      border-left: 1px solid grey;
+    }
 
 
 
@@ -103,9 +116,9 @@ Buttons Color Class: #FFAB40 orange accent-2
       list-style-type: none;
       padding: 0.5rem;
     }
-    li span {
+    .countdown li span {
       display: block;
-      font-size: 1.2rem;
+      font-size: 2.5rem;
       text-align: center;
     }
 
@@ -193,4 +206,14 @@ Buttons Color Class: #FFAB40 orange accent-2
 
     #versions {
       background-color: rgba(0, 0, 0, 0.005);
+    }
+
+    #versions .collapsible-header, #versions .collapsible-body {
+      border-bottom: none !important;
+    }
+
+/* Footer */
+
+    .page-footer {
+      background-color: rgb(30, 30, 30);
     }
