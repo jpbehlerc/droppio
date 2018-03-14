@@ -13,10 +13,8 @@ Buttons Color Class: #FFAB40 orange accent-2
       box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.8);
       -webkit-box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.8);
       -moz-box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.8);
-      width: 100vw !important;
-      height: 100vh !important;
-      overflow: hidden;
-      overflow: scroll;
+      width: 100% !important;
+      height: 100% !important;
     }
     .paddingTop {
       padding-top: 1em;
@@ -38,7 +36,7 @@ Buttons Color Class: #FFAB40 orange accent-2
       margin: 1rem 1rem 1rem 1rem;
       font-size: 2em;
     }
-    .card .droppioIcon{
+    .card .droppioIcon, footer .droppioIcon{
       margin: 0 0 0 0 !important;
       font-size: 2.5rem !important;
     }
@@ -50,6 +48,15 @@ Buttons Color Class: #FFAB40 orange accent-2
 
     .leftBorder {
       border-left: 1px solid grey;
+    }
+
+    .copyleft {
+    display:inline-block;
+    transform: rotate(180deg);
+    }
+
+    .noMarginBottom {
+      margin-bottom: 0px;
     }
 
 
@@ -216,4 +223,19 @@ Buttons Color Class: #FFAB40 orange accent-2
 
     .page-footer {
       background-color: rgb(30, 30, 30);
+    }
+
+    footer a {
+      color: #ccc;
+      -webkit-transition: color .3s ease;
+      -o-transition: color .3s ease;
+      transition: color .3s ease;
+      transition-property: color;
+      transition-duration: 0.3s;
+      transition-timing-function: ease;
+      transition-delay: 0s;
+    }
+
+    footer a:hover {
+      color: #ffab40;
     }
