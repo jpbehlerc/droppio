@@ -105,7 +105,7 @@ Buttons Color Class: #FFAB40 orange accent-2
     }
     li span {
       display: block;
-      font-size: 2rem;
+      font-size: 1.2rem;
       text-align: center;
     }
 
@@ -125,7 +125,7 @@ Buttons Color Class: #FFAB40 orange accent-2
     .droppioList{
       max-width: 50% !important;
       margin-top: 10%;
-      margin-left: 35%;
+      margin-left: 25%;
       margin-bottom: 10%;
       transform: rotate(-15deg);
     }
@@ -183,7 +183,7 @@ Buttons Color Class: #FFAB40 orange accent-2
     }
 
     #versions ul li .card-title {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
 
     #versions .textAlignCenter {
