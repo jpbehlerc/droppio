@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../css/timeline.css">
   <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <link rel="icon" href="../assets/img/tint.png" type="image/png">
   <title> Droppio Website - a Blood Campaign Community App </title>
 </head>
 
@@ -18,10 +19,10 @@
       <div class="nav-wrapper">
         <a href="#presentation" class="brand-logo"><i class="fas fa-tint"></i> Droppio</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="#data" data-scrolly-selector="targetElement" >OpenData</a></li>
+          <li><a href="#data" data-scrolly-selector="targetElement">OpenData</a></li>
           <li><a href="#signup" class="scrolly">Registarse</a></li>
-          <li><a href="#aboutus" data-scrolly-selector="targetElement" >Sobre Nosotros</a></li>
-          <li><a href="#versions" data-scrolly-selector="targetElement" >Versiones</a></li>
+          <li><a href="#aboutus" data-scrolly-selector="targetElement">Sobre Nosotros</a></li>
+          <li><a href="#versions" data-scrolly-selector="targetElement">Versiones</a></li>
         </ul>
       </div>
     </nav>
@@ -30,9 +31,9 @@
     </div>
     <div class="row paddingTop noMarginBottom">
       <div class="col s12 m12 l6">
-        <!-- Card presentation -->
         <div class="row paddingTop ">
-          <div class="col s12 m12 l10 offset-l2 presentatioCard">
+          <!-- Card presentation -->
+          <div class="col s12 m12 l10 offset-l2 presentatioCard" data-scrolly-down="leFadeInLeft, delay:1s, duration:1s">
             <div class="card white lighten-1">
               <div class="card-content grey-text">
                 <span class="card-title black-text">Droppio para salvar vidas</span>
@@ -44,7 +45,7 @@
             </div>
           </div>
           <!-- countdown -->
-          <div class="col s12 m12 l10 offset-l2">
+          <div class="col s12 m12 l10 offset-l2" data-scrolly-down="leFadeInLeft, delay:1.5s, duration:1s">
             <div class="card white lighten-1">
               <div class="card-content grey-text">
                 <div class="countdown">
@@ -66,8 +67,8 @@
       </div>
       <!-- Phone Image -->
       <div class="col s12 m12 l6">
-        <div class="phonePresentation" >
-          <img data-scrolly-down="leFadeInRight, delay:1s, duration:1s" src="../assets/img/img_phone.png">
+        <div class="phonePresentation">
+          <img data-scrolly-down="leFadeInRight, delay:1.3s, duration:1s" src="../assets/img/img_phone.png">
         </div>
       </div>
     </div>
@@ -127,7 +128,7 @@
       <!-- right side -->
       <div class="col s12 m12 l6">
         <div class="row">
-          <div class="col s12 m12 l8 offset-l2">
+          <div class="col s12 m12 l8 offset-l2" data-scrolly-down="leFadeInBottom , delay:0s, duration:1s">
             <div class="card droppioRed">
               <div class="card-content">
                 <div class="row">
@@ -249,7 +250,7 @@
   <section id="versions" class="content container">
     <div class="row paddingTop5 noMarginBottom">
       <!-- left side -->
-      <div class="col s12 m12 l6">
+      <div class="col s12 m12 l5">
         <!-- Card Versions -->
         <div class="col 12 m12 l11 offset-l1" data-scrolly-down="leFadeInLeft, delay:0.3s, duration:1s">
           <div class="card blue-grey darken-1">
@@ -261,18 +262,18 @@
         </div>
       </div>
       <!-- Right side -->
-      <div class="col s12 m12 l6">
+      <div class="col s12 m12 l7">
         <div class="col s12 m12 l11 left">
           <!-- Timeline -->
           <div class="timeline">
             <!-- Timeline Card 1 -->
-            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:0.3, duration:1s">
-              <div class="timeline-content" >
+            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:1s, duration:1s">
+              <div class="timeline-content">
                 <ul class="collapsible" data-collapsible="">
                   <li>
                     <div class="collapsible-header"><i class="fas fa-code droppioIcon"></i><span class="card-title">Alpha Code</span></div>
                     <div class="collapsible-body">
-                      <p>Lorem ipsum dolor sit amet.</p>
+                      <p>Primera version de Webapp</p>
                     </div>
                   </li>
                 </ul>
@@ -280,13 +281,19 @@
               <div class="timeline-badge white-text"><span class="textAlignCenter">v0.1</span></div>
             </div>
             <!-- Timeline Card 2 -->
-            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:0.4, duration:1s">
-              <div class="timeline-content" >
+            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:1.2s, duration:1s">
+              <div class="timeline-content">
                 <ul class="collapsible" data-collapsible="">
                   <li>
                     <div class="collapsible-header"><i class="fas fa-tint droppioIcon"></i><span class="card-title">Beta Droplet</span></div>
                     <div class="collapsible-body">
-                      <p>Lorem ipsum dolor sit amet.</p>
+                      <p>Proximas Mejoras.</p>
+                      <ul>
+                        <li>Eliminar automaticamente campañas duplicadas</li>
+                        <li>Más Funcionalidades a las cartas</li>
+                        <li>Implementacion de Retroalimentacion </li>
+                        <li></li>
+                      </ul>
                     </div>
                   </li>
                 </ul>
@@ -294,13 +301,19 @@
               <div class="timeline-badge white-text"><span class="textAlignCenter">v0.5</span></div>
             </div>
             <!-- Timeline Card 3 -->
-            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:0.6, duration:1s">
-              <div class="timeline-content" >
+            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:1.4s, duration:1s">
+              <div class="timeline-content">
                 <ul class="collapsible" data-collapsible="">
                   <li>
-                    <div class="collapsible-header"><i class="fas fa-share-alt droppioIcon"></i><span class="card-title">Social Droplet</span></div>
+                    <div class="collapsible-header"><i class="fas fa-share-alt droppioIcon"></i><span class="card-title">Social Blood</span></div>
                     <div class="collapsible-body">
-                      <p>Lorem ipsum dolor sit amet.</p>
+                      <p>Proximas Mejoras:</p>
+                      <ul>
+                        <li>Implementacion de Redes Sociales en el motor de busqueda.</li>
+                        <li>Implementacion de Redes Sociales para iniciar sesion.</li>
+                        <li></li>
+                        <li></li>
+                      </ul>
                     </div>
                   </li>
                 </ul>
@@ -308,13 +321,13 @@
               <div class="timeline-badge white-text"><span class="textAlignCenter">v1.0</span></div>
             </div>
             <!-- Timeline Card 4 -->
-            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:0.8, duration:1s">
-              <div class="timeline-content" >
+            <div class="timeline timeline-event" data-scrolly-down="leFadeIn, delay:1.6, duration:1s">
+              <div class="timeline-content">
                 <ul class="collapsible" data-collapsible="">
                   <li>
                     <div class="collapsible-header"><i class="fas fa-rocket droppioIcon"></i><span class="card-title">Rocket Drop</span></div>
                     <div class="collapsible-body">
-                      <p>Lorem ipsum dolor sit amet.</p>
+                      <p>Lanzamiento de aplicaciones nativas para iOS y Android.</p>
                     </div>
                   </li>
                 </ul>
@@ -359,7 +372,7 @@
     </div>
     <div class="footer-copyright">
       <div class="container center">
-        <span class="copyleft">&copy;</span> All Wrongs Reserved - Made it with <span style="color: rgb(255, 100, 100);">♥</span> from <b>Mendoza</b> to the world.
+        <span class="copyleft">&copy;</span> 2018 All Wrongs Reserved - Made it with <span style="color: rgb(255, 100, 100);">♥</span> from <b>Mendoza</b> to the world.
       </div>
     </div>
   </footer>
