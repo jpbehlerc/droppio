@@ -10,13 +10,8 @@ Buttons Color Class: #FFAB40 orange accent-2
     text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.8) !important;
     }
     .content {
-      box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.8);
-      -webkit-box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.8);
-      -moz-box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.8);
       width: 100% !important;
       height: 100% !important;
-      min-width: 100vw !important;
-      min-height: 100vh !important;
     }
     .paddingTop {
       padding-top: 1em;
@@ -61,14 +56,21 @@ Buttons Color Class: #FFAB40 orange accent-2
       margin-bottom: 0px;
     }
 
+    .parallax img {
+      opacity: 1 !important;
+    }
 
 
 /* presentation */
 
     /* background transition */
-    #presentation {
+    #background {
       color: #fff;
+      z-index: -1;
+      position: fixed;
       background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
+      width: 100vw;
+      height: 100vh;
       background-size: 2000px 2000px;
       -webkit-animation: Gradient 15s ease infinite;
       -moz-animation: Gradient 15s ease infinite;
@@ -139,10 +141,11 @@ Buttons Color Class: #FFAB40 orange accent-2
 
 /* OpenData Content */
 
-    #data {
-      background-image: url(../assets/img/OpenDataBg.png);
-      background-repeat: repeat-x repeat-y;
-      background-size: 200px;
+    #data .parallax img {
+      min-width: 0px !important;
+      min-height: 0px !important;
+      background-repeat: repeat-x repeat-y !important;
+      background-size: 200px !important;
     }
     .droppioList{
       max-width: 50% !important;
@@ -156,7 +159,6 @@ Buttons Color Class: #FFAB40 orange accent-2
 
     /* background */
     #signup {
-      background-color: rgb(217, 240, 255);
     }
 
 
@@ -197,15 +199,33 @@ Buttons Color Class: #FFAB40 orange accent-2
       margin-bottom: 0px !important;
     }
 
+/* About us */
+
+
 /* Versions */
 
     #versions ul li {
       width: 100%;
       color: #000;
+      background-color: #fff;
     }
 
     #versions ul li .card-title {
       margin-top: 1rem;
+    }
+
+    #versions ul li .collapsible-header {
+      -webkit-transition: color .3s ease;
+      -o-transition: color .3s ease;
+      transition: color .3s ease;
+      transition-property: color;
+      transition-duration: 0.3s;
+      transition-timing-function: ease;
+      transition-delay: 0s;
+    }
+
+    #versions ul li .collapsible-header:hover {
+      color: grey;
     }
 
     #versions .textAlignCenter {
@@ -213,12 +233,13 @@ Buttons Color Class: #FFAB40 orange accent-2
       padding: 10px 0px 0px 7px !important;
     }
 
-    #versions {
-      background-color: rgba(0, 0, 0, 0.005);
-    }
-
     #versions .collapsible-header, #versions .collapsible-body {
       border-bottom: none !important;
+    }
+
+    #versions {
+      padding-bottom: 5em;
+      box-shadow: 5px 10px 8px #888888;
     }
 
 /* Footer */
@@ -237,7 +258,14 @@ Buttons Color Class: #FFAB40 orange accent-2
       transition-timing-function: ease;
       transition-delay: 0s;
     }
+    footer .footer-copyright {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
 
     footer a:hover {
       color: #ffab40;
+    }
+    footer {
+
+      z-index: -5;
     }

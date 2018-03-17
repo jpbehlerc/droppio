@@ -113,6 +113,39 @@ class home(tornado.web.RequestHandler):
         self.render("home.html")
 
 
+class landing(tornado.web.RequestHandler):
+
+
+    def write_error(self,*args,**kw):
+
+        if len(args) == 1:
+
+            self.write("HTTP Error {}".format(args[0]))
+
+        elif len(args) > 1:
+
+            logging.error("HTTP Error {0}: {1}".format(args[0],args[1]))
+
+        elif hasattr(kw,'exc_info'):
+
+            logging.error("HTTP Error: {0}".format(kw['exc_info'][1]))
+
+        else:
+
+            logging.error("HTTP Error: {0}".format(args[0]))
+
+
+    def get(self):
+
+        try:
+
+            self.xsrf_token
+
+        except ValueError:
+            pass
+
+        self.render("website.html")
+
 class connect(tornado.web.RequestHandler):
 
     def get(self):
@@ -174,7 +207,8 @@ if __name__ == '__main__':
 
         args = parser.parse_args()
 
-        handlers.append((r"/", home))
+        handlers.append((r"/home", home))
+        handlers.append((r"/", landing))
         handlers.append((r"/campaign", campaign))
         handlers.append((r"/connect", connect))
         handlers.append((r"/heart", heart))
