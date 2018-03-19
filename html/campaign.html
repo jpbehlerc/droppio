@@ -7,8 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="/json/manifest.json">
-
-  <link rel="stylesheet" href="../css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link rel="stylesheet" href="../css/droppio.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
   <link rel="icon" href="../assets/img/tint.png" type="image/png">
@@ -59,14 +58,15 @@
   <!-- content -->
 
   <section class="content">
-    <div class="create">
-    <!-- campaign inputs -->
+        <!-- campaign inputs -->
     <div class="row">
-      <div class=" col s12 m12 l6 createInit center">
-        <a class="waves-effect waves-light btn"><i class="far fa-hand-point-up navbarIcon"></i>&nbsp;Para mí</a>
-        <a class="waves-effect waves-light btn">Para otro&nbsp;<i class="far fa-hand-point-right navbarIcon"></i></a>
-      </div>
+
       <form class="input-field col s12 m12 l6" action="#" method="post">
+        <!-- Button Selection -->
+        <div class=" col s12 m12 l12 center">
+          <a class="waves-effect waves-light btn"><i class="far fa-hand-point-up navbarIcon"></i>&nbsp;Para mí</a>
+          <a class="waves-effect waves-light btn">Para otro&nbsp;<i class="far fa-hand-point-right navbarIcon"></i></a>
+        </div>
         <!-- Name Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
@@ -80,7 +80,7 @@
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-tint"></i>
             <select>
-            <option value="" disabled selected>Seleccione tipo de sangre</option>
+            <option value="" disabled selected>Tipo de sangre</option>
             <option value="1">A+</option>
             <option value="2">B+</option>
             <option value="3">AB+</option>
@@ -111,10 +111,14 @@
         </div>
         <!-- Hospital Hours Input -->
         <div class="row">
-          <div class="input-field col s12 m12 l12">
-            <i class="fas prefix fa-h-square"></i>
-            <input type="text" id="hospitalHours" class="validate" required>
-            <label for="hospitalHours">Horarios</label>
+          <div class="input-field col s6 m6 l6">
+            <i class="fas prefix fa-clock"></i>
+            <input type="text" id="hospitalHours" class="timepicker" required>
+            <label for="hospitalHours">Desde</label>
+          </div>
+          <div class="input-field col s6 m6 l6">
+            <input type="text" id="hospitalHours" class="timepicker" required>
+            <label for="hospitalHours">Hasta</label>
           </div>
         </div>
         <!-- Estado de Salud Input -->
@@ -122,7 +126,7 @@
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-heartbeat"></i>
             <select>
-            <option value="" disabled selected>Seleccione el estado de salud</option>
+            <option value="" disabled selected>Estado de salud</option>
             <option value="1">Estable</option>
             <option value="3">Critico</option>
           </select>
@@ -134,10 +138,7 @@
           </button>
         </div>
       </form>
-
-
     </div>
-  </div>
 
   </section>
 
