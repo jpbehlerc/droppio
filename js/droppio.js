@@ -5,7 +5,9 @@ $(document).ready(function() {
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: true,
-    selectYears: 90, // Creates a dropdown of 15 years to control year,
+    min: [1901,1,1],
+    max: true,
+    selectYears: 1000,
     labelMonthNext: 'Proximo Mes',
     labelMonthPrev: 'Mes Anterior',
     labelMonthSelect: 'Seleccione Mes',

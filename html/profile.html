@@ -78,7 +78,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-tint"></i>
-            <select>
+            <select required>
               <option value="" disabled selected>Seleccione tipo de sangre</option>
               <option value="1">A+</option>
               <option value="2">B+</option>
@@ -95,7 +95,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-id-card"></i>
-            <input type="number" id="dni" class="validate" required>
+            <input type="number" id="dni" class="validate" required maxlength="20">
             <label for="dni">DNI o Numero Pasaporte</label>
           </div>
         </div>
@@ -103,7 +103,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-envelope"></i>
-            <input type="email" id="email" class="validate" required>
+            <input type="email" id="email" class="validate" required maxlength="50">
             <label for="email">Email</label>
           </div>
         </div>
@@ -112,14 +112,14 @@
           <div class="input-field col s12 m12 l12">
               <i class="fas prefix fa-birthday-cake"></i>
               <label for="date">Cumpleaños</label>
-              <input type="text" id="date" class="datepicker">
+              <input type="text" id="date" class="datepicker" required>
           </div>
         </div>
         <!-- weight Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-weight"></i>
-            <input type="number" class="validate">
+            <input type="number" class="validate" required maxlength="3">
             <label for="Peso">Peso</label>
           </div>
         </div>
