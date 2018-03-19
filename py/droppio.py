@@ -171,7 +171,7 @@ if __name__ == '__main__':
 
     try:
 
-        parser = argparse.ArgumentParser(prog='Droppio',description='The electric bike community!')
+        parser = argparse.ArgumentParser(prog='Droppio',description='Webapp de campañas de sangre')
 
         settings = {
 

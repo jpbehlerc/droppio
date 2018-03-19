@@ -1,7 +1,7 @@
 /* inputs fields */
 
     /* Textarea */
-    input ,select , textarea{
+    input ,select , textarea, select:not(.picker__select--month, .picker__select, .picker__select--year){
     color: #fff;
     }
     /* label color */

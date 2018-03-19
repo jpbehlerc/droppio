@@ -1,23 +1,27 @@
 $(document).ready(function() {
 
 
+  //$('#pickadate').pickadate();
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
-    today: 'Today',
-    clear: 'Clear',
-    close: 'Ok',
-    closeOnSelect: false, // Close upon selecting a date,
-    onClose: () => {
-      $(":focus").blur();
-    },
+    selectYears: true,
+    selectYears: 90, // Creates a dropdown of 15 years to control year,
+    labelMonthNext: 'Proximo Mes',
+    labelMonthPrev: 'Mes Anterior',
+    labelMonthSelect: 'Seleccione Mes',
+    labelYearSelect: 'Seleccione Año',
+    monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+    weekdaysLetter: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    today: 'Hoy',
+    clear: 'Borrar',
+    close: 'Cerrar'
   });
 
-
-  //$('#pickadate').pickadate();
   $('select').material_select();
-
-
+  // Success Modal
   $('.spread').click(function(e) {
 
     swal('Gracias!',
