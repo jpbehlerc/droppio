@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="../css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link rel="stylesheet" href="../css/sweetalert2.min.css">
   <link rel="stylesheet" href="../css/droppio.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
@@ -66,10 +66,14 @@
       <form class="input-field col s12 m12 l6" action="#" method="post">
         <!-- Name Input -->
         <div class="row">
-          <div class="input-field col s12 m12 l12">
+          <div class="input-field col s6 m6 l6">
             <i class="fas prefix fa-user-circle"></i>
             <input type="text" id="name" class="validate" required>
-            <label for="name">Nombre y Apellido</label>
+            <label for="name">Nombre</label>
+          </div>
+          <div class="input-field col s6 m6 l6">
+            <input type="text" id="surname" class="validate" required>
+            <label for="surname">Apellido</label>
           </div>
         </div>
         <!-- Blood Input -->
@@ -103,6 +107,14 @@
             <i class="fas prefix fa-envelope"></i>
             <input type="email" id="email" class="validate" required>
             <label for="email">Email</label>
+          </div>
+        </div>
+        <!-- Phone Input -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="fas prefix fa-phone"></i>
+            <input type="number" id="phone" class="validate" required>
+            <label for="phone">Telefono</label>
           </div>
         </div>
         <!-- Sign up button -->
