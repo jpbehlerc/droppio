@@ -1,12 +1,18 @@
 $(document).ready(function() {
 
+  $('#home').click(function(e){
 
+    e.preventDefault();
+    window.location = "pornhub.com";
+    
+  });
   //$('#pickadate').pickadate();
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 2002,
+    selectYears: true,
     min: [1901,1,1],
     max: true,
+    Year: 2002,
     selectYears: 1000,
     labelMonthNext: 'Proximo Mes',
     labelMonthPrev: 'Mes Anterior',
