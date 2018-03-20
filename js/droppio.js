@@ -17,7 +17,7 @@ $(document).ready(function() {
     weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
     weekdaysLetter: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-    today: 'Hoy',
+    today: false,
     clear: 'Borrar',
     close: 'Cerrar'
   });
