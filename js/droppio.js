@@ -4,7 +4,7 @@ $(document).ready(function() {
   //$('#pickadate').pickadate();
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: true,
+    selectYears: 2002,
     min: [1901,1,1],
     max: true,
     selectYears: 1000,
