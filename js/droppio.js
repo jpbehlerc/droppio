@@ -3,8 +3,8 @@ $(document).ready(function() {
   $('#home').click(function(e){
 
     e.preventDefault();
-    window.location = "pornhub.com";
-    
+    window.location = "https://droppio.org/home";
+
   });
   //$('#pickadate').pickadate();
   $('.datepicker').pickadate({
