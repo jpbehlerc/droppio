@@ -1,11 +1,18 @@
 $(document).ready(function() {
 
   $('#home').click(function(e){
-
     e.preventDefault();
     window.location = "https://droppio.org/home";
-
   });
+  $('#campaign').click(function(e){
+    e.preventDefault();
+    window.location = "https://droppio.org/campaign";
+  });
+  $('#profile').click(function(e){
+    e.preventDefault();
+    window.location = "https://droppio.org/profile";
+  });
+
   //$('#pickadate').pickadate();
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
