@@ -63,7 +63,7 @@ $(document).ready(function() {
       confirmButtonText: 'Confirmar',
       confirmButtonColor: '#ffab40',
       cancelButtonText: 'Cancelar',
-      position: 'top-start'
+      position: 'top-center'
 
     }).then(function(result) {
 
