@@ -55,7 +55,6 @@ $(document).ready(function() {
       'success');
 
   });
-
   $('.donate').click(function(e) {
 
     swal({
@@ -95,77 +94,4 @@ $(document).ready(function() {
     });
 
   });
-
-  //Sync settings only then start campaign filtration
-  settings.sync(remote_settings, {
-
-    live: true,
-    retry: true,
-    back_off_function: function(delay) {
-
-      if (delay == 0) {
-
-        return 1000;
-
-      } else if (delay >= 1000 && delay < 1800000) {
-
-        return delay * 1.5;
-
-      } else if (delay >= 1800000) {
-
-        return delay * 1.1;
-
-      }
-
-    }
-  }).on('paused', function(err) {
-
-    settings.get('bloodType').then(function(doc) {
-
-      var bloodType = doc.type;
-
-      campaigns.replicate.from(remote_campaigns, {
-
-        live: true,
-        retry: true,
-        back_off_function: function(delay) {
-
-          if (delay == 0) {
-
-            return 1000;
-
-          } else if (delay >= 1000 && delay < 1800000) {
-
-            return delay * 1.5;
-
-          } else if (delay >= 1800000) {
-
-            return delay * 1.1;
-
-          }
-        },
-        selector: {
-          "compatible": {
-            "$elemMatch": {
-              "$eq": bloodType
-            }
-          }
-
-        }
-
-      }).on('error', function(info) {
-        // I'll be back
-      });
-
-    });
-
-
-  }).on('error', function(info) {
-
-    console.log("Oops smth happened while trying to sync settings!");
-
-  });
-
-
-
 });
