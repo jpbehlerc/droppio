@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+<<<<<<< HEAD:js/droppio.js
   $('#home').click(function(e){
     e.preventDefault();
     window.location = "https://droppio.org/home";
@@ -48,6 +49,25 @@ $(document).ready(function() {
   });
   $('select').material_select();
   // Success Modal
+=======
+  //Init respective DBs
+  var campaigns = new PouchDB("campaigns_userID", {
+    auto_compaction: false,
+    cache: false,
+    heartbeat: true
+  });
+
+  var settings = new PouchDB("settings_userID", {
+    auto_compaction: false,
+    cache: false,
+    heartbeat: true
+  });
+
+  var remote_campaigns = new PouchDB('https://droppio.org:6489/campaigns');
+  var remote_settings = new PouchDB('https://droppio.org:6489/settings_userID');
+
+  //Register campaign events
+>>>>>>> 3593a7e2bd0bfce38b7c736ddcd2d68fe1a393f1:js/droppioHome.js
   $('.spread').click(function(e) {
 
     swal('Gracias!',
@@ -55,6 +75,7 @@ $(document).ready(function() {
       'success');
 
   });
+
   $('.donate').click(function(e) {
 
     swal({
@@ -94,4 +115,77 @@ $(document).ready(function() {
     });
 
   });
+
+  //Sync settings only then start campaign filtration
+  settings.sync(remote_settings, {
+
+    live: true,
+    retry: true,
+    back_off_function: function(delay) {
+
+      if (delay == 0) {
+
+        return 1000;
+
+      } else if (delay >= 1000 && delay < 1800000) {
+
+        return delay * 1.5;
+
+      } else if (delay >= 1800000) {
+
+        return delay * 1.1;
+
+      }
+
+    }
+  }).on('paused', function(err) {
+
+    settings.get('bloodType').then(function(doc) {
+
+      var bloodType = doc.type;
+
+      campaigns.replicate.from(remote_campaigns, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+        },
+        selector: {
+          "compatible": {
+            "$elemMatch": {
+              "$eq": bloodType
+            }
+          }
+
+        }
+
+      }).on('error', function(info) {
+        // I'll be back
+      });
+
+    });
+
+
+  }).on('error', function(info) {
+
+    console.log("Oops smth happened while trying to sync settings!");
+
+  });
+
+
+
 });

@@ -113,6 +113,7 @@ class home(tornado.web.RequestHandler):
         self.render("home.html")
 
 
+<<<<<<< HEAD
 class landing(tornado.web.RequestHandler):
 
 
@@ -146,6 +147,8 @@ class landing(tornado.web.RequestHandler):
 
         self.render("website.html")
 
+=======
+>>>>>>> 3593a7e2bd0bfce38b7c736ddcd2d68fe1a393f1
 class profile(tornado.web.RequestHandler):
 
     def get(self):
