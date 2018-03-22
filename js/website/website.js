@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
   $('select').formSelect();
-  $(".button-collapse").sideNav();
   $('.parallax').parallax();
   $('.collapsible').collapsible();
   $("a").on('click', function(event) {
