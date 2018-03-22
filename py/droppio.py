@@ -266,9 +266,18 @@ class home(tornado.web.RequestHandler):
             self.redirect("/register")
             return
 
+        self.render("home.html")
+
+
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
         dbUser,dbPass = tornado.escape.xhtml_escape(self.current_user).split(":")
 
-        self.render("home.html",dbUser=dbUser,dbPass=dbPass)
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass}))
 
 
 class profile(tornado.web.RequestHandler):
