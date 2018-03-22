@@ -1,8 +1,8 @@
 // init
 $(document).ready(function() {
 
+  $('select').formSelect();
   $(".button-collapse").sideNav();
-  $('select').material_select();
   $('.parallax').parallax();
   $('.collapsible').collapsible();
   $("a").on('click', function(event) {

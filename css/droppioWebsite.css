@@ -197,7 +197,7 @@ Buttons Color Class: #FFAB40 orange accent-2
     .titleTransparent {
     color: rgba(255, 255, 255, 0.7);
     }
-    #signup form .row {
+    #signup form .row:not(.checkbox)  {
       margin-bottom: 0px !important;
     }
 
