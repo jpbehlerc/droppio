@@ -1,16 +1,19 @@
 $(document).ready(function() {
 
   //Init pouchDB
-  var settings = {
+  function Settings() {
 
-    bloodType = false,
-    name = false,
-    lastname = false,
-    dni = false,
-    email = false,
-    weight = false,
-    birth = false
+    this.id = false,
+      this.bloodType = false,
+      this.name = false,
+      this.lastName = false,
+      this.dni = false,
+      this.email = false,
+      this.weight = false,
+      this.birthDate = false
   };
+
+  var info = new Settings();
 
   //Init respective DBs
   var campaigns = new PouchDB("campaigns_userID", {
@@ -98,6 +101,76 @@ $(document).ready(function() {
 
       if (result.value) {
 
+        id = $(this).attr("id");
+        donation = {
+          '_id': info._id + '@' + id,
+          'name': info.name,
+          'lastName': info.LastName
+        };
+
+        settings.get('isAble').then(function(res) {
+
+          campaigns.put(donation).catch(function(err) {
+
+            swal({
+              title: 'Oops!',
+              text: 'Ocurrió un error al procesar la donación, por favor intente nuevamente :)',
+              type: 'error',
+              showConfirmButton: false,
+            });
+
+          });
+
+        }).catch(function(err) {
+
+          months = {
+            "January": '01',
+            "February": '02',
+            "March": '03',
+            "April": '04',
+            "May": '05',
+            "June": '06',
+            "July": '07',
+            "August": '08',
+            "September": '09',
+            "October": '10',
+            "November": '11',
+            "December": '12'
+          }
+
+          //Check if user can donate given settings, create flag isAble document
+          now = moment().tz("America/Argentina/Buenos_Aires");
+          birth = info.birthDate.split(" ");
+
+          day = parseInt(birth[0]) < 10 ? "0" + birth[0] : birth[0];
+          month = months[birth[1].split(",")[0]];
+          year = birth[2];
+
+          age = moment(year + "-" + day + "-" + month + " " + "00:00").diff(now, 'years');
+
+          weight = parseInt(info.weight);
+
+          if (age >= 18 && weight >= 50) {
+
+            settings.put({
+              '_id': '_local/isAble'
+            });
+
+            campaigns.put(donation).catch(function(err) {
+
+              swal({
+                title: 'Oops!',
+                text: 'Ocurrió un error al procesar la donación, por favor intente nuevamente :)',
+                type: 'error',
+                showConfirmButton: false,
+              });
+
+            });
+
+          }
+
+        });
+
         swal({
           title: 'Genial!',
           text: 'Estás a un paso de salvar a esta persona, sólo debes ir a donar',
@@ -148,17 +221,31 @@ $(document).ready(function() {
     }
   }).on('paused', function(err) {
 
+      settings.get('name').then(function(doc) {
+        info.name = doc.name
+      });
+
+      settings.get('lastname').then(function(doc) {
+        info.lastName = doc.lastName
+      });
+
+      settings.get('dni').then(function(doc) {
+        info.dni = doc.dni
+      });
+
+      settings.get('weight').then(function(doc) {
+        info.weight = doc.weight
+      });
+
+      settings.get('birthDate').then(function(doc) {
+        info.birthDate = doc.birthDate
+      });
+
       settings.get('bloodType').then(function(doc) {
 
-
           settings.bloodType = doc.bloodType;
-          settings.name = doc.name;
-          settings.lastname = doc.lastname;
-          settings.dni = doc.dni;
-          settings.email = doc.email;
-          settings.weight = doc.weight;
-          settings.birthDate = doc.birthDate;
 
+          //Filter by expiry?
           campaigns.replicate.from(remote_campaigns, {
 
             live: true,
@@ -198,9 +285,7 @@ $(document).ready(function() {
                 var Δφ = (dst.lat - src.lat).toRadians();
                 var Δλ = (dst.lon - src.lon).toRadians();
 
-                var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                  Math.cos(φ1) * Math.cos(φ2) *
-                  Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
                 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
                 return (R * c);
