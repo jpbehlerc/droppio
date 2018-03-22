@@ -6,6 +6,42 @@ Buttons Color Class: #FFAB40 orange accent-2
 
 /* generals */
 
+    /* input fields */
+    /* Textarea */
+    input ,select , textarea{
+    color: #fff !important;
+    }
+    /* label color */
+    .input-field label {
+     color: #fff !important;
+    }
+    /* label focus color */
+    .input-field input[type=text]:focus + label {
+     color: #fff !important;
+    }
+    /* label underline focus color */
+    .input-field input[type=text]:focus {
+     border-bottom: 1px solid #fff !important;
+     box-shadow: 0 1px 0 0 #fff !important;
+    }
+    .dropdown-content li > a, .dropdown-content li > span {
+      color: #c91249 !important;
+    }
+
+    .separator {
+    width: 85% !important;
+    font-size: 1px;
+    color: rgba(0, 0, 0, 0);
+    line-height: 1px;
+    background-color: rgba(0, 0, 0, 0.19);
+    margin: auto !important;
+    margin-top: 1rem !important;
+    }
+    .titleTransparent {
+    color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* content */
     .shadown {
     text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.8) !important;
     }
@@ -21,16 +57,12 @@ Buttons Color Class: #FFAB40 orange accent-2
     .paddingTop5 {
       padding-top: 5em;
     }
-
     body {
       color: #fff;
     }
-
     .droppioRed {
       background: linear-gradient(45deg, #550e23, #c91249);
-
     }
-
     .droppioIcon {
       margin: 1rem 1rem 1rem 1rem;
       font-size: 2em;
@@ -44,20 +76,16 @@ Buttons Color Class: #FFAB40 orange accent-2
       font-size: 1.2rem;
       text-align: center;
     }
-
     .leftBorder {
       border-left: 1px solid grey;
     }
-
     .copyleft {
     display:inline-block;
     transform: rotate(180deg);
     }
-
     .noMarginBottom {
       margin-bottom: 0px;
     }
-
     .parallax img {
       opacity: 1 !important;
     }
@@ -159,44 +187,6 @@ Buttons Color Class: #FFAB40 orange accent-2
 
 /* Sign Up input fields */
 
-    /* background */
-    #signup {
-    }
-
-
-    /* Textarea */
-    input ,select , textarea{
-    color: #fff !important;
-    }
-    /* label color */
-    .input-field label {
-     color: #fff !important;
-    }
-    /* label focus color */
-    .input-field input[type=text]:focus + label {
-     color: #fff !important;
-    }
-    /* label underline focus color */
-    .input-field input[type=text]:focus {
-     border-bottom: 1px solid #fff !important;
-     box-shadow: 0 1px 0 0 #fff !important;
-    }
-    .dropdown-content li > a, .dropdown-content li > span {
-      color: #c91249 !important;
-    }
-
-    .separator {
-    width: 85% !important;
-    font-size: 1px;
-    color: rgba(0, 0, 0, 0);
-    line-height: 1px;
-    background-color: rgba(0, 0, 0, 0.19);
-    margin: auto !important;
-    margin-top: 1rem !important;
-    }
-    .titleTransparent {
-    color: rgba(255, 255, 255, 0.7);
-    }
     #signup form .row:not(.checkbox)  {
       margin-bottom: 0px !important;
     }

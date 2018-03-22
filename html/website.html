@@ -155,12 +155,12 @@
                     <div class="row">
                       <div class="input-field col s6 m6 l6">
                         <i class="fas prefix fa-user-circle"></i>
-                        <input type="text" id="name" class="validate" required>
+                        <input type="text" id="name" class="validate" maxlength="40" required>
                         <label for="name">Nombre</label>
                       </div>
                       <div class="input-field col s6 m6 l6">
-                        <input type="text" id="surname" class="validate" required>
-                        <label for="surname">Apellido</label>
+                        <input type="text" maxlength="40" id="lastname" class="validate" required>
+                        <label for="lastname">Apellido</label>
                       </div>
                     </div>
                     <!-- Blood Input -->
@@ -184,7 +184,7 @@
                     <div class="row">
                       <div class="input-field col s12 m12 l12">
                         <i class="fas prefix fa-id-card"></i>
-                        <input type="number" id="dni" class="validate" required>
+                        <input type="number" maxlength="20" id="dni" class="validate" required>
                         <label for="dni">DNI o Numero Pasaporte</label>
                       </div>
                     </div>
@@ -192,7 +192,7 @@
                     <div class="row">
                       <div class="input-field col s12 m12 l12">
                         <i class="fas prefix fa-envelope"></i>
-                        <input type="email" id="email" class="validate" required>
+                        <input type="email" maxlength="50" id="email" class="validate" required>
                         <label for="email">Email</label>
                       </div>
                     </div>
@@ -200,7 +200,7 @@
                     <div class="row">
                       <div class="input-field col s12 m12 l12">
                         <i class="fas prefix fa-phone"></i>
-                        <input type="number" id="phone" class="validate" required>
+                        <input type="number" maxlength="15" id="phone" class="validate" required>
                         <label for="phone">Telefono</label>
                       </div>
                     </div>
