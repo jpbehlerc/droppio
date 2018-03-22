@@ -1,14 +1,42 @@
 $(document).ready(function() {
 
-  $('#home').click(function(e){
+  //Init pouchDB
+  var settings = {
+
+    bloodType = false,
+    name = false,
+    lastname = false,
+    dni = false,
+    email = false,
+    weight = false,
+    birth = false
+  };
+
+  //Init respective DBs
+  var campaigns = new PouchDB("campaigns_userID", {
+    auto_compaction: false,
+    cache: false,
+    heartbeat: true
+  });
+
+  var settings = new PouchDB("settings_userID", {
+    auto_compaction: false,
+    cache: false,
+    heartbeat: true
+  });
+
+  var remote_campaigns = new PouchDB('https://droppio.org:6489/campaigns');
+  var remote_settings = new PouchDB('https://droppio.org:6489/settings_userID');
+
+  $('#home').click(function(e) {
     e.preventDefault();
     window.location = "https://droppio.org/home";
   });
-  $('#campaign').click(function(e){
+  $('#campaign').click(function(e) {
     e.preventDefault();
     window.location = "https://droppio.org/campaign";
   });
-  $('#profile').click(function(e){
+  $('#profile').click(function(e) {
     e.preventDefault();
     window.location = "https://droppio.org/profile";
   });
@@ -17,7 +45,7 @@ $(document).ready(function() {
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: true,
-    min: [1901,1,1],
+    min: [1901, 1, 1],
     max: true,
     Year: 2002,
     selectYears: 1000,
@@ -37,14 +65,14 @@ $(document).ready(function() {
 
   $('.timepicker').pickatime({
     default: false, // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+    fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
     twelvehour: true, // Use AM/PM or 24-hour format
     donetext: 'OK', // text for done-button
     cleartext: 'Borrar', // text for clear-button
     canceltext: 'Cancelar', // Text for cancel-button
     autoclose: true, // automatic close timepicker
     ampmclickable: true, // make AM PM clickable
-    aftershow: function(){} //Function for after opening timepicker
+    aftershow: function() {} //Function for after opening timepicker
   });
   $('select').material_select();
   // Success Modal
@@ -120,51 +148,93 @@ $(document).ready(function() {
     }
   }).on('paused', function(err) {
 
-    settings.get('bloodType').then(function(doc) {
+      settings.get('bloodType').then(function(doc) {
 
-      var bloodType = doc.type;
 
-      campaigns.replicate.from(remote_campaigns, {
+          settings.bloodType = doc.bloodType;
+          settings.name = doc.name;
+          settings.lastname = doc.lastname;
+          settings.dni = doc.dni;
+          settings.email = doc.email;
+          settings.weight = doc.weight;
+          settings.birthDate = doc.birthDate;
 
-        live: true,
-        retry: true,
-        back_off_function: function(delay) {
+          campaigns.replicate.from(remote_campaigns, {
 
-          if (delay == 0) {
+            live: true,
+            retry: true,
+            back_off_function: function(delay) {
 
-            return 1000;
+              if (delay == 0) {
 
-          } else if (delay >= 1000 && delay < 1800000) {
+                return 1000;
 
-            return delay * 1.5;
+              } else if (delay >= 1000 && delay < 1800000) {
 
-          } else if (delay >= 1800000) {
+                return delay * 1.5;
 
-            return delay * 1.1;
+              } else if (delay >= 1800000) {
 
-          }
-        },
-        selector: {
-          "compatible": {
-            "$elemMatch": {
-              "$eq": bloodType
+                return delay * 1.1;
+
+              }
+            },
+            selector: {
+              "compatible": {
+                "$elemMatch": {
+                  "$eq": settings.bloodType
+                }
+              }
+
             }
-          }
 
-        }
+          }).on('change', function(docs) {
 
-      }).on('error', function(info) {
-        // I'll be back
+              var distance = function(src, dst) {
+
+                var R = 6371e3; // metres
+                var φ1 = src.lat.toRadians();
+                var φ2 = dst.lat.toRadians();
+                var Δφ = (dst.lat - src.lat).toRadians();
+                var Δλ = (dst.lon - src.lon).toRadians();
+
+                var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                  Math.cos(φ1) * Math.cos(φ2) *
+                  Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+                return (R * c);
+
+
+              }
+
+              for (i = 0, n = docs.length; i < n; i++) {
+
+                doc = docs[i];
+                dst = doc.coordinates;
+                src = settings.coordinates;
+
+                if (distance(src, dst) <= 5000) {
+
+                  //Show campaign, else do nothing
+                }
+
+              }
+
+
+            };
+          }).on('error', function(info) {
+          // I'll be back
+        });
+
       });
-
-    });
 
 
   }).on('error', function(info) {
 
-    console.log("Oops smth happened while trying to sync settings!");
+  console.log("Oops smth happened while trying to sync settings!");
 
-  });
+});
 
 
 
