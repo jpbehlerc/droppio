@@ -1,15 +1,17 @@
 $(document).ready(function() {
 
-  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
-    today: 'Today',
-    clear: 'Clear',
-    close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
+  $('select').formSelect();
+  $('.datepicker').datepicker({
+    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+    weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    maxYear: 2002,
+    setDefaultYear: true,
+    defaultYear: 1990,
+    yearRange: 80,
+    clear: 'Borrar',
+    done: 'OK',
   });
-
-  //$('#pickadate').pickadate();
-  $('select').material_select();
-
 });
