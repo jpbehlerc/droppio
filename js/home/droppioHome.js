@@ -31,6 +31,7 @@ $(document).ready(function() {
   var remote_campaigns = new PouchDB('https://droppio.org:6489/campaigns');
   var remote_settings = new PouchDB('https://droppio.org:6489/settings_userID');
 
+  // Page Selection
   $('#home').click(function(e) {
     e.preventDefault();
     window.location = "https://droppio.org/home";
@@ -45,7 +46,7 @@ $(document).ready(function() {
   });
 
   //$('#pickadate').pickadate();
-  $('.datepicker').pickadate({
+  $('.datepicker').datepicker({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: true,
     min: [1901, 1, 1],
@@ -66,7 +67,7 @@ $(document).ready(function() {
     close: 'Cerrar'
   });
 
-  $('.timepicker').pickatime({
+  $('.timepicker').timepicker({
     default: false, // Set default time: 'now', '1:30AM', '16:30'
     fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
     twelvehour: true, // Use AM/PM or 24-hour format
@@ -77,7 +78,7 @@ $(document).ready(function() {
     ampmclickable: true, // make AM PM clickable
     aftershow: function() {} //Function for after opening timepicker
   });
-  $('select').material_select();
+  $('select').formSelect();
   // Success Modal
   $('.spread').click(function(e) {
 
