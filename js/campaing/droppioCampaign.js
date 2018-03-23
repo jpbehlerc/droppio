@@ -74,7 +74,8 @@ $(document).ready(function() {
 
   });
 
-  $('.datepicker').pickadate({
+// Date Picker
+  $('.datepicker').datepicker({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15, // Creates a dropdown of 15 years to control year,
     today: 'Today',
@@ -82,9 +83,15 @@ $(document).ready(function() {
     close: 'Ok',
     closeOnSelect: false // Close upon selecting a date,
   });
-
-  //$('#pickadate').pickadate();
-  $('select').material_select();
+// Timer Picker
+  $('.timepicker').timepicker({
+    defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
+    autoClose: true,
+    twelvehour: false, // Use AM/PM or 24-hour format
+    done: 'OK', // text for done-button
+    cancel: 'Cancelar', // Text for cancel-button
+  });
+  $('select').formSelect();
 
   campaignsDB.sync(remote_campaignsDB, {
 

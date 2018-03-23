@@ -13,41 +13,35 @@ $(document).ready(function() {
     window.location = "https://droppio.org/profile";
   });
 
-  //$('#pickadate').pickadate();
-  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: true,
-    min: [1901,1,1],
-    max: true,
-    Year: 2002,
-    selectYears: 1000,
-    labelMonthNext: 'Proximo Mes',
-    labelMonthPrev: 'Mes Anterior',
-    labelMonthSelect: 'Seleccione Mes',
-    labelYearSelect: 'Seleccione Año',
-    monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+// Pickers - - - - - - - - - - - - -
+// Date Picker
+  $('.datepicker').datepicker({
+    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-    weekdaysLetter: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-    today: false,
+    weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    maxYear: 2002,
+    setDefaultYear: true,
+    defaultYear: 1990,
+    yearRange: 80,
     clear: 'Borrar',
-    close: 'Cerrar'
+    done: 'OK',
   });
 
-  $('.timepicker').pickatime({
-    default: false, // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: true, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Borrar', // text for clear-button
-    canceltext: 'Cancelar', // Text for cancel-button
-    autoclose: true, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function(){} //Function for after opening timepicker
+// Timer Picker
+  $('.timepicker').timepicker({
+    defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
+    autoClose: true,
+    twelvehour: false, // Use AM/PM or 24-hour format
+    done: 'OK', // text for done-button
+    cancel: 'Cancelar', // Text for cancel-button
   });
-  $('select').material_select();
-  // Success Modal
+  $('select').formSelect();
+
+
+// Modals - - - - - - - - - - - - - - - - - -
+// Share
   $('.spread').click(function(e) {
 
     swal('Gracias!',
@@ -55,6 +49,7 @@ $(document).ready(function() {
       'success');
 
   });
+// Donate
   $('.donate').click(function(e) {
 
     swal({
