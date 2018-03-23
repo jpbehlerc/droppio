@@ -13,33 +13,69 @@ $(document).ready(function() {
       this.birthDate = false
   };
 
+  function getCookie(name) {
+    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return r ? r[1] : false;
+  }
+
   var info = new Settings();
 
-  //Init respective DBs
-  var campaigns = new PouchDB("campaigns_userID", {
-    auto_compaction: false,
-    cache: false,
-    heartbeat: true
+  $.post("/", {
+
+    _xsrf: getCookie('_xsrf'),
+    type: "creds"
+
+  }).done(function(data) {
+
+    data = JSON.parse(data);
+
+    respType = data['type'];
+
+    if (respType == 'creds') {
+
+      dbUser = data['dbUser'];
+      dbPass = data['dbPass'];
+
+      //Init respective DBs
+      var campaigns = new PouchDB("campaigns", {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
+      var remote_campaigns = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/campaigns');
+
+      var settings = new PouchDB("settings" + dbUser, {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
+
+      var remote_settings = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/settings' + dbUser);
+
+      var stats = new PouchDB("stats" + dbUser, {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
+
+      var remote_stats = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/stats' + dbUser);
+
+    }
+
   });
 
-  var settings = new PouchDB("settings_userID", {
-    auto_compaction: false,
-    cache: false,
-    heartbeat: true
-  });
-
-  var remote_campaigns = new PouchDB('https://droppio.org:6489/campaigns');
-  var remote_settings = new PouchDB('https://droppio.org:6489/settings_userID');
 
   // Page Selection
   $('#home').click(function(e) {
     e.preventDefault();
     window.location = "https://droppio.org/home";
   });
+
   $('#campaign').click(function(e) {
     e.preventDefault();
     window.location = "https://droppio.org/campaign";
   });
+
   $('#profile').click(function(e) {
     e.preventDefault();
     window.location = "https://droppio.org/profile";
@@ -246,7 +282,7 @@ $(document).ready(function() {
 
           settings.bloodType = doc.bloodType;
 
-          //Filter by expiry?
+          //Filter by what mofo?
           campaigns.replicate.from(remote_campaigns, {
 
             live: true,
@@ -272,25 +308,27 @@ $(document).ready(function() {
                 "$elemMatch": {
                   "$eq": settings.bloodType
                 }
+              },
+              "createdAt": {
+                "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf();
               }
-
             }
 
           }).on('change', function(docs) {
 
+              //Calculate distance using Haversine formula, some yoda shit right here ->
               var distance = function(src, dst) {
 
                 var R = 6371e3; // metres
-                var φ1 = src.lat.toRadians();
-                var φ2 = dst.lat.toRadians();
-                var Δφ = (dst.lat - src.lat).toRadians();
-                var Δλ = (dst.lon - src.lon).toRadians();
+                var radSrc = src.lat.toRadians();
+                var radDst = dst.lat.toRadians();
+                var deltaLat = (dst.lat - src.lat).toRadians();
+                var deltaLon = (dst.lon - src.lon).toRadians();
 
-                var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                var a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) + Math.cos(radSrc) * Math.cos(radDst) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
                 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-                return (R * c);
-
+                return R * c;
 
               }
 
@@ -322,6 +360,30 @@ $(document).ready(function() {
 
 });
 
+//Sync settings only then start campaign filtration
+stats.sync(remote_stats, {
 
+  live: true,
+  retry: true,
+  back_off_function: function(delay) {
+
+    if (delay == 0) {
+
+      return 1000;
+
+    } else if (delay >= 1000 && delay < 1800000) {
+
+      return delay * 1.5;
+
+    } else if (delay >= 1800000) {
+
+      return delay * 1.1;
+
+    }
+
+  }
+}).on('error', function(err) {
+  //See you in afterlife
+});
 
 });

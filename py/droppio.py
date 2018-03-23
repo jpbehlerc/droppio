@@ -3,7 +3,8 @@
 import tornado.web
 import tornado.auth
 from tornado.auth import AuthError
-from tornado.web import HTTPError,MissingArgumentError
+from tornado.web import HTTPError, MissingArgumentError, authenticated
+from tornado.gen import coroutine
 from tornado.httpserver import HTTPServer
 from tornado.httpclient import AsyncHTTPClient,HTTPRequest,HTTPError
 from tornado.escape import xhtml_escape
@@ -16,6 +17,9 @@ from os import urandom
 from aiocouchdb.errors import HttpErrorException
 from collections import defaultdict,deque
 from requests.exceptions import Timeout,ConnectionError
+from hashlib import sha224
+from argon2 import PasswordHasher
+from argon2.exceptions import VerificationError
 import syslog
 import logging
 import argparse
@@ -73,48 +77,14 @@ class heart(tornado.web.RequestHandler):
 
         self.write("beat")
 
-class home(tornado.web.RequestHandler):
+
+class landing(tornado.web.RequestHandler):
 
     def initialize(self):
 
         self.gatling_url = "https://api.mailgun.net/v3/gatling.nabla.tech/messages"
         self.gatling_key = ("api", "key-ab4d563107f353b01e48937a9e6f934a")
         self.send = requests.post
-
-
-    def write_error(self,*args,**kw):
-
-        if len(args) == 1:
-
-            self.write("HTTP Error {}".format(args[0]))
-
-        elif len(args) > 1:
-
-            logging.error("HTTP Error {0}: {1}".format(args[0],args[1]))
-
-        elif hasattr(kw,'exc_info'):
-
-            logging.error("HTTP Error: {0}".format(kw['exc_info'][1]))
-
-        else:
-
-            logging.error("HTTP Error: {0}".format(args[0]))
-
-
-    def get(self):
-
-        try:
-
-            self.xsrf_token
-
-        except ValueError:
-            pass
-
-        self.render("home.html")
-
-
-class landing(tornado.web.RequestHandler):
-
 
     def write_error(self,*args,**kw):
 
@@ -145,6 +115,170 @@ class landing(tornado.web.RequestHandler):
             pass
 
         self.render("website.html")
+
+
+class register(tornado.web.RequestHandler):
+
+    def get(self):
+
+        self.render("signup.html")
+
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'fastSignup' or requestType == 'login'  else False
+
+        captcha = self.get_argument('g-recaptcha-response',default=False)
+        captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
+
+        email = self.get_argument('uid',default=False)
+
+        if requestType=='login' and captcha:
+
+            pwd = self.get_argument('pass',default=False)
+            ip = self.request.headers.get("X-Real-Ip")
+
+            if email and pwd:
+
+                try:
+
+                    #Authenticate to couchDB service
+                    server = aiocouchdb.Server(url_or_resource='http://droppioCouchdb:5984/')
+                    admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
+
+                    sha = sha224()
+
+                    token = await loop.run_in_executor(None,sha.update,email.encode())
+
+                    settingsDB = await server.db('settings%s'%token)
+                    doc = await settingsDB["password"].get()
+                    pwd = doc["hash"]
+
+                    ph = PasswordHasher()
+
+                    await loop.run_in_executor(None,ph.verify,doc['hash'],pwd)
+
+                    dbUser = "droppio%s"%token
+                    dbPass = "%s%s"%(token,self.settings['salt'])
+
+                except VerificationError:
+
+                    logging.error("Mmm.. failed login attempt from ip %s and user %s"%(ip,email))
+                    self.write(json_encode({'type':'error'}))
+
+                except HttpErrorException as e:
+
+                    logging.error("Mmm error while trying to get settings DBs: %s"%str(e))
+                    self.write(json_encode({'type':'error'}))
+
+                else:
+
+                    self.set_secure_cookie("droppioSession", "%s:%s"%(dbUser,dbPass),expires_days=365)
+                    self.write(json_encode({'type':'success'}))
+
+
+        elif requestType=='fastSignup' and captcha:
+
+            username = self.get_argument('name',default=False)
+            bloodType = self.get_argument('bloodType',default=False)
+
+            if username and bloodType and email:
+
+                sha = sha224()
+
+                token = sha.update(email.encode()).hex_digest()
+
+                dbUser = 'droppio%s'%token
+                dbPass = "%s%s"%(token,self.settings['salt'])
+
+                settingsName = 'settings%s'%token
+                statsName = 'stats%s'%token
+                campaignsName = 'campaigns'
+
+                try:
+
+                    #Authenticate to couchDB service
+                    server = aiocouchdb.Server(url_or_resource='http://droppioCouchdb:5984/')
+                    admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
+
+                    #Create new couchDB user
+                    usersDB = await server.db('_users')
+                    doc = await usersDB.doc(docid="org.couchdb.user:%s"%dbUser)
+                    await doc.update({'name':dbUser,'password':dbPass,'type':'user','roles':[]}, auth=admin)
+
+                    #Create and update security on settingsDB
+                    settingsDB = await server.db(settingsName)
+                    await settingsDB.create(auth=admin)
+                    await settingsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]})
+
+                    #Update security on campaignsDB
+                    campaignsDB = await server.db(campaignsName)
+                    await campaignsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]},merge=True)
+
+                    #Create and update security on user's statsDB
+                    statsDB = await server.db(statsName)
+                    await statsDB.create(auth=admin)
+                    await statsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]})
+
+
+                except HttpErrorException as e:
+
+                        logging.error("Mmm error while trying to set user's DBs: %s"%str(e))
+                        self.write(json_encode({'type':'error'}))
+
+                else:
+
+                    self.set_secure_cookie("droppioSession", "%s:%s"%(dbUser,dbPass),expires_days=365)
+                    self.write(json_encode({'type':'success'}))
+
+
+class home(tornado.web.RequestHandler):
+
+    def get_current_user(self):
+
+        self.cookie = self.get_secure_cookie('droppioSession')
+        return self.cookie
+
+    def write_error(self,*args,**kw):
+
+        if len(args) == 1:
+
+            self.write("HTTP Error {}".format(args[0]))
+
+        elif len(args) > 1:
+
+            logging.error("HTTP Error {0}: {1}".format(args[0],args[1]))
+
+        elif hasattr(kw,'exc_info'):
+
+            logging.error("HTTP Error: {0}".format(kw['exc_info'][1]))
+
+        else:
+
+            logging.error("HTTP Error: {0}".format(args[0]))
+
+
+    @authenticated
+    def get(self):
+
+        if not self.current_user:
+
+            self.redirect("/register")
+            return
+
+        self.render("home.html")
+
+
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
+        dbUser,dbPass = tornado.escape.xhtml_escape(self.current_user).split(":")
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass}))
+
 
 class profile(tornado.web.RequestHandler):
 
@@ -187,6 +321,7 @@ if __name__ == '__main__':
         "default_handler_class": errorHandler,
         "couchdb_credentials":['jpbehler','33579313couchdb'],
         "login_url": "/"
+        "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
 
         handlers = [
