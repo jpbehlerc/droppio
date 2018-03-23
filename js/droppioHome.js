@@ -307,8 +307,10 @@ $(document).ready(function() {
                 "$elemMatch": {
                   "$eq": settings.bloodType
                 }
+              },
+              "createdAt": {
+                "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf();
               }
-
             }
 
           }).on('change', function(docs) {
