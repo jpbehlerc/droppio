@@ -123,7 +123,7 @@ class register(tornado.web.RequestHandler):
 
         self.render("signup.html")
 
-    def post(self):
+    async def post(self):
 
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'fastSignup' or requestType == 'login'  else False
