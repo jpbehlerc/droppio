@@ -5,6 +5,8 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
+  $('select').material_select();
+
   $("#start").submit(function(e) {
 
     name = $("#name").val();
