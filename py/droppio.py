@@ -344,6 +344,7 @@ if __name__ == '__main__':
 
         handlers.append((r"/home", home))
         handlers.append((r"/", landing))
+        handlers.append((r"/register", register))
         handlers.append((r"/campaign", campaign))
         handlers.append((r"/profile", profile))
         handlers.append((r"/heart", heart))
