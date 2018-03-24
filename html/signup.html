@@ -76,15 +76,15 @@
             <label for="name">Nombre</label>
           </div>
           <div class="input-field col s6 m6 l6">
-            <input type="text" id="surname" class="validate" required>
-            <label for="surname">Apellido</label>
+            <input type="text" id="lastname" class="validate" required>
+            <label for="lastname">Apellido</label>
           </div>
         </div>
         <!-- Blood Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-tint"></i>
-            <select>
+            <select id="bloodType">
                 <option value="" disabled selected>Tipo de sangre</option>
                 <option value="1">A+</option>
                 <option value="2">B+</option>
@@ -97,7 +97,7 @@
               </select>
           </div>
         </div>
-        <!-- DNI Input -->
+        <!-- DNI Input
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-id-card"></i>
@@ -105,6 +105,7 @@
             <label for="dni">DNI o Numero Pasaporte</label>
           </div>
         </div>
+        -->
         <!-- Mail Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
@@ -113,7 +114,7 @@
             <label for="email">Email</label>
           </div>
         </div>
-        <!-- Phone Input -->
+        <!-- Phone Input
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-phone"></i>
@@ -121,9 +122,10 @@
             <label for="phone">Telefono</label>
           </div>
         </div>
+        -->
         <!-- Sign up button -->
         <div class="row center">
-          <button class="btn-large waves-effect waves-light center" type="submit" name="action">Comenzar</i>
+          <button class="btn-large waves-effect waves-light center" type="submit" name="action" id="start">Comenzar</i>
           </button>
         </div>
       </form>

@@ -131,7 +131,7 @@ class register(tornado.web.RequestHandler):
         captcha = self.get_argument('g-recaptcha-response',default=False)
         captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
-        email = self.get_argument('uid',default=False)
+        email = self.get_argument('email',default=False)
 
         if requestType=='login' and captcha:
 
@@ -179,7 +179,8 @@ class register(tornado.web.RequestHandler):
 
         elif requestType=='fastSignup' and captcha:
 
-            username = self.get_argument('name',default=False)
+            name = self.get_argument('name',default=False)
+            lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
 
             if username and bloodType and email:
