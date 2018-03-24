@@ -320,7 +320,7 @@ if __name__ == '__main__':
         "autoescape": "xhtml_escape",
         "default_handler_class": errorHandler,
         "couchdb_credentials":['jpbehler','33579313couchdb'],
-        "login_url": "/",
+        "login_url": "/register",
         "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
 
