@@ -24,7 +24,7 @@ $(document).ready(function() {
       this.dni = false,
       this.email = false,
       this.weight = false,
-      this.birthday = false,
+      this.birthdate = false,
       this.password = false,
       this.toJSON = function() {
 
