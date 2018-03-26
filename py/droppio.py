@@ -188,7 +188,7 @@ class register(tornado.web.RequestHandler):
                 sha = sha224()
 
                 token = sha.update(email.encode())
-                print(token)
+
                 dbUser = 'droppio%s'%token
                 dbPass = "%s%s"%(token,self.settings['salt'])
 
@@ -196,6 +196,9 @@ class register(tornado.web.RequestHandler):
                 statsName = 'stats%s'%token
                 campaignsName = 'campaigns'
 
+                print(dbUser,dbPass)
+                print(settingsName,statsName,campaignsName)
+                
                 try:
 
                     #Authenticate to couchDB service
