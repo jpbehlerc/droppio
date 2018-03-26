@@ -9,12 +9,12 @@ $(document).ready(function() {
 
   $("#start").submit(function(e) {
 
-
+    alert('here');
     name = $("#name").val();
     lastname = $("#lastname").val();
     bloodType = $("#bloodType").val();
     email = $("#email").val();
-    alert(email);
+
 
     $.post("/register", {
 
