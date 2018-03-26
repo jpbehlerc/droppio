@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     $.post("/register", {
 
-      _xsrf: getCookie('_xsrf'),
+      _xsrf: xsrf_token,
       type: "fastSignup",
       name: name,
       lastname: lastname,
