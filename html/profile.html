@@ -72,11 +72,11 @@
         <div class="row">
           <div class="input-field col s6 m6 l6">
             <i class="fas prefix fa-user-circle"></i>
-            <input type="text" id="name" class="validate" required>
+            <input type="text" id="name" class="validate" tabindex="1" required>
             <label for="name">Nombre</label>
           </div>
           <div class="input-field col s6 m6 l6">
-            <input type="text" id="surname" class="validate" required>
+            <input type="text" id="lastname" tabindex="2" class="validate" required>
             <label for="surname">Apellido</label>
           </div>
         </div>
@@ -84,7 +84,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-tint"></i>
-            <select required>
+            <select required id="bloodType" tabindex="3">
               <option value="" disabled selected>Seleccione tipo de sangre</option>
               <option value="1">A+</option>
               <option value="2">B+</option>
@@ -101,7 +101,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-id-card"></i>
-            <input type="number" id="dni" class="validate" required maxlength="20">
+            <input type="number" tabindex="4" id="dni" class="validate" required maxlength="20">
             <label for="dni">DNI o Numero Pasaporte</label>
           </div>
         </div>
@@ -109,7 +109,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-envelope"></i>
-            <input type="email" id="email" class="validate" required maxlength="50">
+            <input type="email" tabindex="5" id="email" class="validate" required maxlength="50">
             <label for="email">Email</label>
           </div>
         </div>
@@ -118,14 +118,14 @@
           <div class="input-field col s12 m12 l12">
               <i class="fas prefix fa-birthday-cake"></i>
               <label for="date">Fecha de Nacimiento</label>
-              <input type="text" id="date" class="datepicker" required>
+              <input type="text" id="birthdate" tabindex="6" class="datepicker" required>
           </div>
         </div>
         <!-- weight Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-weight"></i>
-            <input type="number" class="validate" required maxlength="3">
+            <input type="number" tabindex="7" class="validate" required maxlength="3">
             <label for="Peso">Peso</label>
           </div>
         </div>
@@ -133,7 +133,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-key"></i>
-            <input type="password" class="validate">
+            <input type="password" tabindex="8" class="validate">
             <label for="password">Contraseña</label>
           </div>
         </div>
@@ -220,6 +220,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
 <script src="../js/pouchdb.min.js"></script>
-<script type="text/javascript" src="../js/droppioProfile.js"></script>
+<script type="text/javascript" src="../js/profile/droppioProfile.js"></script>
 
 </html>
