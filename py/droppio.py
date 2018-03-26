@@ -120,10 +120,11 @@ class landing(tornado.web.RequestHandler):
 class register(tornado.web.RequestHandler):
 
     def get(self):
-
+        
+        self.xsrf_token
         self.render("signup.html")
 
-    def post(self):
+    async def post(self):
 
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'fastSignup' or requestType == 'login'  else False
@@ -131,7 +132,7 @@ class register(tornado.web.RequestHandler):
         captcha = self.get_argument('g-recaptcha-response',default=False)
         captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
-        email = self.get_argument('uid',default=False)
+        email = self.get_argument('email',default=False)
 
         if requestType=='login' and captcha:
 
@@ -179,7 +180,8 @@ class register(tornado.web.RequestHandler):
 
         elif requestType=='fastSignup' and captcha:
 
-            username = self.get_argument('name',default=False)
+            name = self.get_argument('name',default=False)
+            lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
 
             if username and bloodType and email:
@@ -320,7 +322,7 @@ if __name__ == '__main__':
         "autoescape": "xhtml_escape",
         "default_handler_class": errorHandler,
         "couchdb_credentials":['jpbehler','33579313couchdb'],
-        "login_url": "/"
+        "login_url": "/register",
         "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
 
@@ -344,6 +346,7 @@ if __name__ == '__main__':
 
         handlers.append((r"/home", home))
         handlers.append((r"/", landing))
+        handlers.append((r"/register", register))
         handlers.append((r"/campaign", campaign))
         handlers.append((r"/profile", profile))
         handlers.append((r"/heart", heart))

@@ -8,6 +8,9 @@
     .input-field label {
      color: #fff !important;
     }
+    .input-field svg.active {
+     color: #21ebad !important;
+    }
     /* label focus color */
     .input-field input[type=text]:focus + label {
      color: #fff !important;
@@ -22,18 +25,19 @@
     }
 
     .separator {
-    width: 100% !important;
+    width: 92% !important;
     font-size: 1px;
     color: rgba(0, 0, 0, 0);
     line-height: 1px;
-    background-color: rgba(0, 0, 0, 0.19);
+    background-color: rgba(33,235,173,0.85);
     margin: auto !important;
     }
     .titleTransparent {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.95);
     margin-top:4em;
     margin-bottom:1em;
     }
+
     .droppioIcon {
       font-size: 2rem;
       margin-left: 0.5rem;
@@ -41,10 +45,17 @@
 
 /* Buttons */
 
-    .btn, .btn-large, .btn-small {
-      background-color: #ffab40 !important;
+    .droppioBtn {
+      background-color: #45ceee !important;
+      height: 40px;
+      width: 150px;
     }
 
+    .droppioBtnFat {
+      background-color: #45ceee !important;
+      height: 55px;
+      width: 150px;
+    }
 /* Icons */
 
     .navbarIcon{
@@ -56,11 +67,10 @@
 
     .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
       margin-right:0px !important;
-      color: #ffab40 !important;
     }
 
     .card-action {
-        padding: 16px 24px 35px !important;
+        padding: 12px 24px 35px !important;
     }
 
 
@@ -105,7 +115,11 @@
       background-color: #c91249 !important;
     }
 
+    .droppioCardButton{
 
+      font-size:1.25em;
+      color: #45ceee !important;
+    }
 /* content section */
 
 
@@ -121,7 +135,7 @@
     	width: 100wh;
     	height: 90vh;
     	color: #fff;
-    	background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
+    	background: linear-gradient(-45deg, #eb215f, #c81349, #990e38, #820c2f);
     	background-size: 2000px 2000px;
     	-webkit-animation: Gradient 15s ease infinite;
     	-moz-animation: Gradient 15s ease infinite;

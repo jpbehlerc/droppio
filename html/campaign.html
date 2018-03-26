@@ -65,8 +65,8 @@
       <form class="input-field col s12 m12 l6" action="#" method="post">
         <!-- Button Selection -->
         <div class=" col s12 m12 l12 center">
-          <a class="waves-effect waves-light btn"><i class="far fa-hand-point-up navbarIcon"></i>&nbsp;Para mí</a>
-          <a class="waves-effect waves-light btn">Para otro&nbsp;<i class="far fa-hand-point-right navbarIcon"></i></a>
+          <a class="waves-effect waves-light btn droppioBtn"><i class="far fa-hand-point-up navbarIcon"></i>&nbsp;Para mí</a>
+          <a class="waves-effect waves-light btn droppioBtn">Para otro&nbsp;<i class="far fa-hand-point-right navbarIcon"></i></a>
         </div>
         <!-- Name Input -->
         <div class="row">
@@ -76,15 +76,17 @@
             <label for="name">Nombre</label>
           </div>
           <div class="input-field col s6 m6 l6">
-            <input type="text" id="surname" class="validate" required>
-            <label for="surname">Apellido</label>
+
+            <!-- Changed surname for lastname, u english prick -->
+            <input type="text" id="lastname" class="validate" required>
+            <label for="lastname">Apellido</label>
           </div>
         </div>
         <!-- Tipo de SangreInput -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-tint"></i>
-            <select>
+            <select id="bloodType">
             <option value="" disabled selected>Tipo de sangre</option>
             <option value="1">A+</option>
             <option value="2">B+</option>
@@ -118,11 +120,11 @@
         <div class="row">
           <div class="input-field col s6 m6 l6">
             <i class="fas prefix fa-clock"></i>
-            <input type="text" id="hospitalHours" class="timepicker" required>
+            <input type="text" id="hospitalHoursStart" class="timepicker" required>
             <label for="hospitalHours">Desde</label>
           </div>
           <div class="input-field col s6 m6 l6">
-            <input type="text" id="hospitalHours" class="timepicker" required>
+            <input type="text" id="hospitalHoursEnd" class="timepicker" required>
             <label for="hospitalHours">Hasta</label>
           </div>
         </div>
@@ -139,7 +141,7 @@
         </div>
         <!-- send button -->
         <div class="row center">
-          <button class="btn-large waves-effect waves-light center" type="submit" name="action" id="submitCampaign"> Subir&nbsp; <i class="fas fa-paper-plane"></i>
+          <button class="btn-large waves-effect waves-light center droppioBtnFat" type="submit" name="action" id="submitCampaign"> Subir&nbsp; <i class="fas fa-paper-plane"></i>
           </button>
         </div>
       </form>
