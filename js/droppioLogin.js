@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   $('select').material_select();
 
-  $("#submit").submit(function(e) {
+  $("#signup").submit(function(e) {
 
     e.preventDefault();
 
