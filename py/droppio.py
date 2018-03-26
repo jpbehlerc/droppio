@@ -132,7 +132,8 @@ class register(tornado.web.RequestHandler):
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
         email = self.get_argument('email',default=False)
-
+        print(email)
+        
         if requestType=='login':
 
             pwd = self.get_argument('pass',default=False)
@@ -182,7 +183,7 @@ class register(tornado.web.RequestHandler):
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
-            print(bloodType)
+
             if name and lastname and bloodType and email:
 
                 sha = sha224()
