@@ -121,20 +121,20 @@ class register(tornado.web.RequestHandler):
 
     def get(self):
         
-        self.xsrf_token
         self.render("signup.html")
 
     async def post(self):
 
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'fastSignup' or requestType == 'login'  else False
-
-        captcha = self.get_argument('g-recaptcha-response',default=False)
-        captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
+        print(self.xsrf_token)
+        print(self.get_argument('_xsrf',default=False))
+        #captcha = self.get_argument('g-recaptcha-response',default=False)
+        #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
         email = self.get_argument('email',default=False)
 
-        if requestType=='login' and captcha:
+        if requestType=='login':
 
             pwd = self.get_argument('pass',default=False)
             ip = self.request.headers.get("X-Real-Ip")
@@ -178,7 +178,7 @@ class register(tornado.web.RequestHandler):
                     self.write(json_encode({'type':'success'}))
 
 
-        elif requestType=='fastSignup' and captcha:
+        elif requestType=='fastSignup':
 
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)

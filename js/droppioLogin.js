@@ -9,12 +9,14 @@ $(document).ready(function() {
 
   $("#start").submit(function(e) {
 
+    e.preventDefault();
+
     name = $("#name").val();
     lastname = $("#lastname").val();
     bloodType = $("#bloodType").val();
     email = $("#email").val();
 
-    $.post("/", {
+    $.post("/register", {
 
       _xsrf: getCookie('_xsrf'),
       type: "fastSignup",

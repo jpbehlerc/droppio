@@ -42,6 +42,7 @@ $(document).ready(function() {
         cache: false,
         heartbeat: true
       });
+
       var remote_campaigns = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/campaigns');
 
       var settings = new PouchDB("settings" + dbUser, {
@@ -256,6 +257,7 @@ $(document).ready(function() {
       }
 
     }
+
   }).on('paused', function(err) {
 
       settings.get('name').then(function(doc) {
@@ -331,6 +333,11 @@ $(document).ready(function() {
                 return R * c;
 
               }
+
+              si vas a dividir
+              una hoja en dos
+              cuantas opciones tenes ?
+                pista : si empezas por la segunda linea, es pq ya asumiste la primera como verdadera
 
               for (i = 0, n = docs.length; i < n; i++) {
 
