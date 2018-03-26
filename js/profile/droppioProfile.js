@@ -10,7 +10,6 @@ $(document).ready(function() {
     weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
     maxYear: 2002,
     setDefaultYear: true,
-    defaultYear: 1990,
     yearRange: 80,
     clear: 'Borrar',
     done: 'OK',
