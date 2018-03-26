@@ -130,10 +130,6 @@ class register(tornado.web.RequestHandler):
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
         email = self.get_argument('email',default=False)
-<<<<<<< HEAD
-        print(email)
-=======
->>>>>>> 4dde3747a9596123ec76bd9395c7a5838a75034f
 
         if requestType=='login':
 
