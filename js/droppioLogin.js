@@ -7,15 +7,15 @@ $(document).ready(function() {
 
   $('select').material_select();
 
-  $("#start").submit(function(e) {
+  $("#submit").submit(function(e) {
 
-    alert('here');
+
     name = $("#name").val();
     lastname = $("#lastname").val();
     bloodType = $("#bloodType").val();
     email = $("#email").val();
 
-
+    alert(bloodType);
     $.post("/register", {
 
       _xsrf: xsrf_token,
