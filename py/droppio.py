@@ -130,7 +130,10 @@ class register(tornado.web.RequestHandler):
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
         email = self.get_argument('email',default=False)
+<<<<<<< HEAD
         print(email)
+=======
+>>>>>>> 4dde3747a9596123ec76bd9395c7a5838a75034f
 
         if requestType=='login':
 
@@ -186,7 +189,7 @@ class register(tornado.web.RequestHandler):
 
                 sha = sha224()
 
-                token = sha.update(email.encode()).hex_digest()
+                token = sha.update(email.encode())
 
                 dbUser = 'droppio%s'%token
                 dbPass = "%s%s"%(token,self.settings['salt'])
@@ -195,10 +198,13 @@ class register(tornado.web.RequestHandler):
                 statsName = 'stats%s'%token
                 campaignsName = 'campaigns'
 
+                print(dbUser,dbPass)
+                print(settingsName,statsName,campaignsName)
+
                 try:
 
                     #Authenticate to couchDB service
-                    server = aiocouchdb.Server(url_or_resource='http://droppioCouchdb:5984/')
+                    server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
                     admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
 
                     #Create new couchDB user

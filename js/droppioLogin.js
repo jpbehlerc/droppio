@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   $('select').material_select();
 
-  $("#start").submit(function(e) {
+  $("#signup").submit(function(e) {
 
     e.preventDefault();
 
@@ -15,6 +15,8 @@ $(document).ready(function() {
     lastname = $("#lastname").val();
     bloodType = $("#bloodType").val();
     email = $("#email").val();
+
+    alert(bloodType);
 
     $.post("/register", {
 
