@@ -120,8 +120,7 @@ class landing(tornado.web.RequestHandler):
 class register(tornado.web.RequestHandler):
 
     def get(self):
-
-        self.xsrf_token()
+        
         self.render("signup.html")
 
     async def post(self):
