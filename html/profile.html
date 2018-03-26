@@ -72,11 +72,11 @@
         <div class="row">
           <div class="input-field col s6 m6 l6">
             <i class="fas prefix fa-user-circle"></i>
-            <input type="text" id="name" class="validate" tabindex="1" required>
+            <input type="text" id="name" class="validate" tabindex="1" required maxlength="30">
             <label for="name">Nombre</label>
           </div>
           <div class="input-field col s6 m6 l6">
-            <input type="text" id="lastname" tabindex="2" class="validate" required>
+            <input type="text" id="lastname" tabindex="2" class="validate" required maxlength="30">
             <label for="surname">Apellido</label>
           </div>
         </div>
@@ -118,14 +118,14 @@
           <div class="input-field col s12 m12 l12">
               <i class="fas prefix fa-birthday-cake"></i>
               <label for="date">Fecha de Nacimiento</label>
-              <input type="text" id="birthdate" tabindex="6" class="datepicker" required>
+              <input type="text" id="birthdate" tabindex="6" class="datepicker" required maxlength="50">
           </div>
         </div>
         <!-- weight Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-weight"></i>
-            <input type="number" tabindex="7" class="validate" required maxlength="3">
+            <input type="number" tabindex="7" id="weight" class="validate" required maxlength="3">
             <label for="Peso">Peso</label>
           </div>
         </div>
@@ -133,7 +133,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-key"></i>
-            <input type="password" tabindex="8" class="validate">
+            <input type="password" tabindex="8" id="password" class="validate" maxlength="40">
             <label for="password">Contraseña</label>
           </div>
         </div>
