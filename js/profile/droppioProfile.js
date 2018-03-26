@@ -9,7 +9,6 @@ $(document).ready(function() {
     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
     weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
     maxYear: 2002,
-    setDefaultYear: true,
     yearRange: 80,
     clear: 'Borrar',
     done: 'OK',
