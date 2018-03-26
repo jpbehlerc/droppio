@@ -106,8 +106,8 @@ $(document).ready(function() {
       info.birthDate = $("#birthDate").val();
       info.weight = $("#weight").val();
       info.password = $("#password").val();
-
-      for (var prop in info) {
+      /*
+      for (var doc in info.toJSON()) {
 
         settingsDB.get(prop).then(function(doc) {
 
@@ -119,6 +119,7 @@ $(document).ready(function() {
 
         });
       }
+      */
     });
 
 
