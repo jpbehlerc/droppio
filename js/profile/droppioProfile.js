@@ -41,6 +41,8 @@ $(document).ready(function() {
 
   var info = new Settings();
 
+  $("#saveSettings").submit(function(e) {
+
   info.name = $("#name").val();
   info.lastname = $("#lastname").val();
   info.bloodType = $("#bloodType").val();
@@ -50,7 +52,8 @@ $(document).ready(function() {
   info.weight = $("#weight").val();
   info.password = $("#password").val();
 
-
+  console.log(info.toJSON());
+  });
   /*
   function getCookie(name) {
     var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
