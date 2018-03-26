@@ -120,15 +120,14 @@ class landing(tornado.web.RequestHandler):
 class register(tornado.web.RequestHandler):
 
     def get(self):
-        
+
         self.render("signup.html")
 
     async def post(self):
 
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'fastSignup' or requestType == 'login'  else False
-        print(self.xsrf_token)
-        print(self.get_argument('_xsrf',default=False))
+
         #captcha = self.get_argument('g-recaptcha-response',default=False)
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
@@ -183,8 +182,8 @@ class register(tornado.web.RequestHandler):
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
-
-            if username and bloodType and email:
+            
+            if name and lastname and bloodType and email:
 
                 sha = sha224()
 
