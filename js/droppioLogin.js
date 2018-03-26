@@ -16,7 +16,7 @@ $(document).ready(function() {
     bloodType = $("#bloodType").val();
     email = $("#email").val();
 
-    $.post("/", {
+    $.post("/register", {
 
       _xsrf: getCookie('_xsrf'),
       type: "fastSignup",
