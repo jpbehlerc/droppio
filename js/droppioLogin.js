@@ -15,7 +15,7 @@ $(document).ready(function() {
     lastname = $("#lastname").val();
     bloodType = $("#bloodType").val();
     email = $("#email").val();
-
+    alert(email)
     $.post("/register", {
 
       _xsrf: xsrf_token,
