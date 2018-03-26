@@ -131,7 +131,7 @@ class register(tornado.web.RequestHandler):
 
         email = self.get_argument('email',default=False)
         print(email)
-        
+
         if requestType=='login':
 
             pwd = self.get_argument('pass',default=False)
