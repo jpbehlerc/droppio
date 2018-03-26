@@ -18,8 +18,6 @@ from aiocouchdb.errors import HttpErrorException
 from collections import defaultdict,deque
 from requests.exceptions import Timeout,ConnectionError
 from hashlib import sha224
-from argon2 import PasswordHasher
-from argon2.exceptions import VerificationError
 import syslog
 import logging
 import argparse
@@ -182,7 +180,7 @@ class register(tornado.web.RequestHandler):
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
-            
+
             if name and lastname and bloodType and email:
 
                 sha = sha224()
