@@ -132,8 +132,7 @@ class register(tornado.web.RequestHandler):
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
 
         email = self.get_argument('email',default=False)
-        print(email)
-        
+
         if requestType=='login':
 
             pwd = self.get_argument('pass',default=False)
@@ -188,8 +187,8 @@ class register(tornado.web.RequestHandler):
 
                 sha = sha224()
 
-                token = sha.update(email.encode()).hex_digest()
-
+                token = sha.update(email.encode())
+                print(token)
                 dbUser = 'droppio%s'%token
                 dbPass = "%s%s"%(token,self.settings['salt'])
 
