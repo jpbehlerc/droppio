@@ -9,6 +9,7 @@ $(document).ready(function() {
 
   $("#submit").submit(function(e) {
 
+    e.preventDefault();
 
     name = $("#name").val();
     lastname = $("#lastname").val();
@@ -16,6 +17,7 @@ $(document).ready(function() {
     email = $("#email").val();
 
     alert(bloodType);
+
     $.post("/register", {
 
       _xsrf: xsrf_token,
