@@ -182,7 +182,7 @@ class register(tornado.web.RequestHandler):
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
-            
+            print(bloodType)
             if name and lastname and bloodType and email:
 
                 sha = sha224()
