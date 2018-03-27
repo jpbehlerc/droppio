@@ -185,6 +185,7 @@ class register(tornado.web.RequestHandler):
 
             if name and lastname and bloodType and email:
 
+                print(email.decode())
                 token = sha224(email.decode()).hexdigest()
 
                 dbUser = 'droppio%s'%token
