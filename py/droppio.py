@@ -201,7 +201,7 @@ class register(tornado.web.RequestHandler):
 
                     #Authenticate to couchDB service
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
-                    admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
+                    admin = await server.session.open('martin', 'Fant@buloso')
 
                     #Create new couchDB user
                     usersDB = await server.db('_users')
