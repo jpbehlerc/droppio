@@ -23,7 +23,7 @@ $(document).ready(function() {
 
             if (this[prop].length) {
 
-              if (prop in this._fields[this.type]) {
+              if (this._fields[this.type].indexOf(prop) > 0) {
                 console.log('fields property ' + prop);
 
                 this._jsonified.push({
