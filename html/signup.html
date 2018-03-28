@@ -61,7 +61,7 @@
   <div class="row">
     <div class="row center" style="margin-top:1em;">
       <div class="col  s12 m12 l6">
-        <h6 class="titleTransparent"style="font-size:1.5em;">Iniciar Sesión</h6>
+        <h6 class="titleTransparent"style="font-size:1.5em;">Ingresa rápidamente</h6>
         <div class="separator">.</div>
       </div>
     </div>
@@ -131,6 +131,34 @@
         </div>
       </form>
     </div>
+
+    <div class="row center" style="margin-top:2em;">
+      <div class="col  s12 m12 l6">
+        <h6 class="titleTransparent"style="font-size:1.5em;">Si tienes cuenta, inicia sesión</h6>
+        <div class="separator">.</div>
+      </div>
+    </div>
+
+    <form id="login" class="input-field col s12 m12 l6" action="/register" method="post">
+    {% module xsrf_form_html() %}
+
+    <div class="row">
+      <div class="input-field col s12 m12 l12">
+        <i class="fas prefix fa-envelope"></i>
+        <input type="email" id="email" class="validate" required>
+        <label for="email">Email</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12 m12 l12">
+        <i class="fas prefix fa-key"></i>
+        <input type="password" id="password" class="validate">
+        <label for="password">Contraseña</label>
+      </div>
+    </div>
+
+    </form>
 
 </body>
 

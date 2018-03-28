@@ -133,6 +133,9 @@ class register(tornado.web.RequestHandler):
 
         email = self.get_argument('email',default=False)
 
+        dbAdminUser = self.settings['db']['user']
+        dbAdminPass = self.settings['db']['pass']
+
         if requestType=='login':
 
             pwd = self.get_argument('pass',default=False)
@@ -143,14 +146,14 @@ class register(tornado.web.RequestHandler):
                 try:
 
                     #Authenticate to couchDB service
-                    server = aiocouchdb.Server(url_or_resource='http://droppioCouchdb:5984/')
-                    admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
+                    server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
+                    admin = await server.session.open(dbAdminUser, dbAdminPass)
 
                     sha = sha224()
 
-                    token = await loop.run_in_executor(None,sha.update,email.encode())
+                    token = await loop.run_in_executor(None,sha224,email.encode())
 
-                    settingsDB = await server.db('settings%s'%token)
+                    settingsDB = await server.db('settings%s'%token.hexdigest())
                     doc = await settingsDB["password"].get()
                     pwd = doc["hash"]
 
@@ -189,9 +192,6 @@ class register(tornado.web.RequestHandler):
 
                 dbUser = 'droppio%s'%token
                 dbPass = "%s%s"%(token,self.settings['salt'])
-
-                dbAdminUser = self.settings['db']['user']
-                dbAdminPass = self.settings['db']['pass']
 
                 settingsName = 'settings%s'%token
                 statsName = 'stats%s'%token

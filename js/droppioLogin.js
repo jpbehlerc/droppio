@@ -1,33 +1,61 @@
 $(document).ready(function() {
 
-  function getCookie(name) {
-    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-    return r ? r[1] : false;
+  function Signx() {
+
+    this._jsonified = [];
+    this._xsrf = false,
+      this._fields = {
+        'fastSignup': ['name', 'lastname', 'bloodType', 'email'],
+        'login': ['password', 'email']
+      };
+    this.bloodType = false,
+      this.name = false,
+      this.lastname = false,
+      this.email = false,
+      this.password = false,
+      this.type = false,
+
+      this.toJSON = function() {
+
+        if (this.type in this._fields) {
+
+          for (var prop in this) {
+
+            if (prop in fields[this.type]) {
+              if (this[prop].length) {
+
+                this._jsonified.push({
+                  '_id': prop,
+                  value: this[prop]
+                });
+              }
+            }
+          }
+        }
+
+        return this._jsonified;
+      }
   }
+
+  signx = new Signx();
 
   $('select').material_select();
 
-  $("#signup").submit(function(e) {
+  $("#signup,#login").submit(function(e) {
 
     e.preventDefault();
 
-    name = $("#name").val();
-    lastname = $("#lastname").val();
-    bloodType = $("#bloodType").val();
-    email = $("#email").val();
+    type = $(this).attr("id");
 
-    alert(bloodType);
-
-    $.post("/register", {
-
-      _xsrf: xsrf_token,
-      type: "fastSignup",
-      name: name,
-      lastname: lastname,
-      bloodType: bloodType,
-      email: email
-
-    }).done(function(data) {
+    signx.type = $(this).attr("id");
+    signx.name = $("#name").val();
+    signx.lastname = $("#name").val();
+    signx.bloodType = $("#bloodType").val();
+    signx.email = $("#email").val();
+    signx.password = $("#email").val();
+    console.log(signx);
+    /*
+    $.post("/register", signx).done(function(data) {
 
       data = JSON.parse(data);
       respType = data['type'];
@@ -40,5 +68,7 @@ $(document).ready(function() {
         //Oops something weird happened (show warning)
       }
     });
+    */
   });
+
 });
