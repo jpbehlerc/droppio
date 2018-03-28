@@ -55,7 +55,7 @@ $(document).ready(function() {
 
 
     data = signx.toJSON();
-
+    console.log(data);
     $.post("/register", data).done(function(resp) {
 
       resp = JSON.parse(resp);
