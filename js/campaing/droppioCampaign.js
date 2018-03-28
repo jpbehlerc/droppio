@@ -10,9 +10,10 @@ $(document).ready(function() {
       this.dni = false,
       this.hospital = false,
       this.hospitalHours = false,
+      this.hospitalLocation = false,
       this.duty = false,
       this.status = false,
-      this.createdAt = false,
+      this.createdAt = false
 
   };
 
@@ -74,7 +75,7 @@ $(document).ready(function() {
 
   });
 
-// Date Picker
+  // Date Picker
   $('.datepicker').datepicker({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15, // Creates a dropdown of 15 years to control year,
@@ -83,7 +84,7 @@ $(document).ready(function() {
     close: 'Ok',
     closeOnSelect: false // Close upon selecting a date,
   });
-// Timer Picker
+  // Timer Picker
   $('.timepicker').timepicker({
     defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
     autoClose: true,
@@ -123,7 +124,14 @@ $(document).ready(function() {
       bloodType = $("#bloodType").val();
       dni = $("#dni").val();
       status = $("#status").val();
-      hospital = $("#hospital").val();
+
+      hospital = $("#hospital").val().split("@");
+      hospitalLocation = hospital[1].split(" ");
+      hospitalLocation = {
+        'lat': hospitalLocation[0],
+        'lon': hospitalLocation[1]
+      };
+      hospital = hospital[0];
 
       hospitalStarts = $("#hospitalHoursStart").val();
       hospitalEnds = $("#hospitalHoursEnd").val();

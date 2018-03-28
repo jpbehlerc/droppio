@@ -124,12 +124,14 @@ class register(tornado.web.RequestHandler):
     async def post(self):
 
         requestType = self.get_argument('type',default=False)
-        requestType = requestType if requestType == 'fastSignup' or requestType == 'login'  else False
+        requestType = requestType if requestType == 'signup' or requestType == 'login'  else False
 
         #captcha = self.get_argument('g-recaptcha-response',default=False)
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
-
         email = self.get_argument('email',default=False)
+
+        dbAdminUser = self.settings['db']['user']
+        dbAdminPass = self.settings['db']['pass']
 
         if requestType=='login':
 
@@ -141,14 +143,14 @@ class register(tornado.web.RequestHandler):
                 try:
 
                     #Authenticate to couchDB service
-                    server = aiocouchdb.Server(url_or_resource='http://droppioCouchdb:5984/')
-                    admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
+                    server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
+                    admin = await server.session.open(dbAdminUser, dbAdminPass)
 
                     sha = sha224()
 
-                    token = await loop.run_in_executor(None,sha.update,email.encode())
+                    token = await loop.run_in_executor(None,sha224,email.encode())
 
-                    settingsDB = await server.db('settings%s'%token)
+                    settingsDB = await server.db('settings%s'%token.hexdigest())
                     doc = await settingsDB["password"].get()
                     pwd = doc["hash"]
 
@@ -162,12 +164,12 @@ class register(tornado.web.RequestHandler):
                 except VerificationError:
 
                     logging.error("Mmm.. failed login attempt from ip %s and user %s"%(ip,email))
-                    self.write(json_encode({'type':'error'}))
+                    self.write(json_encode({'type':'loginPassError'}))
 
                 except HttpErrorException as e:
 
                     logging.error("Mmm error while trying to get settings DBs: %s"%str(e))
-                    self.write(json_encode({'type':'error'}))
+                    self.write(json_encode({'type':'logError'}))
 
                 else:
 
@@ -175,7 +177,7 @@ class register(tornado.web.RequestHandler):
                     self.write(json_encode({'type':'success'}))
 
 
-        elif requestType=='fastSignup':
+        elif requestType=='signup':
 
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
@@ -199,9 +201,10 @@ class register(tornado.web.RequestHandler):
 
                     #Authenticate to couchDB service
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
-                    admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
+                    admin = await server.session.open(dbAdminUser, dbAdminPass)
 
                     print("creating user")
+
                     #Create new couchDB user
                     usersDB = await server.db('_users')
                     doc = await usersDB.doc(docid="org.couchdb.user:%s"%dbUser)
@@ -213,10 +216,6 @@ class register(tornado.web.RequestHandler):
                     await settingsDB.create(auth=admin)
                     await settingsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]})
 
-                    print("updating campaign")
-                    #Update security on campaignsDB
-                    campaignsDB = await server.db(campaignsName)
-                    await campaignsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]},merge=True)
 
                     print("creating stats")
                     #Create and update security on user's statsDB
@@ -228,11 +227,11 @@ class register(tornado.web.RequestHandler):
                 except HttpErrorException as e:
 
                         logging.error("Mmm error while trying to set user's DBs: %s"%str(e))
-                        self.write(json_encode({'type':'error'}))
+                        self.write(json_encode({'type':'signupError'}))
 
                 else:
 
-                    self.set_secure_cookie("droppioSession", "%s:%s"%(dbUser,dbPass),expires_days=365)
+                    self.set_secure_cookie("droppioSession", "%s:%s&%s:%s"%(dbUser,dbPass,dbAdminUser,dbAdminPass),expires_days=365)
                     self.write(json_encode({'type':'success'}))
 
 
@@ -279,9 +278,17 @@ class home(tornado.web.RequestHandler):
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'creds' else False
 
-        dbUser,dbPass = tornado.escape.xhtml_escape(self.current_user).split(":")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
 
-        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass}))
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
 class profile(tornado.web.RequestHandler):
@@ -323,7 +330,7 @@ if __name__ == '__main__':
         "compress_response":True,
         "autoescape": "xhtml_escape",
         "default_handler_class": errorHandler,
-        "couchdb_credentials":['jpbehler','33579313couchdb'],
+        "db": {'user':'droppio','pass':'SjDdtbDUWDxqwid4'},
         "login_url": "/register",
         "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
