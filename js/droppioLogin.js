@@ -44,13 +44,12 @@ $(document).ready(function() {
 
   $('select').material_select();
 
-  $("#signup,#login").submit(function(e) {
+  $("#signup, #login").submit(function(e) {
 
     e.preventDefault();
 
-    type = $(this).attr("id");
-
     signx.type = $(this).attr("id");
+    console.log(signx.type);
     signx.name = $("#name").val();
     signx.lastname = $("#lastname").val();
     signx.bloodType = $("#bloodType").val();
