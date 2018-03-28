@@ -5,8 +5,8 @@ $(document).ready(function() {
     this._jsonified = [];
     this._xsrf = false,
       this._fields = {
-        'signup': ['name', 'lastname', 'bloodType', 'email'],
-        'login': ['password', 'email']
+        'signup': ['name', 'lastname', 'bloodType', 'email', '_xsrf'],
+        'login': ['password', 'email', '_xsrf']
       };
     this.bloodType = false,
       this.name = false,
@@ -24,7 +24,6 @@ $(document).ready(function() {
             if (this[prop].length) {
 
               if (this._fields[this.type].indexOf(prop) > 0) {
-                console.log('fields property ' + prop);
 
                 this._jsonified.push({
                   '_id': prop,
