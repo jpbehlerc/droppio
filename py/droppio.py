@@ -207,6 +207,7 @@ class register(tornado.web.RequestHandler):
                     admin = await server.session.open(dbAdminUser, dbAdminPass)
 
                     print("creating user")
+                    
                     #Create new couchDB user
                     usersDB = await server.db('_users')
                     doc = await usersDB.doc(docid="org.couchdb.user:%s"%dbUser)
