@@ -126,7 +126,6 @@ class register(tornado.web.RequestHandler):
     async def post(self):
 
         requestType = self.get_argument('type',default=False)
-        print(requestType)
         requestType = requestType if requestType == 'signup' or requestType == 'login'  else False
 
         #captcha = self.get_argument('g-recaptcha-response',default=False)
@@ -137,7 +136,7 @@ class register(tornado.web.RequestHandler):
         if requestType=='login':
 
             email = self.get_argument('email2',default=False)
-            pwd = self.get_argument('pass',default=False)
+            pwd = self.get_argument('password',default=False)
             ip = self.request.headers.get("X-Real-Ip")
 
             if email and pwd:
