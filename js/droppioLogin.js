@@ -6,7 +6,7 @@ $(document).ready(function() {
     this._xsrf = false,
       this._fields = {
         'signup': ['name', 'lastname', 'bloodType', 'email', '_xsrf', 'type'],
-        'login': ['password', 'email', '_xsrf', 'type']
+        'login': ['password', 'email2', '_xsrf', 'type']
       };
     this.bloodType = false,
       this.name = false,
