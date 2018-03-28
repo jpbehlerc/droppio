@@ -55,10 +55,10 @@ $(document).ready(function() {
 
     data = signx.toJSON();
     console.log(data);
-    $.post("/register", data).done(function(data) {
+    $.post("/register", data).done(function(resp) {
 
-      data = JSON.parse(data);
-      respType = data['type'];
+      resp = JSON.parse(resp);
+      respType = resp['type'];
 
       if (respType == 'success') {
 
