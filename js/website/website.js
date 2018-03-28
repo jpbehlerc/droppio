@@ -4,6 +4,9 @@ $(document).ready(function() {
   $('select').formSelect();
   $('.parallax').parallax();
   $('.collapsible').collapsible();
+  $('.collapsible').on('click', function(){
+    $(this).find('.material-icons').toggleClass('rotate180');
+  });
   $("a").on('click', function(event) {
         if (this.hash !== "") {
             event.preventDefault();

@@ -83,6 +83,14 @@ Buttons Color Class: #FFAB40 orange accent-2
     display:inline-block;
     transform: rotate(180deg);
     }
+
+    .timeline i:not(.fas) {
+      transition: all 0.3s ease;
+    }
+    .rotate180{
+    transform: rotate(180deg);
+    }
+
     .noMarginBottom {
       margin-bottom: 0px;
     }
