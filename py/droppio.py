@@ -126,6 +126,7 @@ class register(tornado.web.RequestHandler):
     async def post(self):
 
         requestType = self.get_argument('type',default=False)
+        print(requestType)
         requestType = requestType if requestType == 'signup' or requestType == 'login'  else False
 
         #captcha = self.get_argument('g-recaptcha-response',default=False)
