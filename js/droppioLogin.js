@@ -21,7 +21,7 @@ $(document).ready(function() {
 
           for (var prop in this) {
 
-            if (prop in fields[this.type]) {
+            if (prop in this._fields[this.type]) {
               if (this[prop].length) {
 
                 this._jsonified.push({
