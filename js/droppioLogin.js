@@ -57,7 +57,7 @@ $(document).ready(function() {
     signx._xsrf = xsrf_token;
 
     data = signx.toJSON();
-
+    console.log(data);
     $.post("/register", data).done(function(data) {
 
       data = JSON.parse(data);
