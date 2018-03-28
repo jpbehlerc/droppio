@@ -5,7 +5,7 @@ $(document).ready(function() {
     this._jsonified = [];
     this._xsrf = false,
       this._fields = {
-        'fastSignup': ['name', 'lastname', 'bloodType', 'email'],
+        'signup': ['name', 'lastname', 'bloodType', 'email'],
         'login': ['password', 'email']
       };
     this.bloodType = false,
