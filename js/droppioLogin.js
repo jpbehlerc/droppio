@@ -18,16 +18,19 @@ $(document).ready(function() {
       this.toJSON = function() {
 
         if (this.type in this._fields) {
-
+          console.log('type is' + this.type);
           for (var prop in this) {
 
             if (prop in this._fields[this.type]) {
+              console.log('fields property ' + prop);
+
               if (this[prop].length) {
 
                 this._jsonified.push({
                   '_id': prop,
                   value: this[prop]
                 });
+
               }
             }
           }
@@ -49,10 +52,10 @@ $(document).ready(function() {
 
     signx.type = $(this).attr("id");
     signx.name = $("#name").val();
-    signx.lastname = $("#name").val();
+    signx.lastname = $("#lastname").val();
     signx.bloodType = $("#bloodType").val();
     signx.email = $("#email").val();
-    signx.password = $("#email").val();
+    signx.password = $("#password").val();
     console.log(signx.toJSON());
     /*
     $.post("/register", signx).done(function(data) {
