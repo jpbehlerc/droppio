@@ -130,7 +130,6 @@ class register(tornado.web.RequestHandler):
 
         #captcha = self.get_argument('g-recaptcha-response',default=False)
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
-
         email = self.get_argument('email',default=False)
 
         dbAdminUser = self.settings['db']['user']
@@ -207,7 +206,7 @@ class register(tornado.web.RequestHandler):
                     admin = await server.session.open(dbAdminUser, dbAdminPass)
 
                     print("creating user")
-                    
+
                     #Create new couchDB user
                     usersDB = await server.db('_users')
                     doc = await usersDB.doc(docid="org.couchdb.user:%s"%dbUser)
