@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   function Signx() {
 
-    this._jsonified = [];
+    this._jsonified = {};
     this._xsrf = false,
       this._fields = {
         'signup': ['name', 'lastname', 'bloodType', 'email', '_xsrf'],
@@ -23,9 +23,9 @@ $(document).ready(function() {
 
             if (this[prop].length) {
 
-              if (this._fields[this.type].indexOf(prop) >= 0) {
+              if (this._fields[this.type].includes(prop)) {
 
-                this._jsonified[prop] = this[prop]
+                this._jsonified[prop] = this[prop];
 
               }
             }
