@@ -46,17 +46,17 @@ $(document).ready(function() {
 
   $("#signup,#login").submit(function(e) {
 
-      e.preventDefault();
+    e.preventDefault();
 
-      type = $(this).attr("id");
+    type = $(this).attr("id");
 
-      signx.type = $(this).attr("id");
-      signx.name = $("#name").val();
-      signx.lastname = $("#lastname").val();
-      signx.bloodType = $("#bloodType").val();
-      signx.email = $("#email").val();
-      signx.password = $("#password").val();
-      data = signx.toJSON());
+    signx.type = $(this).attr("id");
+    signx.name = $("#name").val();
+    signx.lastname = $("#lastname").val();
+    signx.bloodType = $("#bloodType").val();
+    signx.email = $("#email").val();
+    signx.password = $("#password").val();
+    data = signx.toJSON();
 
     $.post("/register", data).done(function(data) {
 
