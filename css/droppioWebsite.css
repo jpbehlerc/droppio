@@ -90,6 +90,10 @@ Buttons Color Class: #FFAB40 orange accent-2
       opacity: 1 !important;
     }
 
+    a:not(footer) {
+      color: #ffab40;
+    }
+
 
 /* presentation */
 
