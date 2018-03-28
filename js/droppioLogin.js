@@ -22,7 +22,7 @@ $(document).ready(function() {
           for (var prop in this) {
 
             if (this[prop].length) {
-
+              console.log('prop ' + prop + ': ' + this._fields[this.type].indexOf(prop));
               if (this._fields[this.type].indexOf(prop) > 0) {
 
                 this._jsonified.push({
