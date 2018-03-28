@@ -151,7 +151,7 @@ class register(tornado.web.RequestHandler):
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
                     admin = await server.session.open(dbAdminUser, dbAdminPass)
 
-                    settingsDB = await server.db('settings%s'%token.hexdigest())
+                    settingsDB = await server.db('settings%s'%token.hexdigest(),auth=admin)
                     doc = await settingsDB["password"].get()
                     pwd = doc["hash"]
 
