@@ -47,7 +47,7 @@ $(document).ready(function() {
     signx.type = $(this).attr("id");
     signx.name = $("#name").val();
     signx.lastname = $("#lastname").val();
-    console.log($("#bloodType").val());
+    console.log($("#lastName").val());
     signx.bloodType = $("#bloodType").val();
     signx.email = $("#email").val();
     signx.password = $("#password").val();
