@@ -26,7 +26,7 @@ $(document).ready(function() {
               if (this._fields[this.type].indexOf(prop) >= 0) {
 
                 this._jsonified.push({
-                  prop: this[prop]
+                  '' + prop: this[prop]
                 });
 
               }
