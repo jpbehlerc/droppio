@@ -18,8 +18,9 @@ $(document).ready(function() {
       this.toJSON = function() {
 
         if (this.type in this._fields) {
-          console.log('type is' + this.type);
+          console.log('type is ' + this.type);
           for (var prop in this) {
+            console.log('prop is ' + prop);
 
             if (prop in this._fields[this.type]) {
               console.log('fields property ' + prop);
