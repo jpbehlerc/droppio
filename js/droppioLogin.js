@@ -22,8 +22,8 @@ $(document).ready(function() {
           for (var prop in this) {
 
             if (this[prop].length) {
-              console.log('prop ' + prop + ': ' + this._fields[this.type].indexOf(prop));
-              if (this._fields[this.type].indexOf(prop) > 0) {
+
+              if (this._fields[this.type].indexOf(prop) >= 0) {
 
                 this._jsonified.push({
                   prop: this[prop]
@@ -56,7 +56,7 @@ $(document).ready(function() {
     signx._xsrf = xsrf_token;
 
     data = signx.toJSON();
-    console.log(signx);
+    console.log(data);
     $.post("/register", data).done(function(data) {
 
       data = JSON.parse(data);
