@@ -130,13 +130,12 @@ class register(tornado.web.RequestHandler):
 
         #captcha = self.get_argument('g-recaptcha-response',default=False)
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
-        email = self.get_argument('email',default=False)
-
         dbAdminUser = self.settings['db']['user']
         dbAdminPass = self.settings['db']['pass']
 
         if requestType=='login':
 
+            email = self.get_argument('email2',default=False)
             pwd = self.get_argument('pass',default=False)
             ip = self.request.headers.get("X-Real-Ip")
 
@@ -181,6 +180,7 @@ class register(tornado.web.RequestHandler):
 
         elif requestType=='signup':
 
+            email = self.get_argument('email',default=False)
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
