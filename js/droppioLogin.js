@@ -47,12 +47,13 @@ $(document).ready(function() {
     signx.type = $(this).attr("id");
     signx.name = $("#name").val();
     signx.lastname = $("#lastname").val();
+    console.log($("#bloodType").val());
     signx.bloodType = $("#bloodType").val();
     signx.email = $("#email").val();
     signx.password = $("#password").val();
     signx._xsrf = xsrf_token;
 
-    console.log(signx);
+
     data = signx.toJSON();
 
     $.post("/register", data).done(function(resp) {
