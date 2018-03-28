@@ -53,7 +53,7 @@ $(document).ready(function() {
     signx.bloodType = $("#bloodType").val();
     signx.email = $("#email").val();
     signx.password = $("#email").val();
-    console.log(signx);
+    console.log(signx.toJSON());
     /*
     $.post("/register", signx).done(function(data) {
 
