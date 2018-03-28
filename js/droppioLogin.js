@@ -45,7 +45,6 @@ $(document).ready(function() {
     e.preventDefault();
 
     signx.type = $(this).attr("id");
-    console.log(signx.type);
     signx.name = $("#name").val();
     signx.lastname = $("#lastname").val();
     signx.bloodType = $("#bloodType").val();
@@ -54,7 +53,7 @@ $(document).ready(function() {
     signx._xsrf = xsrf_token;
 
     data = signx.toJSON();
-    console.log(data);
+
     $.post("/register", data).done(function(resp) {
 
       resp = JSON.parse(resp);
@@ -64,8 +63,12 @@ $(document).ready(function() {
 
         window.location = "https://droppio.org/home"
 
-      } else {
-        //Oops something weird happened (show warning)
+      } else if (respType == 'signupError') {
+        //User already present or something weird happened (show warning)
+      } else if (respType == 'loginPassError') {
+        //Definately smth weird happened (show warning)
+      } else if (respType == 'loginError') {
+        //Definately smth weird happened (show warning)
       }
     });
 

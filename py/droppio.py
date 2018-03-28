@@ -166,12 +166,12 @@ class register(tornado.web.RequestHandler):
                 except VerificationError:
 
                     logging.error("Mmm.. failed login attempt from ip %s and user %s"%(ip,email))
-                    self.write(json_encode({'type':'error'}))
+                    self.write(json_encode({'type':'loginPassError'}))
 
                 except HttpErrorException as e:
 
                     logging.error("Mmm error while trying to get settings DBs: %s"%str(e))
-                    self.write(json_encode({'type':'error'}))
+                    self.write(json_encode({'type':'logError'}))
 
                 else:
 
@@ -229,7 +229,7 @@ class register(tornado.web.RequestHandler):
                 except HttpErrorException as e:
 
                         logging.error("Mmm error while trying to set user's DBs: %s"%str(e))
-                        self.write(json_encode({'type':'error'}))
+                        self.write(json_encode({'type':'signupError'}))
 
                 else:
 
