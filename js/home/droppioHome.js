@@ -10,7 +10,9 @@ $(document).ready(function() {
       this.dni = false,
       this.email = false,
       this.weight = false,
-      this.birthDate = false
+      this.birthDate = false,
+      this.location = false
+
   };
 
   function getCookie(name) {
@@ -18,7 +20,23 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
+  function storePosition(position) {
+
+    this.location = {
+      'lat': position.coords.latitude,
+      'lon': position.coords.longitude
+    };
+
+  }
+
   var info = new Settings();
+
+  //Watch and store position in realtime
+  navigator.geolocation.watchPosition(function(position) {
+
+    storePosition(position);
+  });
+
 
   $.post("/", {
 
@@ -342,8 +360,8 @@ $(document).ready(function() {
               for (i = 0, n = docs.length; i < n; i++) {
 
                 doc = docs[i];
-                dst = doc.coordinates;
-                src = settings.coordinates;
+                dst = doc.hospitalLocation;
+                src = settings.location;
 
                 if (distance(src, dst) <= 5000) {
 
