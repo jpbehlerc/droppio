@@ -25,8 +25,10 @@ $(document).ready(function() {
 
               if (this._fields[this.type].indexOf(prop) >= 0) {
 
+                key = '' + prop;
+
                 this._jsonified.push({
-                  '' + prop: this[prop]
+                  key: this[prop]
                 });
 
               }
