@@ -130,6 +130,7 @@ class register(tornado.web.RequestHandler):
 
         #captcha = self.get_argument('g-recaptcha-response',default=False)
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
+        loop = asyncio.get_event_loop()
 
         if requestType=='login':
 
@@ -141,12 +142,10 @@ class register(tornado.web.RequestHandler):
 
                 try:
 
-                    loop = asyncio.get_event_loop()
-
                     token = await loop.run_in_executor(None,sha224,email.encode())
 
-                    dbAdminUser = 'droppio%s'%token
-                    dbAdminPass = '%s%s'%(token,self.settings['salt'])
+                    dbAdminUser = self.settings['db']['user']
+                    dbAdminPass = self.settings['db']['pass']
 
                     #Authenticate to couchDB service
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
@@ -189,7 +188,8 @@ class register(tornado.web.RequestHandler):
                 dbAdminUser = self.settings['db']['user']
                 dbAdminPass = self.settings['db']['pass']
 
-                token = sha224(email.encode()).hexdigest()
+                token = await loop.run_in_executor(None,sha224,email.encode())
+                token = token.hexdigest()
 
                 dbUser = 'droppio%s'%token
                 dbPass = "%s%s"%(token,self.settings['salt'])
