@@ -46,19 +46,19 @@ $(document).ready(function() {
 
   $("#signup,#login").submit(function(e) {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    type = $(this).attr("id");
+      type = $(this).attr("id");
 
-    signx.type = $(this).attr("id");
-    signx.name = $("#name").val();
-    signx.lastname = $("#lastname").val();
-    signx.bloodType = $("#bloodType").val();
-    signx.email = $("#email").val();
-    signx.password = $("#password").val();
-    console.log(signx.toJSON());
-    /*
-    $.post("/register", signx).done(function(data) {
+      signx.type = $(this).attr("id");
+      signx.name = $("#name").val();
+      signx.lastname = $("#lastname").val();
+      signx.bloodType = $("#bloodType").val();
+      signx.email = $("#email").val();
+      signx.password = $("#password").val();
+      data = signx.toJSON());
+
+    $.post("/register", data).done(function(data) {
 
       data = JSON.parse(data);
       respType = data['type'];
@@ -71,7 +71,7 @@ $(document).ready(function() {
         //Oops something weird happened (show warning)
       }
     });
-    */
+
   });
 
 });
