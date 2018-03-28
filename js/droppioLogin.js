@@ -5,8 +5,8 @@ $(document).ready(function() {
     this._jsonified = {};
     this._xsrf = false,
       this._fields = {
-        'signup': ['name', 'lastname', 'bloodType', 'email', '_xsrf'],
-        'login': ['password', 'email', '_xsrf']
+        'signup': ['name', 'lastname', 'bloodType', 'email', '_xsrf', 'type'],
+        'login': ['password', 'email', '_xsrf', 'type']
       };
     this.bloodType = false,
       this.name = false,
@@ -31,9 +31,6 @@ $(document).ready(function() {
             }
           }
         }
-
-        this._jsonified['contentType'] = "application/json";
-        this._jsonified['dataType'] = "json";
 
         return this._jsonified;
       }
