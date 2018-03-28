@@ -190,6 +190,9 @@ class register(tornado.web.RequestHandler):
                 dbUser = 'droppio%s'%token
                 dbPass = "%s%s"%(token,self.settings['salt'])
 
+                dbAdminUser = self.settings['db']['user']
+                dbAdminPass = self.settings['db']['pass']
+
                 settingsName = 'settings%s'%token
                 statsName = 'stats%s'%token
                 campaignsName = 'campaigns'
@@ -201,7 +204,7 @@ class register(tornado.web.RequestHandler):
 
                     #Authenticate to couchDB service
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
-                    admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
+                    admin = await server.session.open(dbAdminUser, dbAdminPass)
 
                     print("creating user")
                     #Create new couchDB user
@@ -215,10 +218,6 @@ class register(tornado.web.RequestHandler):
                     await settingsDB.create(auth=admin)
                     await settingsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]})
 
-                    print("updating campaign")
-                    #Update security on campaignsDB
-                    campaignsDB = await server.db(campaignsName)
-                    await campaignsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]},merge=True)
 
                     print("creating stats")
                     #Create and update security on user's statsDB
@@ -234,7 +233,7 @@ class register(tornado.web.RequestHandler):
 
                 else:
 
-                    self.set_secure_cookie("droppioSession", "%s:%s"%(dbUser,dbPass),expires_days=365)
+                    self.set_secure_cookie("droppioSession", "%s:%s&%s:%s"%(dbUser,dbPass,dbAdminUser,dbAdminPass),expires_days=365)
                     self.write(json_encode({'type':'success'}))
 
 
@@ -281,9 +280,17 @@ class home(tornado.web.RequestHandler):
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'creds' else False
 
-        dbUser,dbPass = tornado.escape.xhtml_escape(self.current_user).split(":")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
 
-        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass}))
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
 class profile(tornado.web.RequestHandler):
@@ -325,7 +332,7 @@ if __name__ == '__main__':
         "compress_response":True,
         "autoescape": "xhtml_escape",
         "default_handler_class": errorHandler,
-        "couchdb_credentials":['jpbehler','33579313couchdb'],
+        "db": {'user':'droppio','pass':'SjDdtbDUWDxqwid4'},
         "login_url": "/register",
         "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
