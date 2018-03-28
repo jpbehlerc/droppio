@@ -149,6 +149,8 @@ class register(tornado.web.RequestHandler):
 
                     sha = sha224()
 
+                    loop = asyncio.get_event_loop()
+
                     token = await loop.run_in_executor(None,sha224,email.encode())
 
                     settingsDB = await server.db('settings%s'%token.hexdigest())
