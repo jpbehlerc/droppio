@@ -201,20 +201,24 @@ class register(tornado.web.RequestHandler):
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
                     admin = await server.session.open('droppio', 'SjDdtbDUWDxqwid4')
 
+                    print("creating user")
                     #Create new couchDB user
                     usersDB = await server.db('_users')
                     doc = await usersDB.doc(docid="org.couchdb.user:%s"%dbUser)
                     await doc.update({'name':dbUser,'password':dbPass,'type':'user','roles':[]}, auth=admin)
 
+                    print("creating settings")
                     #Create and update security on settingsDB
                     settingsDB = await server.db(settingsName)
                     await settingsDB.create(auth=admin)
                     await settingsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]})
 
+                    print("updating campaign")
                     #Update security on campaignsDB
                     campaignsDB = await server.db(campaignsName)
                     await campaignsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]},merge=True)
 
+                    print("creating stats")
                     #Create and update security on user's statsDB
                     statsDB = await server.db(statsName)
                     await statsDB.create(auth=admin)
