@@ -56,6 +56,8 @@ $(document).ready(function() {
     signx.bloodType = $("#bloodType").val();
     signx.email = $("#email").val();
     signx.password = $("#password").val();
+    signx._xsrf = xsrf_token;
+
     data = signx.toJSON();
 
     $.post("/register", data).done(function(data) {
