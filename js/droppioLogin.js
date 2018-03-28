@@ -18,14 +18,13 @@ $(document).ready(function() {
       this.toJSON = function() {
 
         if (this.type in this._fields) {
-          console.log('type is ' + this.type);
+
           for (var prop in this) {
-            console.log('prop are ' + this._fields[this.type]);
 
-            if (prop in this._fields[this.type]) {
-              console.log('fields property ' + prop);
+            if (this[prop].length) {
 
-              if (this[prop].length) {
+              if (prop in this._fields[this.type]) {
+                console.log('fields property ' + prop);
 
                 this._jsonified.push({
                   '_id': prop,
