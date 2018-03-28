@@ -32,7 +32,7 @@ $(document).ready(function() {
           }
         }
 
-        this._jsonified['contentType'] = "application/json; charset=utf-8";
+        this._jsonified['contentType'] = "application/json";
         this._jsonified['dataType'] = "json";
 
         return this._jsonified;
