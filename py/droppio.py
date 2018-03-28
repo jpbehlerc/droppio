@@ -152,7 +152,7 @@ class register(tornado.web.RequestHandler):
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
                     admin = await server.session.open(dbAdminUser, dbAdminPass)
 
-                    settingsDB = await server.db('settings%s'%token.hexdigest(),auth=admin)
+                    settingsDB = await server.db('settings%s'%token.hexdigest())
                     doc = await settingsDB["password"].get()
                     pwd = doc["hash"]
 
@@ -160,8 +160,6 @@ class register(tornado.web.RequestHandler):
 
                     await loop.run_in_executor(None,ph.verify,doc['hash'],pwd)
 
-                    dbUser = "droppio%s"%token
-                    dbPass = "%s%s"%(token,self.settings['salt'])
 
                 except VerificationError:
 
@@ -200,8 +198,6 @@ class register(tornado.web.RequestHandler):
                 statsName = 'stats%s'%token
                 campaignsName = 'campaigns'
 
-                print(dbUser,dbPass)
-                print(settingsName,statsName,campaignsName)
 
                 try:
 
