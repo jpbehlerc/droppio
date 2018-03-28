@@ -21,7 +21,7 @@ $(document).ready(function() {
 
           for (var prop in this) {
 
-            if (this[prop] === null) {
+            if (this[prop] != null) {
 
               if (this._fields[this.type].includes(prop)) {
 
