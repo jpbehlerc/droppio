@@ -294,11 +294,45 @@ class home(tornado.web.RequestHandler):
 
 class profile(tornado.web.RequestHandler):
 
+    def get_current_user(self):
+
+        self.cookie = self.get_secure_cookie('droppioSession')
+        return self.cookie
+
+
+    def write_error(self,*args,**kw):
+
+        if len(args) == 1:
+
+            self.write("HTTP Error {}".format(args[0]))
+
+        elif len(args) > 1:
+
+            logging.error("HTTP Error {0}: {1}".format(args[0],args[1]))
+
+        elif hasattr(kw,'exc_info'):
+
+            logging.error("HTTP Error: {0}".format(kw['exc_info'][1]))
+
+        else:
+
+            logging.error("HTTP Error: {0}".format(args[0]))
+
+
     @authenticated
     def get(self):
 
         self.render("profile.html")
+        
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
 
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
 
 class campaign(tornado.web.RequestHandler):
 
