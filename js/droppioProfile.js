@@ -36,8 +36,7 @@ $(document).ready(function() {
 
   }
 
-
-
+  console.log($("#radius").val());
   //Watch and store position in realtime
   navigator.geolocation.watchPosition(function(position) {
 
