@@ -294,9 +294,11 @@ class home(tornado.web.RequestHandler):
 
 class profile(tornado.web.RequestHandler):
 
+    @authenticated
     def get(self):
 
         self.render("profile.html")
+
 
 class campaign(tornado.web.RequestHandler):
 
