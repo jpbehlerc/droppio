@@ -16,23 +16,25 @@
      color: #fff !important;
     }
 
-    /* slider color */
+
+    /*
     input[type="range"]::-moz-range-track{
 
       background: #fff !important;
     }
 
-    /* no-box slider */
+
     input[type="range"]{
 
       border: 0px solid white !important;
     }
 
+    */
+    
     /* align and set width */
     .range-field{
 
-      width: 90% !important;
-      margin-right: 0.7em !important;
+      width: 93% !important;
     }
     /* label underline focus color */
     .input-field input[type=text]:focus {
@@ -139,6 +141,13 @@
 
       font-size:1.25em;
       color: #45ceee !important;
+    }
+
+    .droppioSlider{
+
+      margin-top:2em;
+      background: #fff !important;
+      border: 0px solid white !important;
     }
 /* content section */
 
