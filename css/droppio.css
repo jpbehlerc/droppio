@@ -15,6 +15,25 @@
     .input-field input[type=text]:focus + label {
      color: #fff !important;
     }
+
+    /* slider color */
+    input[type="range"]::-moz-range-track{
+
+      background: #fff !important;
+    }
+
+    /* no-box slider */
+    input[type="range"]{
+
+      border: 0px solid white !important;
+    }
+
+    /* align and set width */
+    .range-field{
+
+      width: 90% !important;
+      margin-right: 0.7em !important;
+    }
     /* label underline focus color */
     .input-field input[type=text]:focus {
      border-bottom: 1px solid #fff !important;
@@ -23,6 +42,7 @@
     .dropdown-content li > a, .dropdown-content li > span {
       color: #c91249 ;
     }
+
 
     .separator {
     width: 92% !important;
