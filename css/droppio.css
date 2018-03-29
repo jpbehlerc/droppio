@@ -17,20 +17,20 @@
     }
 
 
-    /*
+    /*slider white background*/
     input[type="range"]::-moz-range-track{
 
       background: #fff !important;
     }
 
-
+    /*no-border slider*/
     input[type="range"]{
 
       border: 0px solid white !important;
     }
 
-    */
-    
+
+
     /* align and set width */
     .range-field{
 
@@ -146,8 +146,6 @@
     .droppioSlider{
 
       margin-top:2em;
-      background: #fff !important;
-      border: 0px solid white !important;
     }
 /* content section */
 
