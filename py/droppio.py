@@ -323,7 +323,14 @@ class profile(tornado.web.RequestHandler):
     def get(self):
 
         self.render("profile.html")
-        
+
+
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
         user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
 
         user = user.split(':')
@@ -333,6 +340,9 @@ class profile(tornado.web.RequestHandler):
         admin = admin.split(':')
         dbAdminUser = admin[0]
         dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
+
 
 class campaign(tornado.web.RequestHandler):
 
