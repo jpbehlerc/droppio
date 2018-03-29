@@ -27,7 +27,7 @@ $(document).ready(function() {
 
   var info = new Settings();
 
-  $.post("/", {
+  $.post("/register", {
 
     _xsrf: xsrf_token,
     type: "creds"
