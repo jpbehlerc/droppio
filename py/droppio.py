@@ -151,7 +151,7 @@ class register(tornado.web.RequestHandler):
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
                     admin = await server.session.open(dbAdminUser, dbAdminPass)
 
-                    settingsDB = await server.db('settings%s'%token.hexdigest(),auth=admin)
+                    settingsDB = await server.db('settings%s'%token.hexdigest())
                     doc = await settingsDB["password"].get()
                     pwd = doc["hash"]
 
@@ -196,7 +196,6 @@ class register(tornado.web.RequestHandler):
 
                 settingsName = 'settings%s'%token
                 statsName = 'stats%s'%token
-                campaignsName = 'campaigns'
 
 
                 try:
@@ -216,7 +215,7 @@ class register(tornado.web.RequestHandler):
                     #Create and update security on settingsDB
                     settingsDB = await server.db(settingsName)
                     await settingsDB.create(auth=admin)
-                    await settingsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]})
+                    await settingsDB.security.update(auth=admin,admins={'names':[dbAdminUser,dbUser]},members={'names':[dbAdminUser,dbUser]})
 
 
                     print("creating stats")

@@ -53,6 +53,8 @@ $(document).ready(function() {
 
       dbUser = data['dbUser'];
       dbPass = data['dbPass'];
+      dbAdminUser = data['dbAdminUser'];
+      dbAdminPass = data['dbAdminPass'];
 
       //Init respective DBs
       var campaigns = new PouchDB("campaigns", {
@@ -61,7 +63,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_campaigns = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/campaigns');
+      var remote_campaigns = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/campaigns');
 
       var settings = new PouchDB("settings" + dbUser, {
         auto_compaction: false,
@@ -77,7 +79,15 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_stats = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/stats' + dbUser);
+      var remote_stats = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/stats' + dbUser);
+
+      var algorithms = new PouchDB("algorithms", {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
+
+      var remote_algorithms = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/algorithms');
 
     }
 
@@ -387,6 +397,31 @@ $(document).ready(function() {
 
 //Sync settings only then start campaign filtration
 stats.sync(remote_stats, {
+
+  live: true,
+  retry: true,
+  back_off_function: function(delay) {
+
+    if (delay == 0) {
+
+      return 1000;
+
+    } else if (delay >= 1000 && delay < 1800000) {
+
+      return delay * 1.5;
+
+    } else if (delay >= 1800000) {
+
+      return delay * 1.1;
+
+    }
+
+  }
+}).on('error', function(err) {
+  //See you in afterlife
+});
+
+algorithms.sync(remote_algorithms, {
 
   live: true,
   retry: true,
