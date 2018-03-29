@@ -115,7 +115,7 @@ class landing(tornado.web.RequestHandler):
         self.render("website.html")
 
 
-class register(tornado.web.RequestHandler):
+class sign(tornado.web.RequestHandler):
 
     def get(self):
 
@@ -149,7 +149,7 @@ class register(tornado.web.RequestHandler):
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
                     admin = await server.session.open(dbAdminUser, dbAdminPass)
 
-                    settingsDB = await server.db('settings%s'%token.hexdigest(),auth=admin)
+                    settingsDB = await server.db('settings%s'%token.hexdigest())
                     doc = await settingsDB["password"].get()
                     pwd = doc["hash"]
 
@@ -194,7 +194,6 @@ class register(tornado.web.RequestHandler):
 
                 settingsName = 'settings%s'%token
                 statsName = 'stats%s'%token
-                campaignsName = 'campaigns'
 
 
                 try:
@@ -214,7 +213,7 @@ class register(tornado.web.RequestHandler):
                     #Create and update security on settingsDB
                     settingsDB = await server.db(settingsName)
                     await settingsDB.create(auth=admin)
-                    await settingsDB.security.update(auth=admin,admins={'names':[dbUser]},members={'names':[dbUser]})
+                    await settingsDB.security.update(auth=admin,admins={'names':[dbAdminUser,dbUser]},members={'names':[dbAdminUser,dbUser]})
 
 
                     print("creating stats")
@@ -266,7 +265,7 @@ class home(tornado.web.RequestHandler):
 
         if not self.current_user:
 
-            self.redirect("/register")
+            self.redirect("/sign")
             return
 
         self.render("home.html")
@@ -293,9 +292,36 @@ class home(tornado.web.RequestHandler):
 
 class profile(tornado.web.RequestHandler):
 
+    def get_current_user(self):
+
+        self.cookie = self.get_secure_cookie('droppioSession')
+        return self.cookie
+
+
+    def write_error(self,*args,**kw):
+
+        if len(args) == 1:
+
+            self.write("HTTP Error {}".format(args[0]))
+
+        elif len(args) > 1:
+
+            logging.error("HTTP Error {0}: {1}".format(args[0],args[1]))
+
+        elif hasattr(kw,'exc_info'):
+
+            logging.error("HTTP Error: {0}".format(kw['exc_info'][1]))
+
+        else:
+
+            logging.error("HTTP Error: {0}".format(args[0]))
+
+
+    @authenticated
     def get(self):
 
         self.render("profile.html")
+
 
 class campaign(tornado.web.RequestHandler):
 
@@ -309,6 +335,32 @@ class campaign(tornado.web.RequestHandler):
             pass
 
         self.render("campaign.html")
+
+
+class register(tornado.web.RequestHandler):
+
+    def get_current_user(self):
+
+        self.cookie = self.get_secure_cookie('droppioSession')
+        return self.cookie
+
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
+
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
 if __name__ == '__main__':
@@ -331,7 +383,7 @@ if __name__ == '__main__':
         "autoescape": "xhtml_escape",
         "default_handler_class": errorHandler,
         "db": {'user':'droppio','pass':'SjDdtbDUWDxqwid4'},
-        "login_url": "/register",
+        "login_url": "/sign",
         "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
 
@@ -355,6 +407,7 @@ if __name__ == '__main__':
 
         handlers.append((r"/home", home))
         handlers.append((r"/", landing))
+        handlers.append((r"/sign", sign))
         handlers.append((r"/register", register))
         handlers.append((r"/campaign", campaign))
         handlers.append((r"/profile", profile))

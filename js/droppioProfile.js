@@ -27,9 +27,9 @@ $(document).ready(function() {
 
   var info = new Settings();
 
-  $.post("/", {
+  $.post("/register", {
 
-    _xsrf: getCookie('_xsrf'),
+    _xsrf: xsrf_token,
     type: "creds"
 
   }).done(function(data) {
@@ -67,7 +67,7 @@ $(document).ready(function() {
   //$('#pickadate').pickadate();
   $('select').material_select();
 
-  settings.sync(remote_settings, {
+  settingsDB.sync(remote_settings, {
 
     live: true,
     retry: true,
