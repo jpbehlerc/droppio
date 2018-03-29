@@ -128,29 +128,28 @@ class register(tornado.web.RequestHandler):
 
         #captcha = self.get_argument('g-recaptcha-response',default=False)
         #captcha = captcha if type(captcha) == str and len(captcha) > 30 else False
-        email = self.get_argument('email',default=False)
-
-        dbAdminUser = self.settings['db']['user']
-        dbAdminPass = self.settings['db']['pass']
+        loop = asyncio.get_event_loop()
 
         if requestType=='login':
 
-            pwd = self.get_argument('pass',default=False)
+            email = self.get_argument('email2',default=False)
+            pwd = self.get_argument('password',default=False)
             ip = self.request.headers.get("X-Real-Ip")
 
             if email and pwd:
 
                 try:
 
+                    token = await loop.run_in_executor(None,sha224,email.encode())
+
+                    dbAdminUser = self.settings['db']['user']
+                    dbAdminPass = self.settings['db']['pass']
+
                     #Authenticate to couchDB service
                     server = aiocouchdb.Server(url_or_resource='http://192.168.131.173:5489/')
                     admin = await server.session.open(dbAdminUser, dbAdminPass)
 
-                    sha = sha224()
-
-                    token = await loop.run_in_executor(None,sha224,email.encode())
-
-                    settingsDB = await server.db('settings%s'%token.hexdigest())
+                    settingsDB = await server.db('settings%s'%token.hexdigest(),auth=admin)
                     doc = await settingsDB["password"].get()
                     pwd = doc["hash"]
 
@@ -158,8 +157,6 @@ class register(tornado.web.RequestHandler):
 
                     await loop.run_in_executor(None,ph.verify,doc['hash'],pwd)
 
-                    dbUser = "droppio%s"%token
-                    dbPass = "%s%s"%(token,self.settings['salt'])
 
                 except VerificationError:
 
@@ -179,13 +176,18 @@ class register(tornado.web.RequestHandler):
 
         elif requestType=='signup':
 
+            email = self.get_argument('email',default=False)
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
             bloodType = self.get_argument('bloodType',default=False)
 
             if name and lastname and bloodType and email:
 
-                token = sha224(email.encode()).hexdigest()
+                dbAdminUser = self.settings['db']['user']
+                dbAdminPass = self.settings['db']['pass']
+
+                token = await loop.run_in_executor(None,sha224,email.encode())
+                token = token.hexdigest()
 
                 dbUser = 'droppio%s'%token
                 dbPass = "%s%s"%(token,self.settings['salt'])
@@ -194,8 +196,6 @@ class register(tornado.web.RequestHandler):
                 statsName = 'stats%s'%token
                 campaignsName = 'campaigns'
 
-                print(dbUser,dbPass)
-                print(settingsName,statsName,campaignsName)
 
                 try:
 

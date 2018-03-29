@@ -6,12 +6,13 @@ $(document).ready(function() {
     this._xsrf = false,
       this._fields = {
         'signup': ['name', 'lastname', 'bloodType', 'email', '_xsrf', 'type'],
-        'login': ['password', 'email', '_xsrf', 'type']
+        'login': ['password', 'email2', '_xsrf', 'type']
       };
     this.bloodType = false,
       this.name = false,
       this.lastname = false,
       this.email = false,
+      this.email2 = false,
       this.password = false,
       this.type = false,
 
@@ -21,7 +22,7 @@ $(document).ready(function() {
 
           for (var prop in this) {
 
-            if (this[prop] === null) {
+            if (this[prop] != null) {
 
               if (this._fields[this.type].includes(prop)) {
 
@@ -47,9 +48,10 @@ $(document).ready(function() {
     signx.type = $(this).attr("id");
     signx.name = $("#name").val();
     signx.lastname = $("#lastname").val();
-    console.log($("#bloodType").val());
+
     signx.bloodType = $("#bloodType").val();
     signx.email = $("#email").val();
+    signx.email2 = $("#email2").val();
     signx.password = $("#password").val();
     signx._xsrf = xsrf_token;
 
