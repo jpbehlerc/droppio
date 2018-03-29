@@ -29,7 +29,7 @@ $(document).ready(function() {
 
   $.post("/", {
 
-    _xsrf: getCookie('_xsrf'),
+    _xsrf: xsrf_token,
     type: "creds"
 
   }).done(function(data) {
