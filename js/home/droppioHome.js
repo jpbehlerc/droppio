@@ -10,8 +10,7 @@ $(document).ready(function() {
       this.dni = false,
       this.email = false,
       this.weight = false,
-      this.birthDate = false,
-      this.location = false
+      this.birthDate = false
 
   };
 
@@ -20,22 +19,7 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
-  function storePosition(position) {
-
-    this.location = {
-      'lat': position.coords.latitude,
-      'lon': position.coords.longitude
-    };
-
-  }
-
   var info = new Settings();
-
-  //Watch and store position in realtime
-  navigator.geolocation.watchPosition(function(position) {
-
-    storePosition(position);
-  });
 
 
   $.post("/", {
@@ -361,11 +345,6 @@ $(document).ready(function() {
                 return R * c;
 
               }
-
-              si vas a dividir
-              una hoja en dos
-              cuantas opciones tenes ?
-                pista : si empezas por la segunda linea, es pq ya asumiste la primera como verdadera
 
               for (i = 0, n = docs.length; i < n; i++) {
 
