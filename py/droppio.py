@@ -319,7 +319,7 @@ class profile(tornado.web.RequestHandler):
             logging.error("HTTP Error: {0}".format(args[0]))
 
 
-    @authenticated
+    #@authenticated
     def get(self):
 
         self.render("profile.html")
