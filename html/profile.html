@@ -76,7 +76,7 @@
             <label for="name">Nombre</label>
           </div>
           <div class="input-field col s6 m6 l6">
-            <input type="text" id="surname" class="validate" required>
+            <input type="text" id="lastname" class="validate" required>
             <label for="surname">Apellido</label>
           </div>
         </div>
@@ -84,7 +84,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-tint"></i>
-            <select required>
+            <select id="bloodType" required>
               <option value="" disabled selected>Seleccione tipo de sangre</option>
               <option value="1">A+</option>
               <option value="2">B+</option>
@@ -118,14 +118,14 @@
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-birthday-cake"></i>
             <label for="date">Fecha de Nacimiento</label>
-            <input type="text" id="date" class="datepicker" required>
+            <input type="text" id="birthDate" class="datepicker" required>
           </div>
         </div>
         <!-- weight Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-weight"></i>
-            <input type="number" class="validate" required maxlength="3">
+            <input id="weight" type="number" class="validate" required maxlength="3">
             <label for="Peso">Peso</label>
           </div>
         </div>
@@ -133,7 +133,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-key"></i>
-            <input type="password" class="validate">
+            <input id="password" type="password" class="validate">
             <label for="password">Contraseña</label>
           </div>
         </div>
