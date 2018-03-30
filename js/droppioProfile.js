@@ -48,7 +48,7 @@ $(document).ready(function() {
   });
 
 
-  $.post("/register", {
+  $.post("/registerTest", {
 
     _xsrf: xsrf_token,
     type: "creds"
