@@ -4,30 +4,28 @@ $(document).ready(function() {
   function Settings() {
 
     this._jsonified = [];
-    this.bloodType = false,
-      this.name = false,
-      this.lastname = false,
-      this.dni = false,
-      this.email = false,
-      this.weight = false,
-      this.birthDate = false,
-      this.password = false,
-      this.toJSON = function() {
+    this._keys = [];
+    this.bloodType = false;
+    this.name = false;
+    this.lastname = false;
+    this.dni = false;
+    this.email = false;
+    this.weight = false;
+    this.birthDate = false;
+    this.password = false;
+    this.toJSON = function() {
 
-        for (var prop in this) {
+      for (var prop in this) {
 
-          if (prop.indexOf('_') == -1) {
+        if (prop.indexOf('_') == -1) {
 
-            if (this[prop].length)
+          if (this[prop].length)
+            this._jsonified[prop] = this[prop];
 
-              this._jsonified.push({
-                '_id': prop,
-                'value': this[prop]
-              });
-          }
         }
-        return this._jsonified;
       }
+      return this._jsonified;
+    };
   }
 
   var info = new Settings();
@@ -87,7 +85,7 @@ $(document).ready(function() {
         info.radius = $("#radius").val();
 
         elems = info.toJSON();
-
+        console.log(elems)
         settingsDB.allDocs({
           include_docs: true,
           keys: elems
