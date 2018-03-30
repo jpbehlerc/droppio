@@ -88,11 +88,9 @@ $(document).ready(function() {
         elems = info.toJSON();
         keys = Object.keys(elems);
 
-        console.log(keys);
-
         settingsDB.allDocs({
           include_docs: true,
-          keys: elems
+          keys: keys
         }).then(function(res) {
 
           console.log(res)
