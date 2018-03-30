@@ -164,7 +164,7 @@ $(document).ready(function() {
     closeOnSelect: false // Close upon selecting a date,
   });
 
-  //$('#pickadate').pickadate();
-  $('select').material_select();
+
+  $('select').formSelect();
 
 });
