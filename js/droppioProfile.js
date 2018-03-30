@@ -15,14 +15,17 @@ $(document).ready(function() {
       this.toJSON = function() {
 
         for (var prop in this) {
-	 
-         if(prop.indexOf('_') == -1){
-          
-          if (this[prop].length)
-            
-            this._jsonified.push({'_id':prop,'value':this[prop]});
-	  }
-         }
+
+          if (prop.indexOf('_') == -1) {
+
+            if (this[prop].length)
+
+              this._jsonified.push({
+                '_id': prop,
+                'value': this[prop]
+              });
+          }
+        }
         return this._jsonified;
       }
   }
@@ -55,7 +58,7 @@ $(document).ready(function() {
     data = JSON.parse(data);
 
     respType = data['type'];
-    
+
     if (respType == 'creds') {
 
       var dbUser = data['dbUser'];
@@ -68,43 +71,43 @@ $(document).ready(function() {
       });
 
       var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
-	
+
       $("#saveSettings").submit(function(e) {
 
-	  e.preventDefault();
+        e.preventDefault();
 
-	  info.name = $("#name").val();
-	  info.lastname = $("#lastname").val();
-	  info.bloodType = $("#bloodType").val();
-	  info.dni = $("#dni").val();
-	  info.email = $("#email").val();
-	  info.birthDate = $("#birthDate").val();
-	  info.weight = $("#weight").val();
-	  info.password = $("#password").val();
-	  info.radius = $("#radius").val();
-	  elems = info.toJSON();
+        info.name = $("#name").val();
+        info.lastname = $("#lastname").val();
+        info.bloodType = $("#bloodType").val();
+        info.dni = $("#dni").val();
+        info.email = $("#email").val();
+        info.birthDate = $("#birthDate").val();
+        info.weight = $("#weight").val();
+        info.password = $("#password").val();
+        info.radius = $("#radius").val();
+        elems = info.toJSON();
 
-	  for (var i in elems) {
-	    console.log(i);
-	    var doc = elems[i];
-	    console.log(elems[i]);
+        for (var i in elems) {
+          console.log(i);
+          var doc = elems[i];
+          console.log(elems[i]);
 
-            settingsDB.get(elems[i]['_id']).then(function(res) {
+          settingsDB.get(elems[i]['_id']).then(function(res) {
 
-	      res.value = elems[i]['value'];
+            res.value = elems[i]['value'];
 
-	      settingsDB.put(res).catch(function(err) {
-		//Strong presence of the dark force I see here (show warning)
-	      });
+            settingsDB.put(res).catch(function(err) {
+              //Strong presence of the dark force I see here (show warning)
+            });
 
-	    }).catch(function(err) {
-	      //Document not found
-	      console.log(doc);
-	      settingsDB.put(elems[i]).catch(function(err) {
-		//Strong presence of the dark force I see here (show warning)
-	      });
-	    });
-	  }
+          }).catch(function(err) {
+            //Document not found
+            console.log(doc);
+            settingsDB.put(elems[i]).catch(function(err) {
+              //Strong presence of the dark force I see here (show warning)
+            });
+          });
+        }
       });
 
       settingsDB.sync(remote_settingsDB, {
@@ -130,7 +133,7 @@ $(document).ready(function() {
         }
 
       }).on('error', function(err) {
-	//See you later terminator 
+        //See you later terminator
       });
 
     }
