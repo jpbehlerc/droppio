@@ -85,29 +85,31 @@ $(document).ready(function() {
         info.weight = $("#weight").val();
         info.password = $("#password").val();
         info.radius = $("#radius").val();
+
         elems = info.toJSON();
 
-        for (var i in elems) {
-          console.log(i);
-          var doc = elems[i];
-          console.log(elems[i]);
+        settingsDB.allDocs({
+          include_docs: true,
+          keys: elems
+        }).then(function(res) {
 
-          settingsDB.get(elems[i]['_id']).then(function(res) {
+          console.log(res)
+          /*
+          res.value = doc.value;
 
-            res.value = elems[i]['value'];
-
-            settingsDB.put(res).catch(function(err) {
-              //Strong presence of the dark force I see here (show warning)
-            });
-
-          }).catch(function(err) {
-            //Document not found
-            console.log(doc);
-            settingsDB.put(elems[i]).catch(function(err) {
-              //Strong presence of the dark force I see here (show warning)
-            });
+          settingsDB.put(res).catch(function(err) {
+            //Strong presence of the dark force I see here (show warning)
           });
-        }
+          */
+        }).catch(function(err) {
+          //Document not found
+          /*
+          settingsDB.put(doc).catch(function(err) {
+            //Strong presence of the dark force I see here (show warning)
+          });
+          */
+        });
+
       });
 
       settingsDB.sync(remote_settingsDB, {
