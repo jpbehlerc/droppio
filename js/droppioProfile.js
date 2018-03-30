@@ -24,6 +24,7 @@ $(document).ready(function() {
 
         }
       }
+
       return this._jsonified;
     };
   }
@@ -85,7 +86,9 @@ $(document).ready(function() {
         info.radius = $("#radius").val();
 
         elems = info.toJSON();
-        console.log(elems)
+        keys = elems.keys();
+
+        console.log(keys);
         settingsDB.allDocs({
           include_docs: true,
           keys: elems
