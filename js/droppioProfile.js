@@ -93,7 +93,20 @@ $(document).ready(function() {
           keys: keys
         }).then(function(res) {
 
-          console.log(res)
+          for (var row in res.rows) {
+
+            if ('error' in row) {
+              console.log({
+                'id': row.key,
+                'value': elems[row.key]
+              });
+
+              //settingsDB.put().catch(function(err) {
+              //Strong presence of the dark force I see here (show warning)
+              //});
+
+            }
+          }
           /*
           res.value = doc.value;
 
