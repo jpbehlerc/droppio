@@ -93,8 +93,7 @@ $(document).ready(function() {
           keys: keys
         }).then(function(res) {
 
-
-          for (var row in res.rows) {
+          for (var row in res.rows.values()) {
             console.log(row)
             if ('error' in row) {
               console.log({
