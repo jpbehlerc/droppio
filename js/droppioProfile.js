@@ -93,6 +93,7 @@ $(document).ready(function() {
           keys: keys
         }).then(function(res) {
 
+          console.log(res.rows)
           for (var row in res.rows) {
 
             if ('error' in row) {
