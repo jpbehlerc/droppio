@@ -86,9 +86,10 @@ $(document).ready(function() {
         info.radius = $("#radius").val();
 
         elems = info.toJSON();
-        keys = elems.keys();
+        keys = Object.keys(elems);
 
         console.log(keys);
+
         settingsDB.allDocs({
           include_docs: true,
           keys: elems
