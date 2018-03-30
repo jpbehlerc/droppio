@@ -352,6 +352,7 @@ class register(tornado.web.RequestHandler):
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'creds' else False
 
+
         user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
 
         user = user.split(':')
