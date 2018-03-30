@@ -93,9 +93,9 @@ $(document).ready(function() {
           keys: keys
         }).then(function(res) {
 
-          console.log(res.rows)
-          for (var row in res.rows) {
 
+          for (var row in res.rows) {
+            console.log(row)
             if ('error' in row) {
               console.log({
                 'id': row.key,
