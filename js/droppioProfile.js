@@ -93,7 +93,7 @@ $(document).ready(function() {
           keys: keys
         }).then(function(res) {
 
-          console.log(res.rows.values());
+          console.log(res.rows);
 
           for (var row in res.rows.values()) {
             console.log(row)
