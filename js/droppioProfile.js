@@ -54,78 +54,82 @@ $(document).ready(function() {
 
   }).done(function(data) {
 
-    data = JSON.parse(data);
+      data = JSON.parse(data);
 
-    respType = data['type'];
+      respType = data['type'];
 
-    if (respType == 'creds') {
+      if (respType == 'creds') {
 
-      var dbUser = data['dbUser'];
-      var dbPass = data['dbPass'];
+        var dbUser = data['dbUser'];
+        var dbPass = data['dbPass'];
 
-      var settingsDB = new PouchDB("settings" + dbUser, {
-        auto_compaction: false,
-        cache: false,
-        heartbeat: true
-      });
-
-      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
-
-      $("#saveSettings").submit(function(e) {
-
-        e.preventDefault();
-
-        info.name = $("#name").val();
-        info.lastname = $("#lastname").val();
-        info.bloodType = $("#bloodType").val();
-        info.dni = $("#dni").val();
-        info.email = $("#email").val();
-        info.birthDate = $("#birthDate").val();
-        info.weight = $("#weight").val();
-        info.password = $("#password").val();
-        info.radius = $("#radius").val();
-
-        elems = info.toJSON();
-        keys = Object.keys(elems);
-
-        settingsDB.allDocs({
-          include_docs: true,
-          keys: keys
-        }).then(function(res) {
-
-          console.log(res.rows);
-
-          for (var row in res.rows.values()) {
-            console.log(row)
-            if ('error' in row) {
-              console.log({
-                'id': row.key,
-                'value': elems[row.key]
-              });
-
-              //settingsDB.put().catch(function(err) {
-              //Strong presence of the dark force I see here (show warning)
-              //});
-
-            }
-          }
-          /*
-          res.value = doc.value;
-
-          settingsDB.put(res).catch(function(err) {
-            //Strong presence of the dark force I see here (show warning)
-          });
-          */
-        }).catch(function(err) {
-          //Document not found
-          /*
-          settingsDB.put(doc).catch(function(err) {
-            //Strong presence of the dark force I see here (show warning)
-          });
-          */
+        var settingsDB = new PouchDB("settings" + dbUser, {
+          auto_compaction: false,
+          cache: false,
+          heartbeat: true
         });
 
-      });
+        var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+
+        $("#saveSettings").submit(function(e) {
+
+            e.preventDefault();
+
+            info.name = $("#name").val();
+            info.lastname = $("#lastname").val();
+            info.bloodType = $("#bloodType").val();
+            info.dni = $("#dni").val();
+            info.email = $("#email").val();
+            info.birthDate = $("#birthDate").val();
+            info.weight = $("#weight").val();
+            info.password = $("#password").val();
+            info.radius = $("#radius").val();
+
+            elems = info.toJSON();
+            keys = Object.keys(elems);
+
+            settingsDB.allDocs({
+              include_docs: true,
+              keys: keys
+            }).then(function(res) {
+
+                console.log(res.rows);
+
+                res.rows.forEach(function(row) {
+
+                    console.log(row)
+
+                    if ('error' in row) {
+                      console.log({
+                        'id': row.key,
+                        'value': elems[row.key]
+                      });
+                    })
+
+
+                  //settingsDB.put().catch(function(err) {
+                  //Strong presence of the dark force I see here (show warning)
+                  //});
+
+                }
+              }
+              /*
+              res.value = doc.value;
+
+              settingsDB.put(res).catch(function(err) {
+                //Strong presence of the dark force I see here (show warning)
+              });
+              */
+            }).catch(function(err) {
+            //Document not found
+            /*
+            settingsDB.put(doc).catch(function(err) {
+              //Strong presence of the dark force I see here (show warning)
+            });
+            */
+          });
+
+        });
 
       settingsDB.sync(remote_settingsDB, {
 
@@ -157,16 +161,16 @@ $(document).ready(function() {
 
   });
 
-  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
-    today: 'Today',
-    clear: 'Clear',
-    close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
-  });
+$('.datepicker').pickadate({
+  selectMonths: true, // Creates a dropdown to control month
+  selectYears: 15, // Creates a dropdown of 15 years to control year,
+  today: 'Today',
+  clear: 'Clear',
+  close: 'Ok',
+  closeOnSelect: false // Close upon selecting a date,
+});
 
 
-  $('select').material_select();
+$('select').material_select();
 
 });
