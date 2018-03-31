@@ -97,13 +97,24 @@ $(document).ready(function() {
 
           res.rows.forEach(function(row) {
 
-            console.log(row)
+            if ('error' in row) {
 
-            if ('error' in row)
-              console.log({
+              settingsDB.put({
                 'id': row.key,
                 'value': elems[row.key]
+              }).catch(function(err) {
+                // Show some fancy warning :O
               });
+
+            } else {
+
+              doc = row.doc;
+              doc['value'] = elems[row.key];
+              console.log(doc);
+              settingsDB.put(doc).catch(function(err) {
+                // Show some fancy warning :O
+              });
+            }
 
           });
 
