@@ -93,14 +93,12 @@ $(document).ready(function() {
           keys: keys
         }).then(function(res) {
 
-          console.log(res.rows);
-
           res.rows.forEach(function(row) {
 
             if ('error' in row) {
 
               settingsDB.put({
-                'id': row.key,
+                '_id': row.key,
                 'value': elems[row.key]
               }).catch(function(err) {
                 // Show some fancy warning :O
