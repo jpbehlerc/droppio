@@ -73,93 +73,94 @@ $(document).ready(function() {
 
         $("#saveSettings").submit(function(e) {
 
-            e.preventDefault();
+          e.preventDefault();
 
-            info.name = $("#name").val();
-            info.lastname = $("#lastname").val();
-            info.bloodType = $("#bloodType").val();
-            info.dni = $("#dni").val();
-            info.email = $("#email").val();
-            info.birthDate = $("#birthDate").val();
-            info.weight = $("#weight").val();
-            info.password = $("#password").val();
-            info.radius = $("#radius").val();
+          info.name = $("#name").val();
+          info.lastname = $("#lastname").val();
+          info.bloodType = $("#bloodType").val();
+          info.dni = $("#dni").val();
+          info.email = $("#email").val();
+          info.birthDate = $("#birthDate").val();
+          info.weight = $("#weight").val();
+          info.password = $("#password").val();
+          info.radius = $("#radius").val();
 
-            elems = info.toJSON();
-            keys = Object.keys(elems);
+          elems = info.toJSON();
+          keys = Object.keys(elems);
 
-            settingsDB.allDocs({
-              include_docs: true,
-              keys: keys
-            }).then(function(res) {
+          settingsDB.allDocs({
+            include_docs: true,
+            keys: keys
+          }).then(function(res) {
 
-                console.log(res.rows);
+              console.log(res.rows);
 
-                res.rows.forEach(function(row) {
+              res.rows.forEach(function(row) {
 
-                    console.log(row)
+                console.log(row)
 
-                    if ('error' in row) {
-                      console.log({
-                        'id': row.key,
-                        'value': elems[row.key]
-                      });
-                    })
-
-
-                  //settingsDB.put().catch(function(err) {
-                  //Strong presence of the dark force I see here (show warning)
-                  //});
-
+                if ('error' in row) {
+                  console.log({
+                    'id': row.key,
+                    'value': elems[row.key]
+                  });
                 }
-              }
-              /*
-              res.value = doc.value;
-
-              settingsDB.put(res).catch(function(err) {
-                //Strong presence of the dark force I see here (show warning)
               });
-              */
-            }).catch(function(err) {
-            //Document not found
-            /*
-            settingsDB.put(doc).catch(function(err) {
-              //Strong presence of the dark force I see here (show warning)
-            });
-            */
-          });
 
+
+              //settingsDB.put().catch(function(err) {
+              //Strong presence of the dark force I see here (show warning)
+              //});
+
+            }
+          }
+          /*
+          res.value = doc.value;
+
+          settingsDB.put(res).catch(function(err) {
+            //Strong presence of the dark force I see here (show warning)
+          });
+          */
+        }).catch(function(err) {
+          //Document not found
+          /*
+          settingsDB.put(doc).catch(function(err) {
+            //Strong presence of the dark force I see here (show warning)
+          });
+          */
         });
 
-      settingsDB.sync(remote_settingsDB, {
+      });
 
-        live: true,
-        retry: true,
-        back_off_function: function(delay) {
+    settingsDB.sync(remote_settingsDB, {
 
-          if (delay == 0) {
+      live: true,
+      retry: true,
+      back_off_function: function(delay) {
 
-            return 1000;
+        if (delay == 0) {
 
-          } else if (delay >= 1000 && delay < 1800000) {
+          return 1000;
 
-            return delay * 1.5;
+        } else if (delay >= 1000 && delay < 1800000) {
 
-          } else if (delay >= 1800000) {
+          return delay * 1.5;
 
-            return delay * 1.1;
+        } else if (delay >= 1800000) {
 
-          }
+          return delay * 1.1;
 
         }
 
-      }).on('error', function(err) {
-        //See you later terminator
-      });
+      }
 
-    }
+    }).on('error', function(err) {
+      //See you later terminator
+    });
 
-  });
+  }
+
+});
 
 $('.datepicker').pickadate({
   selectMonths: true, // Creates a dropdown to control month
