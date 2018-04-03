@@ -93,21 +93,36 @@ $(document).ready(function() {
           keys: keys
         }).then(function(res) {
 
+          res.rows.forEach(function(row) {
 
-          for (var row in res.rows) {
-            console.log(row)
             if ('error' in row) {
-              console.log({
-                'id': row.key,
+
+              settingsDB.put({
+                '_id': row.key,
                 'value': elems[row.key]
+              }).catch(function(err) {
+                // Show some fancy warning :O
               });
 
-              //settingsDB.put().catch(function(err) {
-              //Strong presence of the dark force I see here (show warning)
-              //});
+            } else {
 
+              doc = row.doc;
+              doc['value'] = elems[row.key];
+              console.log(doc);
+              settingsDB.put(doc).catch(function(err) {
+                // Show some fancy warning :O
+              });
             }
-          }
+
+          });
+
+
+          //settingsDB.put().catch(function(err) {
+          //Strong presence of the dark force I see here (show warning)
+          //});
+
+
+
           /*
           res.value = doc.value;
 
@@ -165,7 +180,7 @@ $(document).ready(function() {
     closeOnSelect: false // Close upon selecting a date,
   });
 
-  //$('#pickadate').pickadate();
+
   $('select').material_select();
 
 });
