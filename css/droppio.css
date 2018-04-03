@@ -1,3 +1,13 @@
+/* General Info about Materialize.
+Normal:
+Buttons Color Class: #FFAB40 orange accent-2
+
+Secundary:
+
+Contrasts:
+Buttons Color Class: #21ebad
+*/
+
 /* inputs fields */
 
     /* Textarea */
@@ -8,9 +18,9 @@
     .input-field label {
      color: #fff !important;
     }
-    .input-field svg.active {
+    /*.input-field svg.active {
      color: #21ebad !important;
-    }
+    }*/
     /* label focus color */
     .input-field input[type=text]:focus + label {
      color: #fff !important;
@@ -51,7 +61,8 @@
     font-size: 1px;
     color: rgba(0, 0, 0, 0);
     line-height: 1px;
-    background-color: rgba(33,235,173,0.85);
+    /*background-color: rgba(33,235,173,0.85); jpb */
+    background-color: rgba(255, 255, 255, 0.95);
     margin: auto !important;
     }
     .titleTransparent {
@@ -65,18 +76,23 @@
       margin-left: 0.5rem;
     }
 
+    .datepicker-date-display {
+      background-color: #c91249;
+    }
+    .datepicker-calendar-container {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
 /* Buttons */
 
-    .droppioBtn {
-      background-color: #45ceee !important;
-      height: 40px;
-      width: 150px;
+    .btn, .btn-large {
+      /*background-color: #45ceee !important;*/
+      background-color: #FFAB40 !important;
     }
 
     .droppioBtnFat {
-      background-color: #45ceee !important;
-      height: 55px;
-      width: 150px;
+      /*background-color: #45ceee !important;*/
+      background-color: #FFAB40 !important;
     }
 /* Icons */
 
@@ -140,7 +156,8 @@
     .droppioCardButton{
 
       font-size:1.25em;
-      color: #45ceee !important;
+      /*color: #45ceee !important;*/
+      background-color: #FFAB40 !important;
     }
 
     .droppioSlider{
@@ -162,7 +179,7 @@
     	width: 100wh;
     	height: 90vh;
     	color: #fff;
-    	background: linear-gradient(-45deg, #eb215f, #c81349, #990e38, #820c2f);
+    	background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
     	background-size: 2000px 2000px;
     	-webkit-animation: Gradient 15s ease infinite;
     	-moz-animation: Gradient 15s ease infinite;

@@ -9,9 +9,11 @@ $(document).ready(function() {
     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
     weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
     maxYear: 2002,
-    yearRange: 80,
-    clear: 'Borrar',
-    done: 'OK',
+    yearRange: 65,
+    done: 'Listo',
+    today: false,
+    setDefaultDate: true,
+    defaultDate:  (1990, 0, 1),
   });
 
   //Init pouchDB
