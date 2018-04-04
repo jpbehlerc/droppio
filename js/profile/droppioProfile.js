@@ -1,72 +1,55 @@
 $(document).ready(function() {
 
-  //Init Materialzie
-  $('select').formSelect();
-  $('.datepicker').datepicker({
-    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-    weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-    maxYear: 2002,
-    yearRange: 65,
-    done: 'Listo',
-    today: false,
-    setDefaultDate: true,
-    defaultDate:  (1990, 0, 1),
-  });
-
   //Init pouchDB
   function Settings() {
 
-    this.jsonified = [];
-    this.bloodType = false,
-      this.name = false,
-      this.lastname = false,
-      this.dni = false,
-      this.email = false,
-      this.weight = false,
-      this.birthdate = false,
-      this.password = false,
-      this.toJSON = function() {
+    this._jsonified = [];
+    this._keys = [];
+    this.bloodType = false;
+    this.name = false;
+    this.lastname = false;
+    this.dni = false;
+    this.email = false;
+    this.weight = false;
+    this.birthDate = false;
+    this.password = false;
+    this.toJSON = function() {
 
-        for (var prop in this) {
+      for (var prop in this) {
+
+        if (prop.indexOf('_') == -1) {
+
           if (this[prop].length)
-            this.jsonified.push({
-              '_id': prop,
-              value: this[prop]
-            });
+            this._jsonified[prop] = this[prop];
+
         }
-        return this.jsonified;
       }
+
+      return this._jsonified;
+    };
   }
 
   var info = new Settings();
 
-  $("#saveSettings").submit(function(e) {
+  function storePosition(position) {
 
-  info.name = $("#name").val();
-  info.lastname = $("#lastname").val();
-  info.bloodType = $("#bloodType").val();
-  info.dni = $("#dni").val();
-  info.email = $("#email").val();
-  info.birthDate = $("#birthdate").val();
-  info.weight = $("#weight").val();
-  info.password = $("#password").val();
+    info.location = {
+      'lat': position.coords.latitude,
+      'lon': position.coords.longitude
+    };
 
-  console.log(info.toJSON());
+  }
+
+  //Watch and store position in realtime
+  navigator.geolocation.watchPosition(function(position) {
+
+    storePosition(position);
   });
-  /*
-  function getCookie(name) {
-    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-    return r ? r[1] : false;
-  }
 
-  var info = new Settings();
 
-  $.post("/", {
+  $.post("/registerTest", {
 
-    _xsrf: getCookie('_xsrf'),
+    _xsrf: xsrf_token,
     type: "creds"
 
   }).done(function(data) {
@@ -86,64 +69,118 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_settingssDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/settings' + dbUser);
+      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
-    }
+      $("#saveSettings").submit(function(e) {
 
-  });
+        e.preventDefault();
+
+        info.name = $("#name").val();
+        info.lastname = $("#lastname").val();
+        info.bloodType = $("#bloodType").val();
+        info.dni = $("#dni").val();
+        info.email = $("#email").val();
+        info.birthDate = $("#birthDate").val();
+        info.weight = $("#weight").val();
+        info.password = $("#password").val();
+        info.radius = $("#radius").val();
+
+        elems = info.toJSON();
+        keys = Object.keys(elems);
+
+        settingsDB.allDocs({
+          include_docs: true,
+          keys: keys
+        }).then(function(res) {
+
+          res.rows.forEach(function(row) {
+
+            if ('error' in row) {
+
+              settingsDB.put({
+                '_id': row.key,
+                'value': elems[row.key]
+              }).catch(function(err) {
+                // Show some fancy warning :O
+              });
+
+            } else {
+
+              doc = row.doc;
+              doc['value'] = elems[row.key];
+              console.log(doc);
+              settingsDB.put(doc).catch(function(err) {
+                // Show some fancy warning :O
+              });
+            }
+
+          });
 
 
-  settings.sync(remote_settings, {
+          //settingsDB.put().catch(function(err) {
+          //Strong presence of the dark force I see here (show warning)
+          //});
 
-    live: true,
-    retry: true,
-    back_off_function: function(delay) {
 
-      if (delay == 0) {
 
-        return 1000;
+          /*
+          res.value = doc.value;
 
-      } else if (delay >= 1000 && delay < 1800000) {
-
-        return delay * 1.5;
-
-      } else if (delay >= 1800000) {
-
-        return delay * 1.1;
-
-      }
-
-    }
-
-  }).on('paused', function(err) {
-
-    $("#saveSettings").submit(function(e) {
-
-      info.name = $("#name").val();
-      info.lastname = $("#lastname").val();
-      info.bloodType = $("#bloodType").val();
-      info.dni = $("#dni").val();
-      info.email = $("#email").val();
-      info.birthDate = $("#birthDate").val();
-      info.weight = $("#weight").val();
-      info.password = $("#password").val();
-      /*
-      for (var doc in info.toJSON()) {
-
-        settingsDB.get(prop).then(function(doc) {
-
-          doc.value = info[prop];
-
+          settingsDB.put(res).catch(function(err) {
+            //Strong presence of the dark force I see here (show warning)
+          });
+          */
+        }).catch(function(err) {
+          //Document not found
+          /*
           settingsDB.put(doc).catch(function(err) {
             //Strong presence of the dark force I see here (show warning)
           });
-
+          */
         });
-      }
 
-    });
+      });
 
+      settingsDB.sync(remote_settingsDB, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+
+        }
+
+      }).on('error', function(err) {
+        //See you later terminator
+      });
+
+    }
 
   });
-  */
+
+  $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+
+
+  $('select').material_select();
+
 });
