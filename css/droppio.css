@@ -8,7 +8,7 @@ Contrasts:
 Buttons Color Class: #21ebad
 */
 
-/* inputs fields */
+/* form */
 
     /* Textarea */
     input ,select , textarea, select:not(.picker__select--month, .picker__select--year){
@@ -40,8 +40,9 @@ Buttons Color Class: #21ebad
     }
 
 
-
     /* align and set width */
+
+
     .range-field{
 
       width: 93% !important;
@@ -55,6 +56,7 @@ Buttons Color Class: #21ebad
       color: #c91249 ;
     }
 
+    /* Titles */
 
     .separator {
     width: 92% !important;
@@ -65,10 +67,23 @@ Buttons Color Class: #21ebad
     background-color: rgba(255, 255, 255, 0.95);
     margin: auto !important;
     }
+
     .titleTransparent {
-    color: rgba(255, 255, 255, 0.95);
-    margin-top:4em;
-    margin-bottom:1em;
+    color: rgba(255, 255, 255, 0.80);
+    }
+    h6 {
+      margin-top:4em;
+      margin-bottom:1em;
+      font-size: 1.5em;
+    }
+
+    #signUpSection .row {
+      margin-bottom: 5px !important;
+    }
+
+    #logInSection {
+      width: 100vw;
+      height: 100vh;
     }
 
     .droppioIcon {
@@ -85,15 +100,11 @@ Buttons Color Class: #21ebad
 
 /* Buttons */
 
-    .btn, .btn-large {
+   .btn, .btn-large {
       /*background-color: #45ceee !important;*/
       background-color: #FFAB40 !important;
     }
 
-    .droppioBtnFat {
-      /*background-color: #45ceee !important;*/
-      background-color: #FFAB40 !important;
-    }
 /* Icons */
 
     .navbarIcon{
@@ -163,6 +174,12 @@ Buttons Color Class: #21ebad
     .droppioSlider{
 
       margin-top:1.7em !important;
+    }
+
+    /* SignUp Logo */
+    .signUpLogo {
+      height: 30px !important;
+      margin-top: 30px;
     }
 /* content section */
 
