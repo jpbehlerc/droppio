@@ -1,4 +1,4 @@
-$(document).ready(function() {
+2 $(document).ready(function() {
 
   //Init pouchDB
   function Campaign() {
@@ -36,14 +36,14 @@ $(document).ready(function() {
   var campaign = new Campaigns();
 
   var compatibility = {
-    "O+": ["O+", "O-"],
-    "A+": ["A+", "A-", "O+", "O-"],
-    "B+": ["B+", "B-", "O+", "O-"],
-    "AB+": ["A+", "A-", "AB+", "AB-", "B+", "B-", "O+", "O-"],
-    "O-": ["O-"],
-    "A-": ["A-", "O-"],
-    "B-": ["B-", "O-"],
-    "AB-": ["AB-", "A-", "B-", "O-"]
+    4: [4, 8],
+    1: [1, 5, 4, 8],
+    2: [2, 6, 4, 8],
+    3: [1, 5, 3, 7, 2, 6, 4, 8],
+    8: [8],
+    5: [5, 8],
+    6: [6, 8],
+    7: [7, 5, 6, 8]
   }
 
   $.post("/", {
