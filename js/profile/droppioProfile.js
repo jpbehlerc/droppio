@@ -38,11 +38,11 @@ $(document).ready(function() {
       'lon': position.coords.longitude
     };
 
-    var latlon = new google.maps.LatLng(info.location.lat, info.location.lon);
+    var latlon = new google.maps.LatLng("-32.8832582", "-68.8935387");
 
     var request = {
       location: latlon,
-      query: 'hospitals near Mendoza'
+      query: 'Hospitals in Mendoza'
     };
 
     var opts = {
