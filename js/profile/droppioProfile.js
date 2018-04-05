@@ -45,8 +45,13 @@ $(document).ready(function() {
       query: 'hospitals near Mendoza'
     };
 
+    var opts = {
+      zoom: 14,
+      center: latlon
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas"), opts);
     //Make the service call to google
-    var callPlaces = new google.maps.places.PlacesService('<div id="dummy"></div>');
+    var callPlaces = new google.maps.places.PlacesService(map);
 
     callPlaces.search(request, function(results, status) {
       //check to see if Google returns an "OK" status
