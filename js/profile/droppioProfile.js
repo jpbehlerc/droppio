@@ -39,24 +39,31 @@ $(document).ready(function() {
       'lon': position.coords.longitude
     };
 
-    var geocoder = new google.maps.Geocoder();
+  }
 
+  //Get state/province from location
+  function storeProvince() {
+
+    var geocoder = new google.maps.Geocoder();
     var latLon = new google.maps.LatLng(info.location.lat, info.location.lon);
 
     geocoder.geocode({
       'latLng': latLon
     }, function(results, status) {
+
       if (status == google.maps.GeocoderStatus.OK) {
+
         var result;
         if (results.length > 1) {
           result = results[1];
         } else {
           result = results[0];
         }
-        //console.log(result);
-        console.log(result.address_components[3].long_name);
+
+        info.province = result.address_components[3].long_name;
 
       }
+
     });
 
   }
@@ -65,6 +72,10 @@ $(document).ready(function() {
   navigator.geolocation.watchPosition(function(position) {
 
     storePosition(position);
+
+    if (info.province)
+      storeProvince();
+
   });
 
 
@@ -114,9 +125,24 @@ $(document).ready(function() {
         info.password = $("#password").val();
         info.radius = $("#radius").val();
 
+
         elems = info.toJSON();
         keys = Object.keys(elems);
 
+        if ('province' in elems) {
+
+          hospitalsDB.find({
+            selector: {
+              province: info.province
+            }
+          }).then(function(result) {
+
+            console.log(result);
+          }).catch(function(err) {
+            console.log(err);
+          });
+
+        }
         settingsDB.allDocs({
           include_docs: true,
           keys: keys
