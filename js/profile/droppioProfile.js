@@ -41,10 +41,10 @@ $(document).ready(function() {
 
     var geocoder = new google.maps.Geocoder();
 
-    var latlon = new google.maps.LatLng("-32.8832582", "-68.8935387");
+    var latLon = new google.maps.LatLng(info.location.lat, info.location.lon);
 
     geocoder.geocode({
-      'latLng': geolocate
+      'latLng': latLon
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         var result;
@@ -204,26 +204,23 @@ $(document).ready(function() {
         //See you later terminator
       });
 
+
+
+
     }
 
   });
 
+  $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
 
 
-}
-
-});
-
-$('.datepicker').pickadate({
-  selectMonths: true, // Creates a dropdown to control month
-  selectYears: 15, // Creates a dropdown of 15 years to control year,
-  today: 'Today',
-  clear: 'Clear',
-  close: 'Ok',
-  closeOnSelect: false // Close upon selecting a date,
-});
-
-
-$('select').material_select();
+  $('select').material_select();
 
 });
