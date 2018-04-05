@@ -38,6 +38,24 @@ $(document).ready(function() {
       'lon': position.coords.longitude
     };
 
+    var latlon = new google.maps.LatLng(info.location.lat, info.location.lon);
+
+    var request = {
+      location: latlon,
+      query: 'hospitals near Mendoza'
+    };
+
+    //Make the service call to google
+    var callPlaces = new google.maps.places.PlacesService(map);
+
+    callPlaces.search(request, function(results, status) {
+      //check to see if Google returns an "OK" status
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        //trace what Google gives us back
+        console.log(results);
+      };
+    });
+
   }
 
   //Watch and store position in realtime
@@ -116,27 +134,8 @@ $(document).ready(function() {
 
           });
 
-
-          //settingsDB.put().catch(function(err) {
-          //Strong presence of the dark force I see here (show warning)
-          //});
-
-
-
-          /*
-          res.value = doc.value;
-
-          settingsDB.put(res).catch(function(err) {
-            //Strong presence of the dark force I see here (show warning)
-          });
-          */
         }).catch(function(err) {
-          //Document not found
-          /*
-          settingsDB.put(doc).catch(function(err) {
-            //Strong presence of the dark force I see here (show warning)
-          });
-          */
+          // some paranormal shit happening here (show warning)
         });
 
       });
