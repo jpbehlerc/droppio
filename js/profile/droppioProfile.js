@@ -13,6 +13,7 @@ $(document).ready(function() {
     this.weight = false;
     this.birthDate = false;
     this.password = false;
+    this.province = false;
     this.toJSON = function() {
 
       for (var prop in this) {
@@ -38,28 +39,24 @@ $(document).ready(function() {
       'lon': position.coords.longitude
     };
 
+    var geocoder = new google.maps.Geocoder();
+
     var latlon = new google.maps.LatLng("-32.8832582", "-68.8935387");
 
-    var request = {
-      location: latlon,
-      query: 'Hospitals in Mendoza',
-      type: 'hospital',
-      radius: 50000
-    };
+    geocoder.geocode({
+      'latLng': geolocate
+    }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var result;
+        if (results.length > 1) {
+          result = results[1];
+        } else {
+          result = results[0];
+        }
+        //console.log(result);
+        console.log(result.address_components[2].long_name + ', ' + result.address_components[3].long_name);
 
-    map = new google.maps.Map(document.getElementById("dummyMap"), {
-      center: latlon,
-    });
-
-    //Make the service call to google
-    var callPlaces = new google.maps.places.PlacesService(map);
-
-    callPlaces.textSearch(request, function(results, status) {
-      //check to see if Google returns an "OK" status
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        //trace what Google gives us back
-        console.log(results);
-      };
+      }
     });
 
   }
@@ -94,6 +91,14 @@ $(document).ready(function() {
       });
 
       var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+
+      var hospitalsDB = new PouchDB("hospitals", {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
+
+      var remote_hospitalsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/hospitals');
 
       $("#saveSettings").submit(function(e) {
 
@@ -172,20 +177,53 @@ $(document).ready(function() {
         //See you later terminator
       });
 
+
+      hospitalsDB.sync(remote_hospitalsDB, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+
+        }
+
+      }).on('error', function(err) {
+        //See you later terminator
+      });
+
     }
 
   });
 
-  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
-    today: 'Today',
-    clear: 'Clear',
-    close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
-  });
 
 
-  $('select').material_select();
+}
+
+});
+
+$('.datepicker').pickadate({
+  selectMonths: true, // Creates a dropdown to control month
+  selectYears: 15, // Creates a dropdown of 15 years to control year,
+  today: 'Today',
+  clear: 'Clear',
+  close: 'Ok',
+  closeOnSelect: false // Close upon selecting a date,
+});
+
+
+$('select').material_select();
 
 });
