@@ -49,7 +49,7 @@ $(document).ready(function() {
       zoom: 14,
       center: latlon
     }
-    map = new google.maps.Map(document.getElementById("map_canvas"), opts);
+    map = new google.maps.Map(document.getElementById("dummyMap"), opts);
     //Make the service call to google
     var callPlaces = new google.maps.places.PlacesService(map);
 
