@@ -47,7 +47,8 @@ $(document).ready(function() {
 
     var opts = {
       zoom: 14,
-      center: latlon
+      center: latlon,
+      radius: 50000,
     }
     map = new google.maps.Map(document.getElementById("dummyMap"), opts);
     //Make the service call to google
