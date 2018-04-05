@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     var request = {
       location: latlon,
-      query: 'Hospitals in Mendoza',
+      query: 'Hospitales en Mendoza',
       radius: 50000
     };
 
