@@ -54,7 +54,7 @@ $(document).ready(function() {
           result = results[0];
         }
         //console.log(result);
-        console.log(result.address_components[2].long_name + ', ' + result.address_components[3].long_name);
+        console.log(result.address_components[3].long_name);
 
       }
     });
