@@ -42,7 +42,8 @@ $(document).ready(function() {
 
     var request = {
       location: latlon,
-      query: 'Hospitales en Mendoza',
+      query: 'Hospitals in Mendoza',
+      type: 'hospital',
       radius: 50000
     };
 
@@ -53,7 +54,7 @@ $(document).ready(function() {
     //Make the service call to google
     var callPlaces = new google.maps.places.PlacesService(map);
 
-    callPlaces.search(request, function(results, status) {
+    callPlaces.textSearch(request, function(results, status) {
       //check to see if Google returns an "OK" status
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         //trace what Google gives us back
