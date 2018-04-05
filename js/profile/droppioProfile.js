@@ -42,15 +42,14 @@ $(document).ready(function() {
 
     var request = {
       location: latlon,
-      query: 'Hospitals in Mendoza'
+      query: 'Hospitals in Mendoza',
+      radius: 50000
     };
 
-    var opts = {
-      zoom: 14,
+    map = new google.maps.Map(document.getElementById("dummyMap"), {
       center: latlon,
-      radius: 50000,
-    }
-    map = new google.maps.Map(document.getElementById("dummyMap"), opts);
+    });
+
     //Make the service call to google
     var callPlaces = new google.maps.places.PlacesService(map);
 
