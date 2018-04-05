@@ -46,7 +46,7 @@ $(document).ready(function() {
     };
 
     //Make the service call to google
-    var callPlaces = new google.maps.places.PlacesService(map);
+    var callPlaces = new google.maps.places.PlacesService('<div id="dummy"></div>');
 
     callPlaces.search(request, function(results, status) {
       //check to see if Google returns an "OK" status
