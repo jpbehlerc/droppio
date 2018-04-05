@@ -19,7 +19,7 @@ $(document).ready(function() {
       for (var prop in this) {
 
         if (prop.indexOf('_') == -1) {
-
+          console.log(prop);
           if (this[prop].length)
             this._jsonified[prop] = this[prop];
 
