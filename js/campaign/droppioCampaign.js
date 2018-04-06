@@ -121,7 +121,9 @@ $(document).ready(function() {
 
             keys.forEach(function(elem) {
 
-              $('#' + elem + 'Div').css('display', 'block');
+              $('#' + elem + 'Div').fadeIn();
+              $('#' + elem + 'Div').css('display', 'none');
+
             });
 
 
@@ -135,9 +137,14 @@ $(document).ready(function() {
 
                 res.rows.forEach(function(row) {
 
-                  if (keys.includes(row.id))
-                    $('#' + row.id + 'Div').css('display', 'none');
+                  if (keys.includes(row.id)) {
 
+                    $('#' + row.id + 'Div').fadeOut();
+
+                    $('#' + row.id + 'Div').promise().done(function() {
+                      css('display', 'none');
+                    })
+                  }
                 });
 
               }).catch(function(err) {
