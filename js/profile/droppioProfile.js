@@ -129,7 +129,7 @@ $(document).ready(function() {
 
         elems = info.toJSON();
         keys = Object.keys(elems);
-        console.log(elems.include('province'));
+        console.log(keys);
 
         if (keys.include('province')) {
 
