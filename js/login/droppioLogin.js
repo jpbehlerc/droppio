@@ -18,17 +18,18 @@ $(document).ready(function() {
 
       this.toJSON = function() {
 
+        this._jsonified.length = 0
+
         if (this.type in this._fields) {
 
           for (var prop in this) {
 
-            if (this[prop] != null) {
+            if (this[prop] != undefined && this[prop] != "") {
 
-              if (this._fields[this.type].includes(prop)) {
-
+              if (this._fields[this.type].includes(prop))
                 this._jsonified[prop] = this[prop];
 
-              }
+
             }
           }
         }
