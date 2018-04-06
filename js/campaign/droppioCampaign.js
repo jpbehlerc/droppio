@@ -77,7 +77,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/settings' + dbUser);
+      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
       //Init respective DBs
       var campaignsDB = new PouchDB("campaigns", {
@@ -86,7 +86,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/campaigns');
+      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
 
       campaignsDB.sync(remote_campaignsDB, {
 
