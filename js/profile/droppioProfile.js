@@ -129,7 +129,6 @@ $(document).ready(function() {
 
         elems = info.toJSON();
         keys = Object.keys(elems);
-        console.log(elems);
 
         if ('province' in elems) {
 
@@ -139,7 +138,14 @@ $(document).ready(function() {
             }
           }).then(function(result) {
 
-            console.log(result);
+            docs = 'docs' in result ? result.docs : false;
+
+            if (docs) {
+
+              for (var key in docs)
+                console.log(docs[key]);
+
+            }
           }).catch(function(err) {
             console.log(err);
           });
