@@ -41,7 +41,10 @@ $(document).ready(function() {
   var campaign = new Campaign();
   var settings = new Settings();
 
-  var syncReady = false;
+  var syncReady = {
+    'campaigns': false,
+    'settings': false
+  };
 
   var compatibility = {
     4: [4, 8],
@@ -54,7 +57,7 @@ $(document).ready(function() {
     7: [7, 5, 6, 8]
   }
 
-  $.post("/", {
+  $.post("/registerTest", {
 
     _xsrf: getCookie('_xsrf'),
     type: "creds"
@@ -71,22 +74,50 @@ $(document).ready(function() {
       var dbPass = data['dbPass'];
 
       //Init respective DBs
-      var campaignsDB = new PouchDB("settings" + dbUser, {
+      var settingsDB = new PouchDB("settings" + dbUser, {
         auto_compaction: false,
         cache: false,
         heartbeat: true
       });
 
-      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
-      //Init respective DBs
       var campaignsDB = new PouchDB("campaigns", {
-        auto_compaction: false,
+        auto_compaction: true,
         cache: false,
         heartbeat: true
       });
 
       var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
+
+      settingsDB.sync(remote_settingsDB, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+        }
+
+      }).on('paused', function(err) {
+
+        syncReady['settings'] = true;
+
+      }).on('error', function(err) {
+        //See you later pal (show warning)
+      });
 
       campaignsDB.sync(remote_campaignsDB, {
 
@@ -111,7 +142,7 @@ $(document).ready(function() {
 
       }).on('paused', function(err) {
 
-        syncReady = true;
+        syncReady['campaigns'] = true;
 
       }).on('error', function(err) {
         //See you later pal (show warning)
@@ -140,10 +171,45 @@ $(document).ready(function() {
   $('select').formSelect();
 
 
+  $("#ownCampaign, #othersCampaign").click(function() {
+
+    var divs = ['name', 'lastName', 'bloodType', 'dni'];
+
+    if (syncReady['settings']) {
+
+      for (var div in divs) {
+
+        $(div + 'Div').css('display', 'block');
+      }
+
+      if ($(this).attr("id") == 'ownCampaign') {
+
+
+        settingsDB.allDocs({
+          include_docs: true,
+          keys: divs
+        }).then(function(res) {
+
+          res.rows.forEach(function(row) {
+
+            if ('doc' in row)
+              $(divs + 'Div').css('display', 'none');
+
+          });
+
+        }).catch(function(err) {
+          // some paranormal shit happening here (show warning)
+        });
+
+
+      }
+    }
+
+  });
 
   $("#submitCampaign").submit(function() {
 
-    if (syncReady) {
+    if (syncReady['campaigns']) {
 
       name = $("#name").val();
       lastname = $("#lastname").val();
