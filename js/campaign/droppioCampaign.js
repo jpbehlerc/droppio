@@ -123,6 +123,7 @@ $(document).ready(function() {
 
               $(div + 'Div').css('display', 'block');
             }
+            console.log($(this).attr("id"));
 
             if ($(this).attr("id") == 'ownCampaign') {
 
