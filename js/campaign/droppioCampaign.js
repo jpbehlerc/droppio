@@ -148,7 +148,7 @@ $(document).ready(function() {
 
             keys.forEach(function(elem) {
 
-              ('#' + elem + 'Div').css('display', 'block');
+              $('#' + elem + 'Div').css('display', 'block');
               $('#' + elem + 'Div').animateCss('flipInX');
 
 
