@@ -148,10 +148,8 @@ $(document).ready(function() {
 
             keys.forEach(function(elem) {
 
-              $('#' + elem + 'Div').animateCss('flipInX', function() {
-
-                $('#' + elem + 'Div').css('display', 'block');
-              });
+              ('#' + elem + 'Div').css('display', 'block');
+              $('#' + elem + 'Div').animateCss('flipInX');
 
 
             });
