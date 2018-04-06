@@ -5,15 +5,15 @@ $(document).ready(function() {
 
     this._jsonified = [];
     this._keys = [];
-    this.bloodType = undefined;
-    this.name = undefined;
-    this.lastname = undefined;
-    this.dni = undefined;
-    this.email = undefined;
-    this.weight = undefined;
-    this.birthDate = undefined;
-    this.password = undefined;
-    this.province = undefined;
+    this.bloodType = null;
+    this.name = null;
+    this.lastname = null;
+    this.dni = null;
+    this.email = null;
+    this.weight = null;
+    this.birthDate = null;
+    this.password = null;
+    this.province = null;
     this.toJSON = function() {
 
       for (var prop in this) {
@@ -96,16 +96,16 @@ $(document).ready(function() {
       var dbPass = data['dbPass'];
 
       var settingsDB = new PouchDB("settings" + dbUser, {
-        auto_compaction: undefined,
-        cache: undefined,
+        auto_compaction: true,
+        cache: false,
         heartbeat: true
       });
 
       var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
       var hospitalsDB = new PouchDB("hospitals", {
-        auto_compaction: undefined,
-        cache: undefined,
+        auto_compaction: true,
+        cache: false,
         heartbeat: true
       });
 
@@ -127,7 +127,7 @@ $(document).ready(function() {
 
         elems = info.toJSON();
         keys = Object.keys(elems);
-
+        console.log(elems);
         if ('province' in elems) {
 
           hospitalsDB.find({
