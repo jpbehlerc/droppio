@@ -134,8 +134,8 @@ $(document).ready(function() {
               }).then(function(res) {
 
                 res.rows.forEach(function(row) {
-                  console.log(keys);
-                  if (keys.include(row.id))
+
+                  if (keys.includes(row.id))
                     $('#' + row.id + 'Div').css('display', 'none');
 
                 });
