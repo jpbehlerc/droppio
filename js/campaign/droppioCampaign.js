@@ -119,10 +119,10 @@ $(document).ready(function() {
 
             var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
-            for (var div in keys) {
+            keys.forEach(function(elem) {
 
               $('#' + div + 'Div').css('display', 'block');
-            }
+            });
 
 
             if ($(this).attr("id") == 'ownCampaign') {
