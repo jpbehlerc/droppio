@@ -129,7 +129,7 @@ $(document).ready(function() {
 
         elems = info.toJSON();
         keys = Object.keys(elems);
-
+        console.log(keys.includes('province'));
         if (keys.includes('province')) {
 
           hospitalsDB.find({
