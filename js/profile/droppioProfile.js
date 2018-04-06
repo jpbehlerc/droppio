@@ -158,7 +158,13 @@ $(document).ready(function() {
                 console.log(nearEnough);
 
               }
-              console.log(docs[key]);
+
+              settingsDB.put({
+                '_id': 'nearHospitals',
+                'value': nearEnough
+              }).catch(function(err) {
+                // Mmm fresh blood for good 'Ol drake 
+              });
 
             }
           }).catch(function(err) {
