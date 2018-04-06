@@ -1,257 +1,257 @@
 $(document).ready(function() {
 
-      //Init pouchDB
-      function Campaign() {
+  //Init pouchDB
+  function Campaign() {
 
-        this._id = false,
-          this.bloodType = false,
-          this.name = false,
-          this.lastname = false,
-          this.dni = false,
-          this.hospital = false,
-          this.hospitalHours = false,
-          this.hospitalLocation = false,
-          this.duty = false,
-          this.status = false,
-          this.createdAt = false
+    this._id = false,
+      this.bloodType = false,
+      this.name = false,
+      this.lastname = false,
+      this.dni = false,
+      this.hospital = false,
+      this.hospitalHours = false,
+      this.hospitalLocation = false,
+      this.duty = false,
+      this.status = false,
+      this.createdAt = false
 
-      };
+  };
 
-      function Settings() {
+  function Settings() {
 
-        this.bloodType = false,
-          this.nearbyHospitals = false
-      };
+    this.bloodType = false,
+      this.nearbyHospitals = false
+  };
 
-      function getCookie(name) {
-        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-        return r ? r[1] : false;
-      }
+  function getCookie(name) {
+    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return r ? r[1] : false;
+  }
 
-      function dec2hex(dec) {
-        return ('0' + dec.toString(16)).substr(-2);
-      };
+  function dec2hex(dec) {
+    return ('0' + dec.toString(16)).substr(-2);
+  };
 
-      function randHex(len) {
-        var arr = new Uint8Array((len || 40) / 2);
-        window.crypto.getRandomValues(arr);
-        return Array.from(arr, dec2hex).join('');
-      };
+  function randHex(len) {
+    var arr = new Uint8Array((len || 40) / 2);
+    window.crypto.getRandomValues(arr);
+    return Array.from(arr, dec2hex).join('');
+  };
 
-      $.fn.extend({
-        animateCss: function(animationName, callback) {
-          var animationEnd = (function(el) {
-            var animations = {
-              animation: 'animationend',
-              OAnimation: 'oAnimationEnd',
-              MozAnimation: 'mozAnimationEnd',
-              WebkitAnimation: 'webkitAnimationEnd',
-            };
+  $.fn.extend({
+    animateCss: function(animationName, callback) {
+      var animationEnd = (function(el) {
+        var animations = {
+          animation: 'animationend',
+          OAnimation: 'oAnimationEnd',
+          MozAnimation: 'mozAnimationEnd',
+          WebkitAnimation: 'webkitAnimationEnd',
+        };
 
-            for (var t in animations) {
-              if (el.style[t] !== undefined) {
-                return animations[t];
-              }
-            }
-          })(document.createElement('div'));
+        for (var t in animations) {
+          if (el.style[t] !== undefined) {
+            return animations[t];
+          }
+        }
+      })(document.createElement('div'));
 
-          this.addClass('animated ' + animationName).one(animationEnd, function() {
-            $(this).removeClass('animated ' + animationName);
+      this.addClass('animated ' + animationName).one(animationEnd, function() {
+        $(this).removeClass('animated ' + animationName);
 
-            if (typeof callback === 'function') callback();
-          });
-
-          return this;
-        },
+        if (typeof callback === 'function') callback();
       });
 
-      var campaign = new Campaign();
-      var settings = new Settings();
+      return this;
+    },
+  });
 
-      var notReady = {
-        'campaigns': true,
-        'settings': true
-      };
+  var campaign = new Campaign();
+  var settings = new Settings();
 
-      var compatibility = {
-        4: [4, 8],
-        1: [1, 5, 4, 8],
-        2: [2, 6, 4, 8],
-        3: [1, 5, 3, 7, 2, 6, 4, 8],
-        8: [8],
-        5: [5, 8],
-        6: [6, 8],
-        7: [7, 5, 6, 8]
-      }
+  var notReady = {
+    'campaigns': true,
+    'settings': true
+  };
 
-      $.post("/registerTest", {
+  var compatibility = {
+    4: [4, 8],
+    1: [1, 5, 4, 8],
+    2: [2, 6, 4, 8],
+    3: [1, 5, 3, 7, 2, 6, 4, 8],
+    8: [8],
+    5: [5, 8],
+    6: [6, 8],
+    7: [7, 5, 6, 8]
+  }
 
-        _xsrf: getCookie('_xsrf'),
-        type: "creds"
+  $.post("/registerTest", {
 
-      }).done(function(data) {
+    _xsrf: getCookie('_xsrf'),
+    type: "creds"
 
-        data = JSON.parse(data);
+  }).done(function(data) {
 
-        respType = data['type'];
+    data = JSON.parse(data);
 
-        if (respType == 'creds') {
+    respType = data['type'];
 
-          var dbUser = data['dbUser'];
-          var dbPass = data['dbPass'];
+    if (respType == 'creds') {
 
-          //Init respective DBs
-          var settingsDB = new PouchDB("settings" + dbUser, {
-            auto_compaction: false,
-            cache: false,
-            heartbeat: true
-          });
+      var dbUser = data['dbUser'];
+      var dbPass = data['dbPass'];
 
-          var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+      //Init respective DBs
+      var settingsDB = new PouchDB("settings" + dbUser, {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
 
-          var campaignsDB = new PouchDB("campaigns", {
-            auto_compaction: true,
-            cache: false,
-            heartbeat: true
-          });
+      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
-          var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
+      var campaignsDB = new PouchDB("campaigns", {
+        auto_compaction: true,
+        cache: false,
+        heartbeat: true
+      });
 
-          settingsDB.sync(remote_settingsDB, {
+      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
 
-            live: true,
-            retry: true,
-            back_off_function: function(delay) {
+      settingsDB.sync(remote_settingsDB, {
 
-              if (delay == 0) {
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
 
-                return 1000;
+          if (delay == 0) {
 
-              } else if (delay >= 1000 && delay < 1800000) {
+            return 1000;
 
-                return delay * 1.5;
+          } else if (delay >= 1000 && delay < 1800000) {
 
-              } else if (delay >= 1800000) {
+            return delay * 1.5;
 
-                return delay * 1.1;
+          } else if (delay >= 1800000) {
 
-              }
-            }
+            return delay * 1.1;
 
-          }).on('paused', function(err) {
+          }
+        }
 
-            if (notReady['settings']) {
+      }).on('paused', function(err) {
 
-              $("#ownCampaign, #othersCampaign").click(function() {
+        if (notReady['settings']) {
 
-                var keys = ['name', 'lastName', 'bloodType', 'dni'];
+          $("#ownCampaign, #othersCampaign").click(function() {
 
-                keys.forEach(function(elem) {
+            var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
-                  $('#' + elem + 'Div').css('display', 'block');
-                  $('#' + elem + 'Div').animateCss('flipInX');
+            keys.forEach(function(elem) {
 
-
-                });
-
-
-                if ($(this).attr("id") == 'ownCampaign') {
+              $('#' + elem + 'Div').css('display', 'block');
+              $('#' + elem + 'Div').animateCss('flipInX');
 
 
-                  settingsDB.allDocs({
-                    include_docs: true,
-                    keys: keys
-                  }).then(function(res) {
-
-                    res.rows.forEach(function(row) {
-
-                      if (keys.includes(row.id)) {
-
-                        //Have to fix this glitch
-                        $('#' + row.id + 'Div').animateCss('flipOutX', function() {
-                          $('#' + row.id + 'Div').css('display', 'none');
-                        });
+            });
 
 
-                      }
+            if ($(this).attr("id") == 'ownCampaign') {
+
+
+              settingsDB.allDocs({
+                include_docs: true,
+                keys: keys
+              }).then(function(res) {
+
+                res.rows.forEach(function(row) {
+
+                  if (keys.includes(row.id)) {
+
+                    //Have to fix this glitch
+                    $('#' + row.id + 'Div').animateCss('flipOutX', function() {
+                      $('#' + row.id + 'Div').css('display', 'none');
                     });
 
-                  }).catch(function(err) {
-                    // some paranormal shit happening here (show warning)
-                  });
 
+                  }
+                });
 
-
-                }
-
+              }).catch(function(err) {
+                // some paranormal shit happening here (show warning)
               });
 
 
-              notReady['settings'] = false;
+
             }
 
-          }).on('error', function(err) {
-            //See you later pal (show warning)
           });
 
-          campaignsDB.sync(remote_campaignsDB, {
 
-            live: true,
-            retry: true,
-            back_off_function: function(delay) {
+          notReady['settings'] = false;
+        }
 
-              if (delay == 0) {
+      }).on('error', function(err) {
+        //See you later pal (show warning)
+      });
 
-                return 1000;
+      campaignsDB.sync(remote_campaignsDB, {
 
-              } else if (delay >= 1000 && delay < 1800000) {
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
 
-                return delay * 1.5;
+          if (delay == 0) {
 
-              } else if (delay >= 1800000) {
+            return 1000;
 
-                return delay * 1.1;
+          } else if (delay >= 1000 && delay < 1800000) {
 
-              }
-            }
+            return delay * 1.5;
 
-          }).on('paused', function(err) {
+          } else if (delay >= 1800000) {
 
-              if (notReady['campaigns']) {
+            return delay * 1.1;
 
-                $("#createCampaign").submit(function() {
+          }
+        }
 
-                    name = $("#name").val();
-                    lastname = $("#lastname").val();
-                    bloodType = $("#bloodType").val();
-                    dni = $("#dni").val();
-                    status = $("#status").val();
+      }).on('paused', function(err) {
 
-                    hospital = $("#hospital").val().split("@");
-                    hospitalLocation = hospital[1].split(" ");
-                    hospitalLocation = {
-                      'lat': hospitalLocation[0],
-                      'lon': hospitalLocation[1]
-                    };
-                    hospital = hospital[0];
+        if (notReady['campaigns']) {
 
-                    hospitalStarts = $("#hospitalHoursStart").val();
-                    hospitalEnds = $("#hospitalHoursEnd").val();
-                    hospitalHours = hospitalStarts + " " + hospitalEnds;
+          $("#createCampaign").submit(function() {
 
-                    campaign.name = name;
-                    campaign.lastname = lastname;
-                    campaign.bloodType = bloodType;
-                    campaign.dni = dni;
-                    campaign.status = status;
-                    campaign.hospital = hospital;
-                    campaign.hospitalHours = hospitalHours;
-                    campaign.createdAt = moment().tz("America/Argentina/Buenos_Aires").valueOf();
-                    campaign._id = dbUser + randHex(16);
-                    campaign.compatible = compatibility[campaign.bloodType];
+            name = $("#name").val();
+            lastname = $("#lastname").val();
+            bloodType = $("#bloodType").val();
+            dni = $("#dni").val();
+            status = $("#status").val();
 
-                    console.log(campaign);
-                    /*
+            hospital = $("#hospital").val().split("@");
+            hospitalLocation = hospital[1].split(" ");
+            hospitalLocation = {
+              'lat': hospitalLocation[0],
+              'lon': hospitalLocation[1]
+            };
+            hospital = hospital[0];
+
+            hospitalStarts = $("#hospitalHoursStart").val();
+            hospitalEnds = $("#hospitalHoursEnd").val();
+            hospitalHours = hospitalStarts + " " + hospitalEnds;
+
+            campaign.name = name;
+            campaign.lastname = lastname;
+            campaign.bloodType = bloodType;
+            campaign.dni = dni;
+            campaign.status = status;
+            campaign.hospital = hospital;
+            campaign.hospitalHours = hospitalHours;
+            campaign.createdAt = moment().tz("America/Argentina/Buenos_Aires").valueOf();
+            campaign._id = dbUser + randHex(16);
+            campaign.compatible = compatibility[campaign.bloodType];
+
+            console.log(campaign);
+            /*
             campaignsDB.find({
               selector: {
                 dni: campaign.dni
@@ -261,38 +261,40 @@ $(document).ready(function() {
               console.log(res);
             });
 
-          });
+
           */
-                    notReady['campaigns'] = false;
-
-                  }
-                }).on('error', function(err) {
-                //See you later pal (show warning)
-              });
-
-            }
           });
-
-        // Date Picker
-        $('.datepicker').datepicker({
-          selectMonths: true, // Creates a dropdown to control month
-          selectYears: 15, // Creates a dropdown of 15 years to control year,
-          today: 'Today',
-          clear: 'Clear',
-          close: 'Ok',
-          closeOnSelect: false // Close upon selecting a date,
-        });
-        // Timer Picker
-        $('.timepicker').timepicker({
-          defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
-          autoClose: true,
-          twelvehour: false, // Use AM/PM or 24-hour format
-          done: 'OK', // text for done-button
-          cancel: 'Cancelar', // Text for cancel-button
-        });
-        $('select').formSelect();
+        }
+        notReady['campaigns'] = false;
 
 
-
-
+      }).on('error', function(err) {
+        //See you later pal (show warning)
       });
+
+    }
+  });
+
+  // Date Picker
+  $('.datepicker').datepicker({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+  // Timer Picker
+  $('.timepicker').timepicker({
+    defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
+    autoClose: true,
+    twelvehour: false, // Use AM/PM or 24-hour format
+    done: 'OK', // text for done-button
+    cancel: 'Cancelar', // Text for cancel-button
+  });
+  $('select').formSelect();
+
+
+
+
+});
