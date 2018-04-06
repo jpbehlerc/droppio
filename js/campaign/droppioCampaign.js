@@ -134,7 +134,7 @@ $(document).ready(function() {
               }).then(function(res) {
 
                 res.rows.forEach(function(row) {
-                  console.log(row.id);
+                  console.log(keys);
                   if (keys.include(row.id))
                     $('#' + row.id + 'Div').css('display', 'none');
 
