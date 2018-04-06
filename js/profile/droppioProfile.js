@@ -16,7 +16,7 @@ $(document).ready(function() {
     this.province = false;
     this.toJSON = function() {
 
-      this.jsonified.length = 0
+      this.jsonified = [];
 
       for (var prop in this) {
 
