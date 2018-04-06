@@ -117,9 +117,9 @@ $(document).ready(function() {
 
           $("#ownCampaign, #othersCampaign").click(function() {
 
-            var divs = ['name', 'lastName', 'bloodType', 'dni'];
+            var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
-            for (var div in divs) {
+            for (var div in keys) {
 
               $(div + 'Div').css('display', 'block');
             }
@@ -130,12 +130,12 @@ $(document).ready(function() {
 
               settingsDB.allDocs({
                 include_docs: true,
-                keys: divs
+                keys: keys
               }).then(function(res) {
 
                 res.rows.forEach(function(row) {
-
-                  $('#' + divs[row.id] + 'Div').css('display', 'none');
+                  console.log(row.id);
+                  $('#' + row.id + 'Div').css('display', 'none');
 
                 });
 
