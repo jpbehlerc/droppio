@@ -139,7 +139,7 @@ $(document).ready(function() {
 
                   if (keys.includes(row.id)) {
 
-                    $('#' + row.id + 'Div').toggleClass('animated flipOutX');
+                    $('#' + row.id + 'Div').addClass('animated flipOutX');
 
                     $('#' + row.id + 'Div').one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
                       $('#' + row.id + 'Div').css('display', 'none');
