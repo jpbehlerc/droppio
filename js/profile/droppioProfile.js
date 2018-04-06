@@ -84,190 +84,191 @@ $(document).ready(function() {
 
       $.post("/registerTest", {
 
-          _xsrf: xsrf_token,
-          type: "creds"
+        _xsrf: xsrf_token,
+        type: "creds"
 
-        }).done(function(data) {
+      }).done(function(data) {
 
-            data = JSON.parse(data);
+        data = JSON.parse(data);
 
-            respType = data['type'];
+        respType = data['type'];
 
-            if (respType == 'creds') {
+        if (respType == 'creds') {
 
-              var dbUser = data['dbUser'];
-              var dbPass = data['dbPass'];
+          var dbUser = data['dbUser'];
+          var dbPass = data['dbPass'];
 
-              var settingsDB = new PouchDB("settings" + dbUser, {
-                auto_compaction: true,
-                cache: false,
-                heartbeat: true
-              });
+          var settingsDB = new PouchDB("settings" + dbUser, {
+            auto_compaction: true,
+            cache: false,
+            heartbeat: true
+          });
 
-              var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+          var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
-              var hospitalsDB = new PouchDB("hospitals", {
-                auto_compaction: true,
-                cache: false,
-                heartbeat: true
-              });
+          var hospitalsDB = new PouchDB("hospitals", {
+            auto_compaction: true,
+            cache: false,
+            heartbeat: true
+          });
 
-              var remote_hospitalsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/hospitals');
+          var remote_hospitalsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/hospitals');
 
-              $("#saveSettings").submit(function(e) {
+          $("#saveSettings").submit(function(e) {
 
-                e.preventDefault();
+              e.preventDefault();
 
-                info.name = $("#name").val();
-                info.lastname = $("#lastname").val();
-                info.bloodType = $("#bloodType").val();
-                info.dni = $("#dni").val();
-                info.email = $("#email").val();
-                info.birthDate = $("#birthDate").val();
-                info.weight = $("#weight").val();
-                info.password = $("#password").val();
-                info.radius = $("#radius").val();
+              info.name = $("#name").val();
+              info.lastname = $("#lastname").val();
+              info.bloodType = $("#bloodType").val();
+              info.dni = $("#dni").val();
+              info.email = $("#email").val();
+              info.birthDate = $("#birthDate").val();
+              info.weight = $("#weight").val();
+              info.password = $("#password").val();
+              info.radius = $("#radius").val();
 
-                if (info.province) {
+              if (info.province) {
 
-                  hospitalsDB.find({
-                    selector: {
-                      province: info.province
+                hospitalsDB.find({
+                  selector: {
+                    province: info.province
+                  }
+                }).then(function(result) {
+
+                  var nearEnough = [];
+                  var docs = 'docs' in result ? result.docs : false;
+                  var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
+
+                  if (docs) {
+
+                    for (var key in docs) {
+
+                      doc = docs[key];
+
+                      var hospitalPosition = new google.maps.LatLng(doc.location.lat, doc.location.lon);
+
+                      distance = google.maps.geometry.spherical.computeDistanceBetween(currentPosition, hospitalPosition) / 1000;
+
+                      if (distance <= info.radius)
+                        nearEnough.push(doc.name);
+
                     }
-                  }).then(function(result) {
 
-                    var nearEnough = [];
-                    var docs = 'docs' in result ? result.docs : false;
-                    var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
+                    info.nearbyHospitals = nearEnough;
 
-                    if (docs) {
+                  }
 
-                      for (var key in docs) {
+                  elems = info.toJSON();
+                  keys = Object.keys(elems);
 
-                        doc = docs[key];
+                  console.log(elems);
 
-                        var hospitalPosition = new google.maps.LatLng(doc.location.lat, doc.location.lon);
+                  settingsDB.allDocs({
+                    include_docs: true,
+                    keys: keys
+                  }).then(function(res) {
 
-                        distance = google.maps.geometry.spherical.computeDistanceBetween(currentPosition, hospitalPosition) / 1000;
+                    res.rows.forEach(function(row) {
 
-                        if (distance <= info.radius)
-                          nearEnough.push(doc.name);
+                      if ('error' in row) {
 
+                        settingsDB.put({
+                          '_id': row.key,
+                          'value': elems[row.key]
+                        }).catch(function(err) {
+                          // Show some fancy warning :O
+                        });
+
+                      } else {
+
+                        doc = row.doc;
+                        doc['value'] = elems[row.key];
+                        console.log(doc);
+                        settingsDB.put(doc).catch(function(err) {
+                          // Show some fancy warning :O
+                        });
                       }
 
-                      info.nearbyHospitals = nearEnough;
-
-                    }
-
-                    elems = info.toJSON();
-                    keys = Object.keys(elems);
-
-                    console.log(elems);
-
-                    settingsDB.allDocs({
-                      include_docs: true,
-                      keys: keys
-                    }).then(function(res) {
-
-                      res.rows.forEach(function(row) {
-
-                        if ('error' in row) {
-
-                          settingsDB.put({
-                            '_id': row.key,
-                            'value': elems[row.key]
-                          }).catch(function(err) {
-                            // Show some fancy warning :O
-                          });
-
-                        } else {
-
-                          doc = row.doc;
-                          doc['value'] = elems[row.key];
-                          console.log(doc);
-                          settingsDB.put(doc).catch(function(err) {
-                            // Show some fancy warning :O
-                          });
-                        }
-
-                      });
-
-                    }).catch(function(err) {
-                      // some paranormal shit happening here (show warning)
                     });
 
-                  });
-
-                  settingsDB.sync(remote_settingsDB, {
-
-                    live: true,
-                    retry: true,
-                    back_off_function: function(delay) {
-
-                      if (delay == 0) {
-
-                        return 1000;
-
-                      } else if (delay >= 1000 && delay < 1800000) {
-
-                        return delay * 1.5;
-
-                      } else if (delay >= 1800000) {
-
-                        return delay * 1.1;
-
-                      }
-
-                    }
-
-                  }).on('error', function(err) {
-                    //See you later terminator
+                  }).catch(function(err) {
+                    // some paranormal shit happening here (show warning)
                   });
 
 
-                  hospitalsDB.sync(remote_hospitalsDB, {
+                });
+              }
+              settingsDB.sync(remote_settingsDB, {
 
-                    live: true,
-                    retry: true,
-                    back_off_function: function(delay) {
+                live: true,
+                retry: true,
+                back_off_function: function(delay) {
 
-                      if (delay == 0) {
+                  if (delay == 0) {
 
-                        return 1000;
+                    return 1000;
 
-                      } else if (delay >= 1000 && delay < 1800000) {
+                  } else if (delay >= 1000 && delay < 1800000) {
 
-                        return delay * 1.5;
+                    return delay * 1.5;
 
-                      } else if (delay >= 1800000) {
+                  } else if (delay >= 1800000) {
 
-                        return delay * 1.1;
+                    return delay * 1.1;
 
-                      }
-
-                    }
-
-                  }).on('error', function(err) {
-                    //See you later terminator
-                  });
-
-
-
+                  }
 
                 }
 
-              });
-
-              $('.datepicker').datepicker({
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: 15, // Creates a dropdown of 15 years to control year,
-                today: 'Today',
-                clear: 'Clear',
-                close: 'Ok',
-                closeOnSelect: undefined // Close upon selecting a date,
+              }).on('error', function(err) {
+                //See you later terminator
               });
 
 
-              $('select').formSelect();
+              hospitalsDB.sync(remote_hospitalsDB, {
 
-            });
+                live: true,
+                retry: true,
+                back_off_function: function(delay) {
+
+                  if (delay == 0) {
+
+                    return 1000;
+
+                  } else if (delay >= 1000 && delay < 1800000) {
+
+                    return delay * 1.5;
+
+                  } else if (delay >= 1800000) {
+
+                    return delay * 1.1;
+
+                  }
+
+                }
+
+              }).on('error', function(err) {
+                //See you later terminator
+              });
+
+
+
+
+            }
+
+          });
+
+        $('.datepicker').datepicker({
+          selectMonths: true, // Creates a dropdown to control month
+          selectYears: 15, // Creates a dropdown of 15 years to control year,
+          today: 'Today',
+          clear: 'Clear',
+          close: 'Ok',
+          closeOnSelect: undefined // Close upon selecting a date,
+        });
+
+
+        $('select').formSelect();
+
+      });
