@@ -5,20 +5,20 @@ $(document).ready(function() {
 
     this._jsonified = [];
     this._keys = [];
-    this.bloodType = null;
-    this.name = null;
-    this.lastname = null;
-    this.dni = null;
-    this.email = null;
-    this.weight = null;
-    this.birthDate = null;
-    this.password = null;
-    this.province = null;
+    this.bloodType = false;
+    this.name = false;
+    this.lastname = false;
+    this.dni = false;
+    this.email = false;
+    this.weight = false;
+    this.birthDate = false;
+    this.password = false;
+    this.province = false;
     this.toJSON = function() {
 
       for (var prop in this) {
 
-        if (this[prop] != null) {
+        if (this[prop] != undefined && this[prop] != "") {
 
           if (prop.indexOf('_') == -1)
             this._jsonified[prop] = this[prop];
@@ -113,8 +113,6 @@ $(document).ready(function() {
 
       $("#saveSettings").submit(function(e) {
 
-        e.preventDefault();
-
         info.name = $("#name").val();
         info.lastname = $("#lastname").val();
         info.bloodType = $("#bloodType").val();
@@ -128,6 +126,7 @@ $(document).ready(function() {
         elems = info.toJSON();
         keys = Object.keys(elems);
         console.log(elems);
+
         if ('province' in elems) {
 
           hospitalsDB.find({
@@ -142,6 +141,7 @@ $(document).ready(function() {
           });
 
         }
+
         settingsDB.allDocs({
           include_docs: true,
           keys: keys
