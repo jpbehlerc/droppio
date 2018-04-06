@@ -141,7 +141,7 @@ $(document).ready(function() {
             var nearEnough = [];
             var docs = 'docs' in result ? result.docs : false;
             var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
-
+            console.log(docs);
             if (docs) {
 
               for (var key in docs) {
@@ -158,7 +158,7 @@ $(document).ready(function() {
               }
 
             }
-            console.log(nearEnough);
+
             settingsDB.get('nearbyHospitals').then(function(res) {
 
               console.log(res);
