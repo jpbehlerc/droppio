@@ -219,7 +219,7 @@ $(document).ready(function() {
 
         if (notReady['campaigns']) {
 
-          $("#createCampaign").submit(function() {
+          $("#createCampaign").submit(function(e) {
 
             e.preventDefault();
 
