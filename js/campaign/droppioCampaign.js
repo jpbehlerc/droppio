@@ -38,7 +38,7 @@ $(document).ready(function() {
     return Array.from(arr, dec2hex).join('');
   };
 
-  var campaign = new Campaigns();
+  var campaign = new Campaign();
   var settings = new Settings();
 
   var syncReady = false;
