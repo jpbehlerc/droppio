@@ -219,7 +219,7 @@ $(document).ready(function() {
 
               if (notReady['campaigns']) {
 
-                $("#submitCampaign").submit(function() {
+                $("#createCampaign").submit(function() {
 
                     name = $("#name").val();
                     lastname = $("#lastname").val();
