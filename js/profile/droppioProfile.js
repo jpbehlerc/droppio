@@ -113,6 +113,8 @@ $(document).ready(function() {
 
       $("#saveSettings").submit(function(e) {
 
+        e.preventDefault();
+
         info.name = $("#name").val();
         info.lastname = $("#lastname").val();
         info.bloodType = $("#bloodType").val();
