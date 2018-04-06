@@ -1,4 +1,4 @@
-2 $(document).ready(function() {
+$(document).ready(function() {
 
       //Init pouchDB
       function Campaign() {
@@ -87,43 +87,6 @@
             });
 
             var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/campaigns');
-
-            settingsDB.sync(remote_settingsDB, {
-
-              live: true,
-              retry: true,
-              back_off_function: function(delay) {
-
-                if (delay == 0) {
-
-                  return 1000;
-
-                } else if (delay >= 1000 && delay < 1800000) {
-
-                  return delay * 1.5;
-
-                } else if (delay >= 1800000) {
-
-                  return delay * 1.1;
-
-                }
-
-              }
-
-            }).on('paused', function(err) {
-
-              settingsDB.get('bloodType').then(function(res) {
-
-                console.log(res);
-
-              });
-
-              settingsDB.get('nearbyHospitals').then(function(res) {
-
-                console.log(res);
-
-              });
-            });
 
             campaignsDB.sync(remote_campaignsDB, {
 
@@ -216,5 +179,6 @@
             });
           }
         });
+
 
       });
