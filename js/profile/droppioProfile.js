@@ -3,8 +3,8 @@ $(document).ready(function() {
   //Init pouchDB
   function Settings() {
 
-    this._jsonified = [];
-    this._keys = [];
+    this.jsonified = [];
+    this.notAllowed = ['notAllowed', 'jsonified', 'toJSON'];
     this.bloodType = false;
     this.name = false;
     this.lastname = false;
@@ -16,19 +16,19 @@ $(document).ready(function() {
     this.province = false;
     this.toJSON = function() {
 
-      this._jsonified.length = 0
+      this.jsonified.length = 0
 
       for (var prop in this) {
 
         if (this[prop] != undefined && this[prop] != "") {
 
-          if (prop.indexOf('_') == -1)
-            this._jsonified[prop] = this[prop];
+          if (!this.notAllowed.includes(prop))
+            this.jsonified[prop] = this[prop];
 
         }
       }
 
-      return this._jsonified;
+      return this.jsonified;
     };
   }
 
