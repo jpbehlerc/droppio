@@ -221,6 +221,8 @@ $(document).ready(function() {
 
           $("#createCampaign").submit(function() {
 
+            e.preventDefault();
+
             name = $("#name").val();
             lastname = $("#lastname").val();
             bloodType = $("#bloodType").val();
