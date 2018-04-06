@@ -17,9 +17,9 @@ $(document).ready(function() {
     this.toJSON = function() {
 
       for (var prop in this) {
-
+        console.log(prop);
         if (prop.indexOf('_') == -1) {
-          console.log(prop);
+
           if (this[prop].length)
             this._jsonified[prop] = this[prop];
 
@@ -124,7 +124,6 @@ $(document).ready(function() {
         info.weight = $("#weight").val();
         info.password = $("#password").val();
         info.radius = $("#radius").val();
-
 
         elems = info.toJSON();
         keys = Object.keys(elems);
