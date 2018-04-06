@@ -149,7 +149,7 @@ $(document).ready(function() {
             keys.forEach(function(elem) {
 
               $('#' + elem + 'Div').css('display', 'block');
-              $('#' + elem + 'Div').animateCss('flipInX');
+              $('#' + elem + 'Div').animateCss('zoomIn');
 
 
             });
@@ -168,7 +168,7 @@ $(document).ready(function() {
                   if (keys.includes(row.id)) {
 
                     //Have to fix this glitch
-                    $('#' + row.id + 'Div').animateCss('flipOutX', function() {
+                    $('#' + row.id + 'Div').animateCss('zoomOut', function() {
                       $('#' + row.id + 'Div').css('display', 'none');
                     });
 
