@@ -139,7 +139,7 @@ $(document).ready(function() {
           }).then(function(result) {
 
             var docs = 'docs' in result ? result.docs : false;
-            var currentPosition = new google.maps.LatLng(info.position.lat, info.position.lon);
+            var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
 
             if (docs) {
 
