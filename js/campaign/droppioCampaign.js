@@ -121,7 +121,7 @@ $(document).ready(function() {
 
             keys.forEach(function(elem) {
 
-              $('#' + div + 'Div').css('display', 'block');
+              $('#' + elem + 'Div').css('display', 'block');
             });
 
 
