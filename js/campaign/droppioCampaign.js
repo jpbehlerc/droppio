@@ -139,6 +139,8 @@ $(document).ready(function() {
 
                   if (keys.includes(row.id)) {
 
+                    $('#' + row.id + 'Div').fadeOut();
+
                     $('#' + row.id + 'Div').one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
                       $('#' + row.id + 'Div').css('display', 'none');
                     });
