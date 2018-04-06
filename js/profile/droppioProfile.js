@@ -138,12 +138,20 @@ $(document).ready(function() {
             }
           }).then(function(result) {
 
-            docs = 'docs' in result ? result.docs : false;
+            var docs = 'docs' in result ? result.docs : false;
+            var currentPosition = new google.maps.LatLng(info.position.lat, info.position.lon);
 
             if (docs) {
 
-              for (var key in docs)
-                console.log(docs[key]);
+              for (var key in docs) {
+
+                doc = docs[key];
+
+                var hospitalPosition = new google.maps.LatLng(doc.location.lat, doc.location.lon);
+                console.log(google.maps.geometry.spherical.computeDistanceBetween(currentPosition, hospitalPosition));
+
+              }
+              console.log(docs[key]);
 
             }
           }).catch(function(err) {
