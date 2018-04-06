@@ -134,9 +134,8 @@ $(document).ready(function() {
               }).then(function(res) {
 
                 res.rows.forEach(function(row) {
-                  console.log(row);
-                  if ('doc' in row)
-                    $(divs[row._id] + 'Div').css('display', 'none');
+
+                  $('#' + divs[row.id] + 'Div').css('display', 'none');
 
                 });
 
