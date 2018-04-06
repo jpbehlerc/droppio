@@ -91,108 +91,109 @@ $(document).ready(function() {
 
   }).done(function(data) {
 
-    data = JSON.parse(data);
+      data = JSON.parse(data);
 
-    respType = data['type'];
+      respType = data['type'];
 
-    if (respType == 'creds') {
+      if (respType == 'creds') {
 
-      var dbUser = data['dbUser'];
-      var dbPass = data['dbPass'];
+        var dbUser = data['dbUser'];
+        var dbPass = data['dbPass'];
 
-      //Init respective DBs
-      var settingsDB = new PouchDB("settings" + dbUser, {
-        auto_compaction: false,
-        cache: false,
-        heartbeat: true
-      });
+        //Init respective DBs
+        var settingsDB = new PouchDB("settings" + dbUser, {
+          auto_compaction: false,
+          cache: false,
+          heartbeat: true
+        });
 
-      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+        var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
-      var campaignsDB = new PouchDB("campaigns", {
-        auto_compaction: true,
-        cache: false,
-        heartbeat: true
-      });
+        var campaignsDB = new PouchDB("campaigns", {
+          auto_compaction: true,
+          cache: false,
+          heartbeat: true
+        });
 
-      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
+        var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
 
-      settingsDB.sync(remote_settingsDB, {
+        settingsDB.sync(remote_settingsDB, {
 
-        live: true,
-        retry: true,
-        back_off_function: function(delay) {
+          live: true,
+          retry: true,
+          back_off_function: function(delay) {
 
-          if (delay == 0) {
+            if (delay == 0) {
 
-            return 1000;
+              return 1000;
 
-          } else if (delay >= 1000 && delay < 1800000) {
+            } else if (delay >= 1000 && delay < 1800000) {
 
-            return delay * 1.5;
+              return delay * 1.5;
 
-          } else if (delay >= 1800000) {
+            } else if (delay >= 1800000) {
 
-            return delay * 1.1;
+              return delay * 1.1;
 
+            }
           }
-        }
 
-      }).on('paused', function(err) {
+        }).on('paused', function(err) {
 
-        if (notReady['settings']) {
+            if (notReady['settings']) {
 
-          $("#ownCampaign, #othersCampaign").click(function() {
+              $("#ownCampaign, #othersCampaign").click(function() {
 
-            var keys = ['name', 'lastName', 'bloodType', 'dni'];
+                  var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
-            keys.forEach(function(elem) {
+                  keys.forEach(function(elem) {
 
-              $('#' + elem + 'Div').animateCss('flipInX', function() {
+                    $('#' + elem + 'Div').animateCss('flipInX', function() {
 
-                $('#' + elem + 'Div').css('display', 'none');
-              });
-
-
-            });
-
-
-            if ($(this).attr("id") == 'ownCampaign') {
-
-
-              settingsDB.allDocs({
-                include_docs: true,
-                keys: keys
-              }).then(function(res) {
-
-                res.rows.forEach(function(row) {
-
-                  if (keys.includes(row.id)) {
-
-                    //Have to fix this glitch
-                    $('#' + row.id + 'Div').animateCss('flipOutX', function() {
-                      $('#' + row.id + 'Div').css('display', 'none');
+                      $('#' + elem + 'Div').css('display', 'block');
                     });
 
 
-                  }
-                });
+                  });
 
-              }).catch(function(err) {
-                // some paranormal shit happening here (show warning)
+
+                  if ($(this).attr("id") == 'ownCampaign') {
+
+
+                    settingsDB.allDocs({
+                      include_docs: true,
+                      keys: keys
+                    }).then(function(res) {
+
+                        res.rows.forEach(function(row) {
+
+                            if (keys.includes(row.id)) {
+
+                              //Have to fix this glitch
+                              $('#' + row.id + 'Div').animateCss('flipOutX'),
+                                function() {
+                                  $('#' + row.id + 'Div').css('display', 'none');
+                                });
+
+
+                          }
+                        });
+
+                    }).catch(function(err) {
+                    // some paranormal shit happening here (show warning)
+                  });
+
+
+
+                }
+
               });
 
 
+            notReady['settings'] = false;
+          }
 
-            }
-
-          });
-
-
-          notReady['settings'] = false;
-        }
-
-      }).on('error', function(err) {
+        }).on('error', function(err) {
         //See you later pal (show warning)
       });
 
@@ -273,24 +274,23 @@ $(document).ready(function() {
     }
   });
 
-  // Date Picker
-  $('.datepicker').datepicker({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
-    today: 'Today',
-    clear: 'Clear',
-    close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
-  });
-  // Timer Picker
-  $('.timepicker').timepicker({
-    defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
-    autoClose: true,
-    twelvehour: false, // Use AM/PM or 24-hour format
-    done: 'OK', // text for done-button
-    cancel: 'Cancelar', // Text for cancel-button
-  });
-  $('select').formSelect();
+// Date Picker
+$('.datepicker').datepicker({
+  selectMonths: true, // Creates a dropdown to control month
+  selectYears: 15, // Creates a dropdown of 15 years to control year,
+  today: 'Today',
+  clear: 'Clear',
+  close: 'Ok',
+  closeOnSelect: false // Close upon selecting a date,
+});
+// Timer Picker
+$('.timepicker').timepicker({
+  defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
+  autoClose: true,
+  twelvehour: false, // Use AM/PM or 24-hour format
+  done: 'OK', // text for done-button
+  cancel: 'Cancelar', // Text for cancel-button
+}); $('select').formSelect();
 
 
 
