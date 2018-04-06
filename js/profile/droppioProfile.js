@@ -101,7 +101,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/settings' + dbUser);
+      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
       var hospitalsDB = new PouchDB("hospitals", {
         auto_compaction: undefined,
@@ -109,7 +109,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_hospitalsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/hospitals');
+      var remote_hospitalsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/hospitals');
 
       $("#saveSettings").submit(function(e) {
 
