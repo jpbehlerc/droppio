@@ -41,9 +41,9 @@ $(document).ready(function() {
   var campaign = new Campaign();
   var settings = new Settings();
 
-  var syncReady = {
-    'campaigns': false,
-    'settings': false
+  var notReady = {
+    'campaigns': true,
+    'settings': true
   };
 
   var compatibility = {
@@ -113,7 +113,48 @@ $(document).ready(function() {
 
       }).on('paused', function(err) {
 
-        syncReady['settings'] = true;
+
+        if (notReady['settings']) {
+
+          $("#ownCampaign, #othersCampaign").click(function() {
+
+            var divs = ['name', 'lastName', 'bloodType', 'dni'];
+
+            if (syncReady['settings']) {
+
+              for (var div in divs) {
+
+                $(div + 'Div').css('display', 'block');
+              }
+
+              if ($(this).attr("id") == 'ownCampaign') {
+
+
+                settingsDB.allDocs({
+                  include_docs: true,
+                  keys: divs
+                }).then(function(res) {
+
+                  res.rows.forEach(function(row) {
+
+                    if ('doc' in row)
+                      $(divs + 'Div').css('display', 'none');
+
+                  });
+
+                }).catch(function(err) {
+                  // some paranormal shit happening here (show warning)
+                });
+
+
+              }
+            }
+
+          });
+
+
+          syncNotReady['settings'] = false;
+        }
 
       }).on('error', function(err) {
         //See you later pal (show warning)
@@ -142,8 +183,53 @@ $(document).ready(function() {
 
       }).on('paused', function(err) {
 
-        syncReady['campaigns'] = true;
+        if (notReady['campaigns']) {
 
+          $("#submitCampaign").submit(function() {
+
+            name = $("#name").val();
+            lastname = $("#lastname").val();
+            bloodType = $("#bloodType").val();
+            dni = $("#dni").val();
+            status = $("#status").val();
+
+            hospital = $("#hospital").val().split("@");
+            hospitalLocation = hospital[1].split(" ");
+            hospitalLocation = {
+              'lat': hospitalLocation[0],
+              'lon': hospitalLocation[1]
+            };
+            hospital = hospital[0];
+
+            hospitalStarts = $("#hospitalHoursStart").val();
+            hospitalEnds = $("#hospitalHoursEnd").val();
+            hospitalHours = hospitalStarts + " " + hospitalEnds;
+
+            campaign.name = name;
+            campaign.lastname = lastname;
+            campaign.bloodType = bloodType;
+            campaign.dni = dni;
+            campaign.status = status;
+            campaign.hospital = hospital;
+            campaign.hospitalHours = hospitalHours;
+            campaign.createdAt = moment().tz("America/Argentina/Buenos_Aires").valueOf();
+            campaign._id = dbUser + randHex(16);
+            campaign.compatible = compatibility[campaign.bloodType];
+
+            campaignsDB.find({
+              selector: {
+                dni: campaign.dni
+              }
+            }).then(function(res) {
+
+              console.log(res);
+            });
+
+          });
+
+          notReady['campaigns'] = false;
+
+        }
       }).on('error', function(err) {
         //See you later pal (show warning)
       });
@@ -171,86 +257,6 @@ $(document).ready(function() {
   $('select').formSelect();
 
 
-  $("#ownCampaign, #othersCampaign").click(function() {
-
-    var divs = ['name', 'lastName', 'bloodType', 'dni'];
-
-    if (syncReady['settings']) {
-
-      for (var div in divs) {
-
-        $(div + 'Div').css('display', 'block');
-      }
-
-      if ($(this).attr("id") == 'ownCampaign') {
-
-
-        settingsDB.allDocs({
-          include_docs: true,
-          keys: divs
-        }).then(function(res) {
-
-          res.rows.forEach(function(row) {
-
-            if ('doc' in row)
-              $(divs + 'Div').css('display', 'none');
-
-          });
-
-        }).catch(function(err) {
-          // some paranormal shit happening here (show warning)
-        });
-
-
-      }
-    }
-
-  });
-
-  $("#submitCampaign").submit(function() {
-
-    if (syncReady['campaigns']) {
-
-      name = $("#name").val();
-      lastname = $("#lastname").val();
-      bloodType = $("#bloodType").val();
-      dni = $("#dni").val();
-      status = $("#status").val();
-
-      hospital = $("#hospital").val().split("@");
-      hospitalLocation = hospital[1].split(" ");
-      hospitalLocation = {
-        'lat': hospitalLocation[0],
-        'lon': hospitalLocation[1]
-      };
-      hospital = hospital[0];
-
-      hospitalStarts = $("#hospitalHoursStart").val();
-      hospitalEnds = $("#hospitalHoursEnd").val();
-      hospitalHours = hospitalStarts + " " + hospitalEnds;
-
-      campaign.name = name;
-      campaign.lastname = lastname;
-      campaign.bloodType = bloodType;
-      campaign.dni = dni;
-      campaign.status = status;
-      campaign.hospital = hospital;
-      campaign.hospitalHours = hospitalHours;
-      campaign.createdAt = moment().tz("America/Argentina/Buenos_Aires").valueOf();
-      campaign._id = dbUser + randHex(16);
-      campaign.compatible = compatibility[campaign.bloodType];
-
-      campaignsDB.find({
-        selector: {
-          dni: campaign.dni
-        }
-      }).then(function(res) {
-
-        console.log(res);
-      });
-
-    }
-  });
 
 
 });
