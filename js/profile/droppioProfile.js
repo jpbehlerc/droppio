@@ -5,22 +5,22 @@ $(document).ready(function() {
 
     this._jsonified = [];
     this._keys = [];
-    this.bloodType = false;
-    this.name = false;
-    this.lastname = false;
-    this.dni = false;
-    this.email = false;
-    this.weight = false;
-    this.birthDate = false;
-    this.password = false;
-    this.province = false;
+    this.bloodType = undefined;
+    this.name = undefined;
+    this.lastname = undefined;
+    this.dni = undefined;
+    this.email = undefined;
+    this.weight = undefined;
+    this.birthDate = undefined;
+    this.password = undefined;
+    this.province = undefined;
     this.toJSON = function() {
 
       for (var prop in this) {
-        console.log(prop);
-        if (prop.indexOf('_') == -1) {
 
-          if (this[prop].length)
+        if (this[prop] != undefined) {
+
+          if (prop.indexOf('_') == -1)
             this._jsonified[prop] = this[prop];
 
         }
@@ -96,16 +96,16 @@ $(document).ready(function() {
       var dbPass = data['dbPass'];
 
       var settingsDB = new PouchDB("settings" + dbUser, {
-        auto_compaction: false,
-        cache: false,
+        auto_compaction: undefined,
+        cache: undefined,
         heartbeat: true
       });
 
       var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
       var hospitalsDB = new PouchDB("hospitals", {
-        auto_compaction: false,
-        cache: false,
+        auto_compaction: undefined,
+        cache: undefined,
         heartbeat: true
       });
 
@@ -242,7 +242,7 @@ $(document).ready(function() {
     today: 'Today',
     clear: 'Clear',
     close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
+    closeOnSelect: undefined // Close upon selecting a date,
   });
 
 
