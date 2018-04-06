@@ -123,7 +123,7 @@ $(document).ready(function() {
 
               $(div + 'Div').css('display', 'block');
             }
-            console.log($(this).attr("id"));
+
 
             if ($(this).attr("id") == 'ownCampaign') {
 
@@ -134,7 +134,7 @@ $(document).ready(function() {
               }).then(function(res) {
 
                 res.rows.forEach(function(row) {
-
+                  console.log(row);
                   if ('doc' in row)
                     $(divs[row._id] + 'Div').css('display', 'none');
 
