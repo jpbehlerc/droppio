@@ -138,6 +138,7 @@ $(document).ready(function() {
             }
           }).then(function(result) {
 
+            var nearEnough = [];
             var docs = 'docs' in result ? result.docs : false;
             var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
 
@@ -148,7 +149,13 @@ $(document).ready(function() {
                 doc = docs[key];
 
                 var hospitalPosition = new google.maps.LatLng(doc.location.lat, doc.location.lon);
-                console.log(google.maps.geometry.spherical.computeDistanceBetween(currentPosition, hospitalPosition));
+
+                distance = google.maps.geometry.spherical.computeDistanceBetween(currentPosition, hospitalPosition) / 1000;
+
+                if (distance <= info.radius)
+                  nearEnough.push(doc.name);
+
+                console.log(nearEnough);
 
               }
               console.log(docs[key]);
