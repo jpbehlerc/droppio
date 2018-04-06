@@ -75,7 +75,7 @@ $(document).ready(function() {
 
     storePosition(position);
 
-    if (info.province)
+    if (!info.province)
       storeProvince();
 
   });
