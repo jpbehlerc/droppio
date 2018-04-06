@@ -155,18 +155,23 @@ $(document).ready(function() {
                 if (distance <= info.radius)
                   nearEnough.push(doc.name);
 
-                console.log(nearEnough);
-
               }
 
+            }
+
+            settingsDB.get('nearbyHospitals').then(function(res) {
+
+              console.log(res);
+              /*
               settingsDB.put({
-                '_id': 'nearHospitals',
+                '_id': 'nearbyHospitals',
                 'value': nearEnough
               }).catch(function(err) {
-                // Mmm fresh blood for good 'Ol drake 
+                // Mmm fresh blood for good 'Ol drake
               });
+              */
+            });
 
-            }
           }).catch(function(err) {
             console.log(err);
           });
