@@ -120,40 +120,38 @@ $(document).ready(function() {
 
             var divs = ['name', 'lastName', 'bloodType', 'dni'];
 
-            if (syncReady['settings']) {
+            for (var div in divs) {
 
-              for (var div in divs) {
+              $(div + 'Div').css('display', 'block');
+            }
 
-                $(div + 'Div').css('display', 'block');
-              }
-
-              if ($(this).attr("id") == 'ownCampaign') {
+            if ($(this).attr("id") == 'ownCampaign') {
 
 
-                settingsDB.allDocs({
-                  include_docs: true,
-                  keys: divs
-                }).then(function(res) {
+              settingsDB.allDocs({
+                include_docs: true,
+                keys: divs
+              }).then(function(res) {
 
-                  res.rows.forEach(function(row) {
+                res.rows.forEach(function(row) {
 
-                    if ('doc' in row)
-                      $(divs + 'Div').css('display', 'none');
+                  if ('doc' in row)
+                    $(divs + 'Div').css('display', 'none');
 
-                  });
-
-                }).catch(function(err) {
-                  // some paranormal shit happening here (show warning)
                 });
 
+              }).catch(function(err) {
+                // some paranormal shit happening here (show warning)
+              });
 
-              }
+
+
             }
 
           });
 
 
-          syncNotReady['settings'] = false;
+          notReady['settings'] = false;
         }
 
       }).on('error', function(err) {
