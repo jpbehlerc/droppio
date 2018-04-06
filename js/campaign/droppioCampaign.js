@@ -142,7 +142,7 @@ $(document).ready(function() {
                     $('#' + row.id + 'Div').fadeOut();
 
                     $('#' + row.id + 'Div').promise().done(function() {
-                      css('display', 'none');
+                      $(this).css('display', 'none');
                     })
                   }
                 });
