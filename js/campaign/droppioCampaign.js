@@ -121,7 +121,7 @@ $(document).ready(function() {
 
             for (var div in keys) {
 
-              $(div + 'Div').css('display', 'block');
+              $('#' + div + 'Div').css('display', 'block');
             }
 
 
@@ -135,7 +135,8 @@ $(document).ready(function() {
 
                 res.rows.forEach(function(row) {
                   console.log(row.id);
-                  $('#' + row.id + 'Div').css('display', 'none');
+                  if (keys.include(row.id))
+                    $('#' + row.id + 'Div').css('display', 'none');
 
                 });
 
