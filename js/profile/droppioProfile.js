@@ -16,6 +16,8 @@ $(document).ready(function() {
     this.province = false;
     this.toJSON = function() {
 
+      this._jsonified.length = 0
+
       for (var prop in this) {
 
         if (this[prop] != undefined && this[prop] != "") {
