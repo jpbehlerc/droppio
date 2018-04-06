@@ -113,7 +113,6 @@ $(document).ready(function() {
 
       }).on('paused', function(err) {
 
-
         if (notReady['settings']) {
 
           $("#ownCampaign, #othersCampaign").click(function() {
@@ -136,7 +135,7 @@ $(document).ready(function() {
                 res.rows.forEach(function(row) {
 
                   if ('doc' in row)
-                    $(divs + 'Div').css('display', 'none');
+                    $(divs[row._id] + 'Div').css('display', 'none');
 
                 });
 
