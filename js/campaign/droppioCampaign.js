@@ -61,9 +61,7 @@ $(document).ready(function() {
   });
 
   var campaign = new Campaign();
-  var settings = new Settings();
 
-  var province = false;
   var hospitalOpts = {
 
     live: true,
