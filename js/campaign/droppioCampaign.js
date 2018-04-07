@@ -215,6 +215,8 @@ $(document).ready(function() {
 
         if (notReady['hospitals']) {
 
+          console.log('settings raised flag');
+
           hospitalsDB.find(hospitalOpts).then(function(result) {
 
             var nearEnough = [];
