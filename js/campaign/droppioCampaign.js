@@ -68,6 +68,15 @@ $(document).ready(function() {
     'hospitals': true
   };
 
+
+  var hospitalOpts = {
+    selector: {
+      'province': {
+        '$exists': true
+      }
+    }
+  };
+
   var compatibility = {
     4: [4, 8],
     1: [1, 5, 4, 8],
@@ -149,14 +158,6 @@ $(document).ready(function() {
 
             var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
-            var hospitalOpts = {
-              selector: {
-                'province': {
-                  '$exists': true
-                }
-              }
-            };
-
             keys.forEach(function(elem) {
 
               $('#' + elem + 'Div').css('display', 'block');
@@ -213,7 +214,6 @@ $(document).ready(function() {
       hospitalsDB.sync(remote_hospitalsDB, hospitalOpts).on('paused', function(err) {
 
         if (notReady['hospitals']) {
-
 
           hospitalsDB.find(hospitalOpts).then(function(result) {
 
