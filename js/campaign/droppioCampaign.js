@@ -154,9 +154,50 @@ $(document).ready(function() {
 
         if (notReady['settings']) {
 
+          var keys = ['name', 'lastName', 'bloodType', 'dni'];
+          var present = [];
+
+          settingsDB.allDocs({
+            include_docs: true,
+            keys: keys
+          }).then(function(res) {
+
+            res.rows.forEach(function(row) {
+
+              if (keys.includes(row.id))
+                present.push(row.id);
+
+
+              if (row.id == 'province') {
+
+                hospitalOpts['selector'] = {
+                  'province': row.value
+                }
+
+              }
+
+
+            });
+
+            hospitalsDB.find(hospitalOpts).then(function(result) {
+
+              var docs = 'docs' in result ? result.docs : false;
+              console.log(docs)
+              if (docs) {
+
+                for (var key in docs) {
+
+                  doc = docs[key];
+
+                }
+              }
+
+            });
+
+          });
+
           $("#ownCampaign, #othersCampaign").click(function() {
 
-            var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
             keys.forEach(function(elem) {
 
@@ -172,41 +213,13 @@ $(document).ready(function() {
                 keys: keys
               }).then(function(res) {
 
-                res.rows.forEach(function(row) {
+                for (var p in present) {
 
-                  if (keys.includes(row.id)) {
+                  $('#' + p + 'Div').animateCss('flipOutX', function() {
+                    $('#' + p + 'Div').css('display', 'none');
+                  })
 
-                    $('#' + row.id + 'Div').animateCss('flipOutX', function() {
-                      $('#' + row.id + 'Div').css('display', 'none');
-                    })
-                  }
-
-                  if (row.id == 'province') {
-
-                    hospitalOpts['selector'] = {
-                      'province': row.value
-                    }
-
-                  }
-
-
-                });
-
-
-                hospitalsDB.find(hospitalOpts).then(function(result) {
-
-                  var docs = 'docs' in result ? result.docs : false;
-                  console.log(docs)
-                  if (docs) {
-
-                    for (var key in docs) {
-
-                      doc = docs[key];
-
-                    }
-                  }
-
-                });
+                }
 
 
               }).catch(function(err) {
