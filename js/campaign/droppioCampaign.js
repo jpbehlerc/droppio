@@ -300,13 +300,7 @@ $(document).ready(function() {
             dni = $("#dni").val();
             status = $("#status").val();
 
-            hospital = $("#hospital").val().split("@");
-            hospitalLocation = hospital[1].split(" ");
-            hospitalLocation = {
-              'lat': hospitalLocation[0],
-              'lon': hospitalLocation[1]
-            };
-            hospital = hospital[0];
+            hospital = $("#hospital").val().split(",")[0];
 
             hospitalStarts = $("#hospitalHoursStart").val();
             hospitalEnds = $("#hospitalHoursEnd").val();
