@@ -62,27 +62,7 @@ $(document).ready(function() {
 
   var campaign = new Campaign();
 
-  var hospitalOpts = {
-
-    live: true,
-    retry: true,
-    back_off_function: function(delay) {
-
-      if (delay == 0) {
-
-        return 1000;
-
-      } else if (delay >= 1000 && delay < 1800000) {
-
-        return delay * 1.5;
-
-      } else if (delay >= 1800000) {
-
-        return delay * 1.1;
-
-      }
-    }
-  };
+  var hospitalOpts = {};
 
   var notReady = {
     'campaigns': true,
@@ -171,19 +151,14 @@ $(document).ready(function() {
 
             var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
-
             keys.forEach(function(elem) {
 
               $('#' + elem + 'Div').css('display', 'block');
               $('#' + elem + 'Div').animateCss('flipInX');
 
-
             });
 
-
             if ($(this).attr("id") == 'ownCampaign') {
-
-
 
               settingsDB.allDocs({
                 include_docs: true,
@@ -204,27 +179,49 @@ $(document).ready(function() {
                     hospitalOpts['selector'] = {
                       'province': row.value
                     }
+                  } else {
+
+                    hospitalOpts['selector'] = {
+                      province: {
+                        '$exists': true
+                      }
+                    }
                   }
 
 
                 });
 
                 hospitalsDB.sync(remote_hospitalsDB, hospitalOpts).on('paused', function(err) {
-                  //Populate hospitals selector
+
+                  hospitalsDB.find(hospitalOpts).then(function(result) {
+
+                    var nearEnough = [];
+                    var docs = 'docs' in result ? result.docs : false;
+                    var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
+
+                    if (docs) {
+
+                      for (var key in docs) {
+
+                        doc = docs[key];
+
+                      }
+                    }
+
+                  });
                 });
 
+              }).catch(function(err) {
+                // some paranormal shit happening here (show warning)
               });
 
             }
 
-          }).catch(function(err) {
-            // some paranormal shit happening here (show warning)
           });
 
-
           notReady['settings'] = false;
-        }
 
+        }
 
       }).on('error', function(err) {
         //See you later pal (show warning)
@@ -313,6 +310,8 @@ $(document).ready(function() {
 
     }
   });
+
+  $('select').formSelect();
 
   // Date Picker
   $('.datepicker').datepicker({
