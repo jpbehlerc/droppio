@@ -193,6 +193,8 @@ $(document).ready(function() {
                 }
               }
 
+              $('#hospital').formSelect();
+
             });
 
           });
@@ -346,7 +348,7 @@ $(document).ready(function() {
     }
   });
 
-  $('select').formSelect();
+  $('#bloodType, #status').formSelect();
 
   // Date Picker
   $('.datepicker').datepicker({
