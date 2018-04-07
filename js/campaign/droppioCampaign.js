@@ -182,13 +182,13 @@ $(document).ready(function() {
             hospitalsDB.find(hospitalOpts).then(function(result) {
 
               var docs = 'docs' in result ? result.docs : false;
-              console.log(docs)
+
               if (docs) {
 
                 for (var key in docs) {
 
                   doc = docs[key];
-
+                  $('#hospital').append('<option value=' + doc.name + '>' + doc.name + '</option>');
                 }
               }
 
