@@ -185,29 +185,14 @@ $(document).ready(function() {
                     hospitalOpts['selector'] = {
                       'province': row.value
                     }
+
                   }
 
+
                 });
 
-                hospitalsDB.sync(remote_hospitalsDB, hospitalOpts).on('paused', function(err) {
+                notReady['hospitals'] = false;
 
-                  hospitalsDB.find(hospitalOpts).then(function(result) {
-
-                    var nearEnough = [];
-                    var docs = 'docs' in result ? result.docs : false;
-                    var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
-
-                    if (docs) {
-
-                      for (var key in docs) {
-
-                        doc = docs[key];
-                        console.log(doc)
-                      }
-                    }
-
-                  });
-                });
 
               }).catch(function(err) {
                 // some paranormal shit happening here (show warning)
@@ -225,6 +210,30 @@ $(document).ready(function() {
         //See you later pal (show warning)
       });
 
+      hospitalsDB.sync(remote_hospitalsDB, hospitalOpts).on('paused', function(err) {
+
+        if (notReady['hospitals']) {
+
+
+          hospitalsDB.find(hospitalOpts).then(function(result) {
+
+            var nearEnough = [];
+            var docs = 'docs' in result ? result.docs : false;
+            var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
+
+            if (docs) {
+
+              for (var key in docs) {
+
+                doc = docs[key];
+                console.log(doc)
+              }
+            }
+
+          });
+
+        }
+      });
 
       campaignsDB.sync(remote_campaignsDB, {
 
