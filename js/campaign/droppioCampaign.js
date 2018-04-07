@@ -211,13 +211,33 @@ $(document).ready(function() {
         //See you later pal (show warning)
       });
 
-      hospitalsDB.sync(remote_hospitalsDB, hospitalOpts).on('paused', function(err) {
+      hospitalsDB.sync(remote_hospitalsDB, {
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+        }
+
+      }).on('paused', function(err) {
 
         if (notReady['hospitals']) {
-
+          console.log(hospitalOpts);
           hospitalsDB.find(hospitalOpts).then(function(result) {
 
-            console.log(result)
+
             var nearEnough = [];
             var docs = 'docs' in result ? result.docs : false;
             var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
