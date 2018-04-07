@@ -192,7 +192,21 @@ $(document).ready(function() {
 
                 });
 
-                notReady['hospitals'] = true;
+
+                hospitalsDB.find(hospitalOpts).then(function(result) {
+
+                  var docs = 'docs' in result ? result.docs : false;
+
+                  if (docs) {
+
+                    for (var key in docs) {
+
+                      doc = docs[key];
+                      console.log(doc)
+                    }
+                  }
+
+                });
 
 
               }).catch(function(err) {
@@ -232,25 +246,7 @@ $(document).ready(function() {
         }
 
       }).on('paused', function(err) {
-
-        if (notReady['hospitals']) {
-
-          hospitalsDB.find(hospitalOpts).then(function(result) {
-
-            var docs = 'docs' in result ? result.docs : false;
-
-            if (docs) {
-
-              for (var key in docs) {
-
-                doc = docs[key];
-                console.log(doc)
-              }
-            }
-
-          });
-
-        }
+        //See you later sherminator
       });
 
       campaignsDB.sync(remote_campaignsDB, {
