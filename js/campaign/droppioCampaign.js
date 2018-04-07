@@ -136,7 +136,7 @@ $(document).ready(function() {
 
         var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
 
-        var hospitalssDB = new PouchDB("hospitals", {
+        var hospitalsDB = new PouchDB("hospitals", {
           auto_compaction: false,
           cache: false,
           heartbeat: true
