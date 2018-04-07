@@ -62,8 +62,6 @@ $(document).ready(function() {
 
   var campaign = new Campaign();
 
-  var hospitalOpts = {};
-
   var notReady = {
     'campaigns': true,
     'settings': true,
@@ -151,6 +149,14 @@ $(document).ready(function() {
 
             var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
+            var hospitalOpts = {
+              selector: {
+                'province': {
+                  '$exists': true
+                }
+              }
+            };
+
             keys.forEach(function(elem) {
 
               $('#' + elem + 'Div').css('display', 'block');
@@ -179,15 +185,7 @@ $(document).ready(function() {
                     hospitalOpts['selector'] = {
                       'province': row.value
                     }
-                  } else {
-
-                    hospitalOpts['selector'] = {
-                      province: {
-                        '$exists': true
-                      }
-                    }
                   }
-
 
                 });
 
@@ -204,7 +202,7 @@ $(document).ready(function() {
                       for (var key in docs) {
 
                         doc = docs[key];
-
+                        console.log(doc)
                       }
                     }
 
