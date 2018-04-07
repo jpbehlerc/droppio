@@ -188,7 +188,8 @@ $(document).ready(function() {
                 for (var key in docs) {
 
                   doc = docs[key];
-                  $('#hospital').append('<option value=' + doc.name + '>' + doc.name + '</option>');
+                  name = doc.name;
+                  $('#hospital').append('<option value="' + name + '">' + name + '</option>');
                 }
               }
 
