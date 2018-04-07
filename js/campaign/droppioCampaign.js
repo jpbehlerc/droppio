@@ -215,10 +215,9 @@ $(document).ready(function() {
 
         if (notReady['hospitals']) {
 
-          console.log('settings raised flag');
-
           hospitalsDB.find(hospitalOpts).then(function(result) {
 
+            console.log(result)
             var nearEnough = [];
             var docs = 'docs' in result ? result.docs : false;
             var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
