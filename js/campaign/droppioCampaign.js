@@ -110,244 +110,229 @@ $(document).ready(function() {
 
   }).done(function(data) {
 
-      data = JSON.parse(data);
+    data = JSON.parse(data);
 
-      respType = data['type'];
+    respType = data['type'];
 
-      if (respType == 'creds') {
+    if (respType == 'creds') {
 
-        var dbUser = data['dbUser'];
-        var dbPass = data['dbPass'];
+      var dbUser = data['dbUser'];
+      var dbPass = data['dbPass'];
 
-        //Init respective DBs
-        var settingsDB = new PouchDB("settings" + dbUser, {
-          auto_compaction: false,
-          cache: false,
-          heartbeat: true
-        });
+      //Init respective DBs
+      var settingsDB = new PouchDB("settings" + dbUser, {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
 
-        var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
-        var campaignsDB = new PouchDB("campaigns", {
-          auto_compaction: true,
-          cache: false,
-          heartbeat: true
-        });
+      var campaignsDB = new PouchDB("campaigns", {
+        auto_compaction: true,
+        cache: false,
+        heartbeat: true
+      });
 
-        var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
+      var remote_campaignsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/campaigns');
 
-        var hospitalsDB = new PouchDB("hospitals", {
-          auto_compaction: false,
-          cache: false,
-          heartbeat: true
-        });
+      var hospitalsDB = new PouchDB("hospitals", {
+        auto_compaction: false,
+        cache: false,
+        heartbeat: true
+      });
 
-        var remote_hospitalsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/hospitals');
+      var remote_hospitalsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/hospitals');
 
-        settingsDB.sync(remote_settingsDB, {
+      settingsDB.sync(remote_settingsDB, {
 
-          live: true,
-          retry: true,
-          back_off_function: function(delay) {
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
 
-            if (delay == 0) {
+          if (delay == 0) {
 
-              return 1000;
+            return 1000;
 
-            } else if (delay >= 1000 && delay < 1800000) {
+          } else if (delay >= 1000 && delay < 1800000) {
 
-              return delay * 1.5;
+            return delay * 1.5;
 
-            } else if (delay >= 1800000) {
+          } else if (delay >= 1800000) {
 
-              return delay * 1.1;
+            return delay * 1.1;
 
-            }
           }
+        }
 
-        }).on('paused', function(err) {
+      }).on('paused', function(err) {
 
-            if (notReady['settings']) {
+        if (notReady['settings']) {
 
-              $("#ownCampaign, #othersCampaign").click(function() {
+          $("#ownCampaign, #othersCampaign").click(function() {
 
-                  var keys = ['name', 'lastName', 'bloodType', 'dni'];
-
-
-                  keys.forEach(function(elem) {
-
-                    $('#' + elem + 'Div').css('display', 'block');
-                    $('#' + elem + 'Div').animateCss('flipInX');
+            var keys = ['name', 'lastName', 'bloodType', 'dni'];
 
 
-                  });
+            keys.forEach(function(elem) {
+
+              $('#' + elem + 'Div').css('display', 'block');
+              $('#' + elem + 'Div').animateCss('flipInX');
 
 
-                  if ($(this).attr("id") == 'ownCampaign') {
-
-
-
-                    settingsDB.allDocs({
-                      include_docs: true,
-                      keys: keys
-                    }).then(function(res) {
-
-                        res.rows.forEach(function(row) {
-
-                          if (keys.includes(row.id)) {
-
-
-
-                            $('#' + row.id + 'Div').animateCss('flipOutX', function() {
-                              $('#' + row.id + 'Div').css('display', 'none');
-                            });
-
-
-                          }
-
-                          if (row.id == 'province') {
-
-                            hospitalOpts['selector'] = {
-                              'province': row.value
-                            }
-                          }
-
-
-
-
-
-                        });
-
-                        hospitalsDB.sync(remote_hospitalsDB, hospitalOpts
-                        }).on('paused',
-                        function(err) {
-                          //Populate hospitals selector
-                        });
-
-                    });
-
-                }
-
-              }).catch(function(err) {
-              // some paranormal shit happening here (show warning)
             });
 
 
-
-          }
-
-        });
+            if ($(this).attr("id") == 'ownCampaign') {
 
 
-      notReady['settings'] = false;
-    }
+
+              settingsDB.allDocs({
+                include_docs: true,
+                keys: keys
+              }).then(function(res) {
+
+                res.rows.forEach(function(row) {
+
+                  if (keys.includes(row.id)) {
+
+                    $('#' + row.id + 'Div').animateCss('flipOutX', function() {
+                      $('#' + row.id + 'Div').css('display', 'none');
+                    })
+                  }
+
+                  if (row.id == 'province') {
+
+                    hospitalOpts['selector'] = {
+                      'province': row.value
+                    }
+                  }
 
 
-  }).on('error', function(err) {
-  //See you later pal (show warning)
-});
+                });
 
+                hospitalsDB.sync(remote_hospitalsDB, hospitalOpts).on('paused', function(err) {
+                  //Populate hospitals selector
+                });
 
-campaignsDB.sync(remote_campaignsDB, {
+              });
 
-  live: true,
-  retry: true,
-  back_off_function: function(delay) {
-
-    if (delay == 0) {
-
-      return 1000;
-
-    } else if (delay >= 1000 && delay < 1800000) {
-
-      return delay * 1.5;
-
-    } else if (delay >= 1800000) {
-
-      return delay * 1.1;
-
-    }
-  }
-
-}).on('paused', function(err) {
-
-  if (notReady['campaigns']) {
-
-    $("#createCampaign").submit(function(e) {
-
-      e.preventDefault();
-
-      name = $("#name").val();
-      lastname = $("#lastname").val();
-      bloodType = $("#bloodType").val();
-      dni = $("#dni").val();
-      status = $("#status").val();
-
-      hospital = $("#hospital").val().split("@");
-      hospitalLocation = hospital[1].split(" ");
-      hospitalLocation = {
-        'lat': hospitalLocation[0],
-        'lon': hospitalLocation[1]
-      };
-      hospital = hospital[0];
-
-      hospitalStarts = $("#hospitalHoursStart").val();
-      hospitalEnds = $("#hospitalHoursEnd").val();
-      hospitalHours = hospitalStarts + " " + hospitalEnds;
-
-      campaign.name = name;
-      campaign.lastname = lastname;
-      campaign.bloodType = bloodType;
-      campaign.dni = dni;
-      campaign.status = status;
-      campaign.hospital = hospital;
-      campaign.hospitalHours = hospitalHours;
-      campaign.createdAt = moment().tz("America/Argentina/Buenos_Aires").valueOf();
-      campaign._id = dbUser + randHex(16);
-      campaign.compatible = compatibility[campaign.bloodType];
-
-      console.log(campaign);
-      /*
-          campaignsDB.find({
-            selector: {
-              dni: campaign.dni
             }
-          }).then(function(res) {
 
-            console.log(res);
+          }).catch(function(err) {
+            // some paranormal shit happening here (show warning)
           });
 
 
-        */
-    });
-  }
-  notReady['campaigns'] = false;
+          notReady['settings'] = false;
+        }
 
 
-}).on('error', function(err) {
-  //See you later pal (show warning)
-});
+      }).on('error', function(err) {
+        //See you later pal (show warning)
+      });
 
-}
-});
 
-// Date Picker
-$('.datepicker').datepicker({
-  selectMonths: true, // Creates a dropdown to control month
-  selectYears: 15, // Creates a dropdown of 15 years to control year,
-  today: 'Today',
-  clear: 'Clear',
-  close: 'Ok',
-  closeOnSelect: false // Close upon selecting a date,
-});
-// Timer Picker
-$('.timepicker').timepicker({
-defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
-autoClose: true,
-twelvehour: false, // Use AM/PM or 24-hour format
-done: 'OK', // text for done-button
-cancel: 'Cancelar', // Text for cancel-button
-});
+      campaignsDB.sync(remote_campaignsDB, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+        }
+
+      }).on('paused', function(err) {
+
+        if (notReady['campaigns']) {
+
+          $("#createCampaign").submit(function(e) {
+
+            e.preventDefault();
+
+            name = $("#name").val();
+            lastname = $("#lastname").val();
+            bloodType = $("#bloodType").val();
+            dni = $("#dni").val();
+            status = $("#status").val();
+
+            hospital = $("#hospital").val().split("@");
+            hospitalLocation = hospital[1].split(" ");
+            hospitalLocation = {
+              'lat': hospitalLocation[0],
+              'lon': hospitalLocation[1]
+            };
+            hospital = hospital[0];
+
+            hospitalStarts = $("#hospitalHoursStart").val();
+            hospitalEnds = $("#hospitalHoursEnd").val();
+            hospitalHours = hospitalStarts + " " + hospitalEnds;
+
+            campaign.name = name;
+            campaign.lastname = lastname;
+            campaign.bloodType = bloodType;
+            campaign.dni = dni;
+            campaign.status = status;
+            campaign.hospital = hospital;
+            campaign.hospitalHours = hospitalHours;
+            campaign.createdAt = moment().tz("America/Argentina/Buenos_Aires").valueOf();
+            campaign._id = dbUser + randHex(16);
+            campaign.compatible = compatibility[campaign.bloodType];
+
+            console.log(campaign);
+            /*
+                campaignsDB.find({
+                  selector: {
+                    dni: campaign.dni
+                  }
+                }).then(function(res) {
+
+                  console.log(res);
+                });
+
+
+              */
+          });
+        }
+        notReady['campaigns'] = false;
+
+
+      }).on('error', function(err) {
+        //See you later pal (show warning)
+      });
+
+    }
+  });
+
+  // Date Picker
+  $('.datepicker').datepicker({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+  // Timer Picker
+  $('.timepicker').timepicker({
+    defaultTime: '08:00', // Set default time: 'now', '1:30AM', '16:30'
+    autoClose: true,
+    twelvehour: false, // Use AM/PM or 24-hour format
+    done: 'OK', // text for done-button
+    cancel: 'Cancelar', // Text for cancel-button
+  });
 
 
 
