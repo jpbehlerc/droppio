@@ -65,7 +65,7 @@ $(document).ready(function() {
   var notReady = {
     'campaigns': true,
     'settings': true,
-    'hospitals': true
+    'hospitals': false
   };
 
 
@@ -192,7 +192,7 @@ $(document).ready(function() {
 
                 });
 
-                notReady['hospitals'] = false;
+                notReady['hospitals'] = true;
 
 
               }).catch(function(err) {
@@ -234,13 +234,10 @@ $(document).ready(function() {
       }).on('paused', function(err) {
 
         if (notReady['hospitals']) {
-          console.log(hospitalOpts);
+
           hospitalsDB.find(hospitalOpts).then(function(result) {
 
-
-            var nearEnough = [];
             var docs = 'docs' in result ? result.docs : false;
-            var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
 
             if (docs) {
 
