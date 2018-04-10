@@ -1,18 +1,17 @@
 $(document).ready(function() {
 
   //Init pouchDB
-  function Campaign() {
+  campaign = {
 
-    this._id = false,
-      this.bloodType = false,
-      this.name = false,
-      this.lastname = false,
-      this.dni = false,
-      this.hospital = false,
-      this.hospitalHours = false,
-      this.duty = false,
-      this.status = false,
-      this.createdAt = false
+    _id: false,
+    bloodType: false,
+    name: false,
+    lastname: false,
+    dni: false,
+    hospital: false,
+    hospitalHours: false,
+    status: false,
+    createdAt: false
 
   };
 
@@ -318,16 +317,18 @@ $(document).ready(function() {
 
             console.log(campaign);
 
-            campaignsDB.find({
-              selector: {
-                dni: campaign.dni
-              }
-            }).then(function(res) {
+            campaignsDB.put(campaign).then(function(res) {
               console.log('Alles gut!');
               console.log(res);
+              doc = res.docs.length ? res.docs[0] : false;
+
+              if (doc) {
+                //Campaign with DNI .. already exists!
+              } else {
+
+              }
             }).catch(function(err) {
-              console.log('Catched!');
-              console.log(err);
+              // Something happened while creating campaign
             });
 
 
