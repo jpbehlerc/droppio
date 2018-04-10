@@ -378,7 +378,7 @@ class register(tornado.web.RequestHandler):
 
 class TwitterHandler(tornado.web.RequestHandler):
 
-    async get(self):
+    async def get(self):
 
         twitter = TwitterClient(
             consumer_key=self.settings['twitter_consumer_key'],
