@@ -4,7 +4,7 @@ $(document).ready(function() {
   function Settings() {
 
     this.bloodType = false,
-      this.radius = false,
+      this.radius = false
 
   };
 
