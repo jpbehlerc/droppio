@@ -375,6 +375,17 @@ class register(tornado.web.RequestHandler):
         self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
+class TwitterHandler(tornado.web.RequestHandler,
+                          tornado.auth.TwitterMixin):
+
+    async def get(self):
+        if self.get_argument("oauth_token", None):
+            user = await self.get_authenticated_user()
+            # Save the user using e.g. set_secure_cookie()
+        else:
+            await self.authorize_redirect()
+
+
 if __name__ == '__main__':
 
 
@@ -395,6 +406,8 @@ if __name__ == '__main__':
         "autoescape": "xhtml_escape",
         "default_handler_class": errorHandler,
         "db": {'user':'droppio','pass':'SjDdtbDUWDxqwid4'},
+        "twitter_consumer_key":'qbFI7UIJH9huBm3k0uUdmUIis',
+        "twitter_consumer_secret":' IZEGXNKx2YIINUO8DaB6WHkW1Bfx7SZUE33niI7H2NgX0TA5c5',
         "login_url": "/sign",
         "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
@@ -420,6 +433,7 @@ if __name__ == '__main__':
         handlers.append((r"/home", home))
         handlers.append((r"/", landing))
         handlers.append((r"/sign", sign))
+        handlers.append((r"/twitterAuth", sign))
         handlers.append((r"/register", register))
         handlers.append((r"/registerTest", registerTest))
         handlers.append((r"/campaign", campaign))
