@@ -376,7 +376,7 @@ class register(tornado.web.RequestHandler):
         self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
-class TwitterHandler(tornado.web.RequestHandler)
+class TwitterHandler(tornado.web.RequestHandler):
 
     async get(self):
 
