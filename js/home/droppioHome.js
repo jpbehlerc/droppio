@@ -3,14 +3,8 @@ $(document).ready(function() {
   //Init pouchDB
   function Settings() {
 
-    this.id = false,
-      this.bloodType = false,
-      this.name = false,
-      this.lastName = false,
-      this.dni = false,
-      this.email = false,
-      this.weight = false,
-      this.birthDate = false
+    this.bloodType = false,
+      this.radius = false,
 
   };
 
@@ -272,157 +266,132 @@ $(document).ready(function() {
 
   }).on('paused', function(err) {
 
-      settings.get('name').then(function(doc) {
-        info.name = doc.name
-      });
+    var keys = ['bloodType', 'radius', 'nearbyHospitals'];
 
-      settings.get('lastname').then(function(doc) {
-        info.lastName = doc.lastName
-      });
+    settings.allDocs({
+      include_docs: true,
+      keys: keys
+    }).then(function(docs) {
+      console.log(docs);
+    }).catch(function() {
+      //
+    });
+    /*
+    settings.get('bloodType').then(function(doc) {
+      //Olé
+    }).then(function() {
 
-      settings.get('dni').then(function(doc) {
-        info.dni = doc.dni
-      });
+      settings.bloodType = doc.bloodType;
 
-      settings.get('weight').then(function(doc) {
-        info.weight = doc.weight
-      });
+      settings.get('radius').then(function(doc) {
 
-      settings.get('birthDate').then(function(doc) {
-        info.birthDate = doc.birthDate
-      });
+        //Filter by what mofo?
+        campaigns.replicate.from(remote_campaigns, {
 
-      settings.get('bloodType').then(function(doc) {
+          live: true,
+          retry: true,
+          back_off_function: function(delay) {
 
-          settings.bloodType = doc.bloodType;
+            if (delay == 0) {
 
-          //Filter by what mofo?
-          campaigns.replicate.from(remote_campaigns, {
+              return 1000;
 
-            live: true,
-            retry: true,
-            back_off_function: function(delay) {
+            } else if (delay >= 1000 && delay < 1800000) {
 
-              if (delay == 0) {
+              return delay * 1.5;
 
-                return 1000;
+            } else if (delay >= 1800000) {
 
-              } else if (delay >= 1000 && delay < 1800000) {
+              return delay * 1.1;
 
-                return delay * 1.5;
-
-              } else if (delay >= 1800000) {
-
-                return delay * 1.1;
-
-              }
-            },
-            selector: {
-              "compatible": {
-                "$elemMatch": {
-                  "$eq": settings.bloodType
-                }
-              },
-              "createdAt": {
-                "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf();
-              }
             }
+          },
+          selector: {
+            "compatible": {
+              "$elemMatch": {
+                "$eq": settings.bloodType
+              },
+            },
+            "createdAt": {
+              "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf();
+            },
+            "createdAt": {
+          }
 
-          }).on('change', function(docs) {
+        }).on('change', function(docs) {
 
-              //Calculate distance using Haversine formula, some yoda shit right here ->
-              var distance = function(src, dst) {
-
-                var R = 6371e3; // metres
-                var radSrc = src.lat.toRadians();
-                var radDst = dst.lat.toRadians();
-                var deltaLat = (dst.lat - src.lat).toRadians();
-                var deltaLon = (dst.lon - src.lon).toRadians();
-
-                var a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) + Math.cos(radSrc) * Math.cos(radDst) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-                return R * c;
-
-              }
-
-              for (i = 0, n = docs.length; i < n; i++) {
-
-                doc = docs[i];
-                dst = doc.hospitalLocation;
-                src = settings.location;
-
-                if (distance(src, dst) <= 5000) {
-
-                  //Show campaign, else do nothing
-                }
-
-              }
-
-
-            };
-          }).on('error', function(info) {
-          // I'll be back
+          //New shiny card!
+        }).on('error', function(info) {
+          console.log("Aha something nasty happened while syncing campaigns!");
         });
 
+      }).catch(function() {
+
+        console.log("Aha something nasty happened while syncing campaigns!");
       });
+
+    }).catch(function() {
+
+      console.log("Aha something nasty happened while syncing campaigns!");
+    });
+    */
 
 
   }).on('error', function(info) {
 
-  console.log("Oops smth happened while trying to sync settings!");
+    console.log("Oops smth happened while trying to sync settings!");
 
-});
+  });
 
-//Sync settings only then start campaign filtration
-stats.sync(remote_stats, {
+  //Sync settings only then start campaign filtration
+  stats.sync(remote_stats, {
 
-  live: true,
-  retry: true,
-  back_off_function: function(delay) {
+    live: true,
+    retry: true,
+    back_off_function: function(delay) {
 
-    if (delay == 0) {
+      if (delay == 0) {
 
-      return 1000;
+        return 1000;
 
-    } else if (delay >= 1000 && delay < 1800000) {
+      } else if (delay >= 1000 && delay < 1800000) {
 
-      return delay * 1.5;
+        return delay * 1.5;
 
-    } else if (delay >= 1800000) {
+      } else if (delay >= 1800000) {
 
-      return delay * 1.1;
+        return delay * 1.1;
 
-    }
-
-  }
-}).on('error', function(err) {
-  //See you in afterlife
-});
-
-algorithms.sync(remote_algorithms, {
-
-  live: true,
-  retry: true,
-  back_off_function: function(delay) {
-
-    if (delay == 0) {
-
-      return 1000;
-
-    } else if (delay >= 1000 && delay < 1800000) {
-
-      return delay * 1.5;
-
-    } else if (delay >= 1800000) {
-
-      return delay * 1.1;
+      }
 
     }
+  }).on('error', function(err) {
+    //See you in afterlife
+  });
 
-  }
-}).on('error', function(err) {
-  //See you in afterlife
-});
+  algorithms.sync(remote_algorithms, {
+
+    live: true,
+    retry: true,
+    back_off_function: function(delay) {
+
+      if (delay == 0) {
+
+        return 1000;
+
+      } else if (delay >= 1000 && delay < 1800000) {
+
+        return delay * 1.5;
+
+      } else if (delay >= 1800000) {
+
+        return delay * 1.1;
+
+      }
+
+    }
+  }).on('error', function(err) {
+    //See you in afterlife
+  });
 
 });
