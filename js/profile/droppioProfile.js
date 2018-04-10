@@ -266,7 +266,7 @@ $(document).ready(function() {
 
   $('#fbSwitch').click(function() {
 
-    if (typeof FB === 'undefined' || FB === null) {
+    if (typeof FB !== 'undefined' && FB !== null) {
 
       FB.login(function(response) {
         if (response.authResponse) {
