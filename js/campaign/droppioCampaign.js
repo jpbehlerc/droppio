@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   //Init pouchDB
-  campaign = {
+  var campaign = {
 
     _id: false,
     bloodType: false,
@@ -57,8 +57,6 @@ $(document).ready(function() {
       return this;
     },
   });
-
-  var campaign = new Campaign();
 
   var notReady = {
     'campaigns': true,
@@ -315,11 +313,11 @@ $(document).ready(function() {
             campaign._id = dbUser + randHex(16);
             campaign.compatible = compatibility[campaign.bloodType];
 
-            console.log(campaign);
 
             campaignsDB.put(campaign).then(function(res) {
               console.log('Alles gut!');
               console.log(res);
+              /*
               doc = res.docs.length ? res.docs[0] : false;
 
               if (doc) {
@@ -327,7 +325,10 @@ $(document).ready(function() {
               } else {
 
               }
+              */
             }).catch(function(err) {
+              console.log('Alles gut!');
+
               // Something happened while creating campaign
             });
 
