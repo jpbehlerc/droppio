@@ -1,17 +1,18 @@
 $(document).ready(function() {
 
   //Init pouchDB
-  var campaign = {
+  function Campaign() {
 
-    _id: false,
-    bloodType: false,
-    name: false,
-    lastname: false,
-    dni: false,
-    hospital: false,
-    hospitalHours: false,
-    status: false,
-    createdAt: false
+    this._id = false,
+      this.bloodType = false,
+      this.name = false,
+      this.lastname = false,
+      this.dni = false,
+      this.hospital = false,
+      this.hospitalHours = false,
+      this.duty = false,
+      this.status = false,
+      this.createdAt = false
 
   };
 
@@ -57,6 +58,8 @@ $(document).ready(function() {
       return this;
     },
   });
+
+  var campaign = new Campaign();
 
   var notReady = {
     'campaigns': true,
@@ -314,21 +317,25 @@ $(document).ready(function() {
             campaign.compatible = compatibility[campaign.bloodType];
 
 
-            campaignsDB.put(campaign).then(function(res) {
-              console.log('Alles gut!');
+
+            campaignsDB.find({
+              selector: {
+                dni: campaign.dni
+              }
+            }).then(function(res) {
               console.log(res);
-              /*
               doc = res.docs.length ? res.docs[0] : false;
 
               if (doc) {
                 //Campaign with DNI .. already exists!
               } else {
-
+                campaignsDB.put(campaign).then(function() {
+                  console.log("alles gut!");
+                }).catch(function() {
+                  // Something happened while creating campaign
+                });
               }
-              */
             }).catch(function(err) {
-              console.log('Alles gut!');
-
               // Something happened while creating campaign
             });
 
