@@ -16,7 +16,7 @@ $(document).ready(function() {
   var info = new Settings();
 
 
-  $.post("/", {
+  $.post("/registerTest", {
 
     _xsrf: getCookie('_xsrf'),
     type: "creds"

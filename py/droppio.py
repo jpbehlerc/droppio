@@ -260,7 +260,7 @@ class home(tornado.web.RequestHandler):
             logging.error("HTTP Error: {0}".format(args[0]))
 
 
-    @authenticated
+    #@authenticated
     def get(self):
 
         if not self.current_user:
@@ -271,7 +271,7 @@ class home(tornado.web.RequestHandler):
         self.render("home.html")
 
 
-    @authenticated
+    #@authenticated
     def post(self):
 
         requestType = self.get_argument('type',default=False)
