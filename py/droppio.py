@@ -433,7 +433,7 @@ if __name__ == '__main__':
         handlers.append((r"/home", home))
         handlers.append((r"/", landing))
         handlers.append((r"/sign", sign))
-        handlers.append((r"/twitterAuth", sign))
+        handlers.append((r"/twitterAuth", TwitterHandler))
         handlers.append((r"/register", register))
         handlers.append((r"/registerTest", registerTest))
         handlers.append((r"/campaign", campaign))
