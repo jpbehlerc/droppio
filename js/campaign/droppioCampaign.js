@@ -10,7 +10,6 @@ $(document).ready(function() {
       this.dni = false,
       this.hospital = false,
       this.hospitalHours = false,
-      this.hospitalLocation = false,
       this.duty = false,
       this.status = false,
       this.createdAt = false
