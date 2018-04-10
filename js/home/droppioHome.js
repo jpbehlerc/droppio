@@ -151,7 +151,7 @@ $(document).ready(function() {
                               }
                             },
                             "createdAt": {
-                              "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf();
+                              "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
                             }
 
                           }).on('change', function(docs) {
