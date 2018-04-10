@@ -378,12 +378,18 @@ class register(tornado.web.RequestHandler):
 class TwitterHandler(tornado.web.RequestHandler,
                           tornado.auth.TwitterMixin):
 
-    async def get(self):
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    def get(self):
         if self.get_argument("oauth_token", None):
-            user = await self.get_authenticated_user()
-            # Save the user using e.g. set_secure_cookie()
+            user = yield self.get_authenticated_user()
+            if not user:
+                raise tornado.web.HTTPError(500, "Twitter auth failed")
+
+            print(user)
+
         else:
-            await self.authorize_redirect()
+            self.authenticate_redirect()
 
 
 if __name__ == '__main__':
