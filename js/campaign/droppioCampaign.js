@@ -332,7 +332,7 @@ $(document).ready(function() {
             });
 
 
-            */
+
           });
         }
         notReady['campaigns'] = false;
