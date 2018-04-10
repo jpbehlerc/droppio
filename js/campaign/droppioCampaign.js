@@ -300,7 +300,7 @@ $(document).ready(function() {
             dni = $("#dni").val();
             status = $("#status").val();
 
-            hospital = $("#hospital").val().split(",")[0];
+            hospital = $("#hospital").val();
 
             hospitalStarts = $("#hospitalHoursStart").val();
             hospitalEnds = $("#hospitalHoursEnd").val();
@@ -318,18 +318,21 @@ $(document).ready(function() {
             campaign.compatible = compatibility[campaign.bloodType];
 
             console.log(campaign);
-            /*
-                campaignsDB.find({
-                  selector: {
-                    dni: campaign.dni
-                  }
-                }).then(function(res) {
 
-                  console.log(res);
-                });
+            campaignsDB.find({
+              selector: {
+                dni: campaign.dni
+              }
+            }).then(function(res) {
+              console.log('Alles gut!');
+              console.log(res);
+            }).catch(function(err) {
+              console.log('Catched!');
+              console.log(err);
+            });
 
 
-              */
+            */
           });
         }
         notReady['campaigns'] = false;
