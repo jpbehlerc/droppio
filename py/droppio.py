@@ -375,21 +375,17 @@ class register(tornado.web.RequestHandler):
         self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
-class TwitterHandler(tornado.web.RequestHandler,
-                          tornado.auth.TwitterMixin):
+class TwitterHandler(tornado.web.RequestHandler)
 
-    @tornado.web.asynchronous
-    @tornado.gen.coroutine
-    def get(self):
-        if self.get_argument("oauth_token", None):
-            user = yield self.get_authenticated_user()
-            if not user:
-                raise tornado.web.HTTPError(500, "Twitter auth failed")
+    async get(self):
 
-            print(user)
-
-        else:
-            self.authenticate_redirect()
+        twitter = TwitterClient(
+            consumer_key=self.settings['twitter_consumer_key'],
+            consumer_secret=self.settings['twitter_consumer_secret'],
+        )
+        request_token, request_token_secret, _ = await twitter.get_request_token()
+        authorize_url = twitter.get_authorize_url(request_token)
+        print(authorize_url)
 
 
 if __name__ == '__main__':
