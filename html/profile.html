@@ -8,8 +8,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="../json/manifest.json">
   <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-      <link rel="stylesheet" href="../css/droppio.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link rel="stylesheet" href="../css/droppio.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
   <link rel="icon" href="../img/tint.png" type="image/png">
 
@@ -74,7 +74,7 @@
         <div class="row">
           <div class="input-field col s6 m6 l6">
             <i class="fas prefix fa-user-circle"></i>
-            <input type="text" id="name" class="validate" tabindex="1"  maxlength="30">
+            <input type="text" id="name" class="validate" tabindex="1" maxlength="30">
             <label for="name">Nombre</label>
           </div>
           <div class="input-field col s6 m6 l6">
@@ -94,7 +94,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-tint"></i>
-            <select  id="bloodType" tabindex="3">
+            <select id="bloodType" tabindex="3">
               <option value="" disabled selected>Seleccione tipo de sangre</option>
               <option value="1">A+</option>
               <option value="2">B+</option>
@@ -179,26 +179,23 @@
       </div>
     </div>
 
-      <!-- Facebook connector -->
-      <div class="row ">
-        <div class="col s12 m12 l6">
-          <div class="col s8 m8 l8">
-            <p class="left flow-text" style="color:white; text-align:justify; margin-left:1em">
-              <i class="fab fa-facebook droppioIcon" style=" margin-top: 0.5em;"></i>&nbsp; Facebook
-            </p>
-          </div>
-          <div class="col s4 m4 l4 center">
-            <div class="switch" id="fbSwitch">
-              <label>
-                <input type="checkbox">
-                <span class="lever"></span>
-              </label>
-            </div>
-
-          </div>
+    <!-- Facebook connector -->
+    <div class="row ">
+      <div class="col s12 m12 l6">
+        <div class="col s8 m8 l8">
+          <p class="left flow-text" style="color:white; text-align:justify; margin-left:1em">
+            <i class="fab fa-facebook droppioIcon" style=" margin-top: 0.5em;"></i>&nbsp; Facebook
+          </p>
         </div>
-
+        <p id="fbSwitch">
+          <label>
+          <input type="checkbox" />
+          <span></span>
+        </label>
+      </p>
       </div>
+
+    </div>
 
     </form>
 
