@@ -158,6 +158,7 @@ $(document).ready(function() {
               info.nearbyHospitals = nearEnough;
 
             }
+
             elems = info.toJSON();
             keys = Object.keys(elems);
 
@@ -260,6 +261,27 @@ $(document).ready(function() {
 
 
     }
+
+  });
+
+  $('#fbSwitch').click(function() {
+
+    if (typeof FB === 'undefined' || FB === null) {
+
+      FB.login(function(response) {
+        if (response.authResponse) {
+          console.log(getUserInfo()); // Get User Information.
+
+        } else {
+          console.log('Authorization failed.');
+        }
+      }, {
+        scope: 'publish_actions'
+      });
+
+
+    }
+
 
   });
 
