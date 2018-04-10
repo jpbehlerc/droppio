@@ -263,11 +263,6 @@ class home(tornado.web.RequestHandler):
     #@authenticated
     def get(self):
 
-        if not self.current_user:
-
-            self.redirect("/sign")
-            return
-
         self.render("home.html")
 
 
