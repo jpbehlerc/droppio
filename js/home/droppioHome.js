@@ -35,37 +35,192 @@ $(document).ready(function() {
       dbAdminPass = data['dbAdminPass'];
 
       //Init respective DBs
-      var campaigns = new PouchDB("campaigns", {
+      var campaignsDB = new PouchDB("campaigns", {
         auto_compaction: false,
         cache: false,
         heartbeat: true
       });
 
-      var remote_campaigns = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/campaigns');
+      var remote_campaignsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/campaigns');
 
-      var settings = new PouchDB("settings" + dbUser, {
+      var settingsDB = new PouchDB("settings" + dbUser, {
         auto_compaction: false,
         cache: false,
         heartbeat: true
       });
 
-      var remote_settings = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/settings' + dbUser);
+      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/settings' + dbUser);
 
-      var stats = new PouchDB("stats" + dbUser, {
+      var statsDB = new PouchDB("stats" + dbUser, {
         auto_compaction: false,
         cache: false,
         heartbeat: true
       });
 
-      var remote_stats = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/stats' + dbUser);
+      var remote_statsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/stats' + dbUser);
 
-      var algorithms = new PouchDB("algorithms", {
+      var algorithmsDB = new PouchDB("algorithms", {
         auto_compaction: false,
         cache: false,
         heartbeat: true
       });
 
-      var remote_algorithms = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/algorithms');
+      var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/algorithms');
+
+      //Sync settings only then start campaign filtration
+      settings.sync(remote_settings, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+
+        }
+
+      }).on('paused', function(err) {
+
+        var keys = ['bloodType', 'radius', 'nearbyHospitals'];
+
+        settings.allDocs({
+          include_docs: true,
+          keys: keys
+        }).then(function(docs) {
+          console.log(docs);
+        }).catch(function() {
+          //
+        });
+        /*
+        settings.get('bloodType').then(function(doc) {
+          //Olé
+        }).then(function() {
+
+          settings.bloodType = doc.bloodType;
+
+          settings.get('radius').then(function(doc) {
+
+            //Filter by what mofo?
+            campaigns.replicate.from(remote_campaigns, {
+
+              live: true,
+              retry: true,
+              back_off_function: function(delay) {
+
+                if (delay == 0) {
+
+                  return 1000;
+
+                } else if (delay >= 1000 && delay < 1800000) {
+
+                  return delay * 1.5;
+
+                } else if (delay >= 1800000) {
+
+                  return delay * 1.1;
+
+                }
+              },
+              selector: {
+                "compatible": {
+                  "$elemMatch": {
+                    "$eq": settings.bloodType
+                  },
+                },
+                "createdAt": {
+                  "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf();
+                },
+                "createdAt": {
+              }
+
+            }).on('change', function(docs) {
+
+              //New shiny card!
+            }).on('error', function(info) {
+              console.log("Aha something nasty happened while syncing campaigns!");
+            });
+
+          }).catch(function() {
+
+            console.log("Aha something nasty happened while syncing campaigns!");
+          });
+
+        }).catch(function() {
+
+          console.log("Aha something nasty happened while syncing campaigns!");
+        });
+        */
+
+
+      }).on('error', function(info) {
+
+        console.log("Oops smth happened while trying to sync settings!");
+
+      });
+
+      //Sync settings only then start campaign filtration
+      stats.sync(remote_stats, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+
+        }
+      }).on('error', function(err) {
+        //See you in afterlife
+      });
+
+      algorithms.sync(remote_algorithms, {
+
+        live: true,
+        retry: true,
+        back_off_function: function(delay) {
+
+          if (delay == 0) {
+
+            return 1000;
+
+          } else if (delay >= 1000 && delay < 1800000) {
+
+            return delay * 1.5;
+
+          } else if (delay >= 1800000) {
+
+            return delay * 1.1;
+
+          }
+
+        }
+      }).on('error', function(err) {
+        //See you in afterlife
+      });
+
+
 
     }
 
@@ -239,159 +394,6 @@ $(document).ready(function() {
       }
     });
 
-  });
-
-  //Sync settings only then start campaign filtration
-  settings.sync(remote_settings, {
-
-    live: true,
-    retry: true,
-    back_off_function: function(delay) {
-
-      if (delay == 0) {
-
-        return 1000;
-
-      } else if (delay >= 1000 && delay < 1800000) {
-
-        return delay * 1.5;
-
-      } else if (delay >= 1800000) {
-
-        return delay * 1.1;
-
-      }
-
-    }
-
-  }).on('paused', function(err) {
-
-    var keys = ['bloodType', 'radius', 'nearbyHospitals'];
-
-    settings.allDocs({
-      include_docs: true,
-      keys: keys
-    }).then(function(docs) {
-      console.log(docs);
-    }).catch(function() {
-      //
-    });
-    /*
-    settings.get('bloodType').then(function(doc) {
-      //Olé
-    }).then(function() {
-
-      settings.bloodType = doc.bloodType;
-
-      settings.get('radius').then(function(doc) {
-
-        //Filter by what mofo?
-        campaigns.replicate.from(remote_campaigns, {
-
-          live: true,
-          retry: true,
-          back_off_function: function(delay) {
-
-            if (delay == 0) {
-
-              return 1000;
-
-            } else if (delay >= 1000 && delay < 1800000) {
-
-              return delay * 1.5;
-
-            } else if (delay >= 1800000) {
-
-              return delay * 1.1;
-
-            }
-          },
-          selector: {
-            "compatible": {
-              "$elemMatch": {
-                "$eq": settings.bloodType
-              },
-            },
-            "createdAt": {
-              "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf();
-            },
-            "createdAt": {
-          }
-
-        }).on('change', function(docs) {
-
-          //New shiny card!
-        }).on('error', function(info) {
-          console.log("Aha something nasty happened while syncing campaigns!");
-        });
-
-      }).catch(function() {
-
-        console.log("Aha something nasty happened while syncing campaigns!");
-      });
-
-    }).catch(function() {
-
-      console.log("Aha something nasty happened while syncing campaigns!");
-    });
-    */
-
-
-  }).on('error', function(info) {
-
-    console.log("Oops smth happened while trying to sync settings!");
-
-  });
-
-  //Sync settings only then start campaign filtration
-  stats.sync(remote_stats, {
-
-    live: true,
-    retry: true,
-    back_off_function: function(delay) {
-
-      if (delay == 0) {
-
-        return 1000;
-
-      } else if (delay >= 1000 && delay < 1800000) {
-
-        return delay * 1.5;
-
-      } else if (delay >= 1800000) {
-
-        return delay * 1.1;
-
-      }
-
-    }
-  }).on('error', function(err) {
-    //See you in afterlife
-  });
-
-  algorithms.sync(remote_algorithms, {
-
-    live: true,
-    retry: true,
-    back_off_function: function(delay) {
-
-      if (delay == 0) {
-
-        return 1000;
-
-      } else if (delay >= 1000 && delay < 1800000) {
-
-        return delay * 1.5;
-
-      } else if (delay >= 1800000) {
-
-        return delay * 1.1;
-
-      }
-
-    }
-  }).on('error', function(err) {
-    //See you in afterlife
   });
 
 });
