@@ -68,7 +68,7 @@ $(document).ready(function() {
       var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/algorithms');
 
       //Sync settings only then start campaign filtration
-      settings.sync(remote_settings, {
+      settingsDB.sync(remote_settingsDB, {
 
         live: true,
         retry: true,
@@ -94,7 +94,7 @@ $(document).ready(function() {
 
         var keys = ['bloodType', 'radius', 'nearbyHospitals'];
 
-        settings.allDocs({
+        settingsDB.allDocs({
           include_docs: true,
           keys: keys
         }).then(function(docs) {
@@ -170,7 +170,7 @@ $(document).ready(function() {
       });
 
       //Sync settings only then start campaign filtration
-      stats.sync(remote_stats, {
+      statsDB.sync(remote_statsDB, {
 
         live: true,
         retry: true,
@@ -195,7 +195,7 @@ $(document).ready(function() {
         //See you in afterlife
       });
 
-      algorithms.sync(remote_algorithms, {
+      algorithmsDB.sync(remote_algorithmsDB, {
 
         live: true,
         retry: true,
