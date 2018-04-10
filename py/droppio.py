@@ -18,7 +18,6 @@ from aiocouchdb.errors import HttpErrorException
 from collections import defaultdict,deque
 from requests.exceptions import Timeout,ConnectionError
 from hashlib import sha224
-from aioauth_client import TwitterClient
 import syslog
 import logging
 import argparse
