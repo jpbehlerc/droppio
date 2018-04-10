@@ -179,8 +179,6 @@
       </div>
     </div>
 
-    <form id="saveSocial" class="input-field col s12 m12 l6" action="#" method="post">
-
       <!-- Facebook connector -->
       <div class="row ">
         <div class="col s12 m12 l6">
@@ -190,7 +188,7 @@
             </p>
           </div>
           <div class="col s4 m4 l4 center">
-            <div class="switch">
+            <div class="switch" id="fbSwitch">
               <label>
                 <input type="checkbox">
                 <span class="lever"></span>
@@ -200,31 +198,6 @@
           </div>
         </div>
 
-      </div>
-      <!-- Twitter connector -->
-      <div class="row ">
-        <div class="col s12 m12 l6">
-          <div class="col s8 m8 l8">
-            <p class="left flow-text" style="color:white; text-align:justify; margin-left:1em">
-              <i class="fab fa-twitter droppioIcon" style=" margin-top: 0.5em;"></i>&nbsp; Twitter
-            </p>
-          </div>
-          <div class="col s4 m4 l4 center">
-            <p>
-      <label>
-        <input type="checkbox" class="filled-in" checked="checked" />
-        <span>Filled in</span>
-      </label>
-    </p>
-          </div>
-        </div>
-      </div>
-      <!-- Save button -->
-      <div class="row">
-        <div class="col s12 m12 l6 center">
-          <button class="btn-large waves-effect waves-light center" type="submit" name="action"> Guardar&nbsp; <i class="fas fa-paper-plane"></i>
-      </button>
-        </div>
       </div>
 
     </form>
@@ -239,9 +212,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
 <script src="../js/common/pouchdb.min.js"></script>
 <script src="../js/common/pouchdb.find.min.js"></script>
-<script src="/js/moment.js"></script>
-<script src="/js/moment-timezone.js"></script>
-<script src="/js/moment-timezone-with-data.js"></script>
+<script src="../js/common/facebookInit.min.js"></script>
 <script type="text/javascript">
   var xsrf_token = "{{ handler.xsrf_token }}";
 </script>

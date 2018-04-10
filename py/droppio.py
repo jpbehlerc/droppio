@@ -376,17 +376,12 @@ class register(tornado.web.RequestHandler):
         self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
-class TwitterHandler(tornado.web.RequestHandler):
+class policies(tornado.web.RequestHandler):
 
-    async def get(self):
+    #@authenticated
+    def get(self):
 
-        twitter = TwitterClient(
-            consumer_key=self.settings['twitter_consumer_key'],
-            consumer_secret=self.settings['twitter_consumer_secret'],
-        )
-        request_token, request_token_secret, _ = await twitter.get_request_token()
-        authorize_url = twitter.get_authorize_url(request_token)
-        print(authorize_url)
+        self.render("policies.html")
 
 
 if __name__ == '__main__':
@@ -409,8 +404,6 @@ if __name__ == '__main__':
         "autoescape": "xhtml_escape",
         "default_handler_class": errorHandler,
         "db": {'user':'droppio','pass':'SjDdtbDUWDxqwid4'},
-        "twitter_consumer_key":'qbFI7UIJH9huBm3k0uUdmUIis',
-        "twitter_consumer_secret":' IZEGXNKx2YIINUO8DaB6WHkW1Bfx7SZUE33niI7H2NgX0TA5c5',
         "login_url": "/sign",
         "salt": '4479bcb7167644f8c288bc604a87ec79'
         }
@@ -436,11 +429,11 @@ if __name__ == '__main__':
         handlers.append((r"/home", home))
         handlers.append((r"/", landing))
         handlers.append((r"/sign", sign))
-        handlers.append((r"/twitterAuth", TwitterHandler))
         handlers.append((r"/register", register))
         handlers.append((r"/registerTest", registerTest))
         handlers.append((r"/campaign", campaign))
         handlers.append((r"/profile", profile))
+        handlers.append((r"/policies", policies))
         handlers.append((r"/heart", heart))
 
         application = tornado.web.Application(handlers, **settings)
