@@ -155,7 +155,7 @@ $(document).ready(function() {
 
 
             }).on('change', function(docs) {
-              //New shiny card!
+              console.log(docs);
             });
 
           }
