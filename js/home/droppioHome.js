@@ -102,10 +102,9 @@ $(document).ready(function() {
 
           var docs = docs;
           var allPresent = true;
-          console.log(doc);
-          for (var key in docs) {
 
-            doc = docs[key];
+          docs.rows.forEach(function(doc) {
+
 
             if ('error' in doc) {
 
@@ -115,7 +114,7 @@ $(document).ready(function() {
               settings[doc._id] = doc.value;
             }
 
-          }
+          });
 
           console.log(allPresent);
 
