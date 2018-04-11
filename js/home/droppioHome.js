@@ -13,7 +13,7 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
-  var info = new Settings();
+  var settings = new Settings();
 
 
   $.post("/registerTest", {
@@ -68,7 +68,7 @@ $(document).ready(function() {
       var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/algorithms');
 
       //Sync settings only then start campaign filtration
-      settingsDB.sync(remote_settingsDB, {
+      settingsDB.sync(remote_gDB, {
 
         live: true,
         retry: true,
@@ -310,7 +310,7 @@ $(document).ready(function() {
           'lastName': info.LastName
         };
 
-        settings.get('isAble').then(function(res) {
+        settingsDB.get('isAble').then(function(res) {
 
           campaigns.put(donation).catch(function(err) {
 
@@ -354,7 +354,7 @@ $(document).ready(function() {
 
           if (age >= 18 && weight >= 50) {
 
-            settings.put({
+            settingsDB.put({
               '_id': '_local/isAble'
             });
 
