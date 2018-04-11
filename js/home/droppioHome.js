@@ -92,7 +92,7 @@ $(document).ready(function() {
 
       }).on('paused', function(err) {
 
-        var keys = ['bloodType', 'radius', 'nearbyHospitals'];
+        var keys = ['bloodType', 'nearbyHospitals'];
 
         settingsDB.allDocs({
           include_docs: true,
@@ -105,7 +105,6 @@ $(document).ready(function() {
 
           docs.rows.forEach(function(doc) {
 
-
             if ('error' in doc) {
 
               allPresent = false;
@@ -116,7 +115,6 @@ $(document).ready(function() {
 
           });
 
-          console.log(allPresent);
 
           if (allPresent) {
 
@@ -148,6 +146,9 @@ $(document).ready(function() {
                 },
                 "createdAt": {
                   "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
+                },
+                "hospital": {
+                  "$in": settings.nearbyHospitals
                 }
 
               }
