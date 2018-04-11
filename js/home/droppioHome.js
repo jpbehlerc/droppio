@@ -160,12 +160,12 @@ $(document).ready(function() {
 
           }
 
-        }).on('error', function(info) {
+        }).catch(function(info) {
           console.log("Aha something nasty happened while syncing campaigns!");
         });
 
 
-      }).catch(function(err) {
+      }).on('error', function(info) {
 
         console.log("Oops smth happened while trying to sync settings!");
 
