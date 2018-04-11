@@ -49,7 +49,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@droppio.org:6489/settings' + dbUser);
+      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
       var statsDB = new PouchDB("stats" + dbUser, {
         auto_compaction: false,
@@ -57,7 +57,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_statsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/stats' + dbUser);
+      var remote_statsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/stats' + dbUser);
 
       var algorithmsDB = new PouchDB("algorithms", {
         auto_compaction: false,
@@ -65,7 +65,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/algorithms');
+      var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/algorithms');
 
       //Sync settings only then start campaign filtration
       settingsDB.sync(remote_settingsDB, {
