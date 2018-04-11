@@ -102,11 +102,11 @@ $(document).ready(function() {
 
           var docs = docs;
           var allPresent = true;
-
+          console.log(doc);
           for (var key in docs) {
 
             doc = docs[key];
-            console.log(doc);
+
             if ('error' in doc) {
 
               allPresent = false;
