@@ -67,6 +67,19 @@ $(document).ready(function() {
 
       var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/algorithms');
 
+
+
+      campaignsDB.createIndex({
+        index: {
+          fields: ['hospital', 'bloodType', 'createdAt']
+        }
+      }).then(function(result) {
+        // handle result
+      }).catch(function(err) {
+        console.log(err);
+      });
+
+
       //Sync settings only then start campaign filtration
       settingsDB.sync(remote_settingsDB, {
 
