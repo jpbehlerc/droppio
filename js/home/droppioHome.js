@@ -165,7 +165,7 @@ $(document).ready(function() {
         });
 
 
-      }).on('error', function(info) {
+      }).catch(function(err) {
 
         console.log("Oops smth happened while trying to sync settings!");
 
