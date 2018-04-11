@@ -102,7 +102,7 @@ $(document).ready(function() {
 
           var docs = docs;
           var allPresent = true;
-
+          console.log(docs);
           docs.forEach(function(doc) {
 
             console.log(doc);
@@ -117,12 +117,9 @@ $(document).ready(function() {
 
           });
 
-          return allPresent;
-
-        }).then(function(present) {
 
 
-          if (present) {
+          if (allPresent) {
 
             campaignsDB.replicate.from(remote_campaignsDB, {
 
