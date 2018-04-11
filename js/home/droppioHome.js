@@ -140,6 +140,21 @@ $(document).ready(function() {
 
                 }
               },
+              filter: function(doc, req) {
+
+                var isCompatible = doc.compatible.indexOf(req.query.bloodType) >= 0;
+                var hasHospital = req.query.nearbyHospitals.indexOf(doc.hospital) >= 0;
+                var valid = req.query.expiry < doc.createdAt;
+
+                return isCompatible && hasHospital && valid;
+
+              },
+              query_params: {
+                "bloodType": settings.bloodType,
+                "nearbyHospitals": settings.nearbyHospitals,
+                "expiry": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
+              }
+              /*
               selector: {
                 //"compatible": {
                 //  "$elemMatch": {
@@ -154,7 +169,7 @@ $(document).ready(function() {
                 }
 
               }
-
+              */
 
             }).on('change', function(docs) {
               console.log(docs);
