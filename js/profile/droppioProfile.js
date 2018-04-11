@@ -63,6 +63,7 @@ $(document).ready(function() {
           result = results[0];
         }
 
+        console.log(result);
         info.province = result.address_components[3].long_name;
 
       }
@@ -264,26 +265,6 @@ $(document).ready(function() {
 
   });
 
-  $('#fbSwitch').click(function() {
-
-    if (typeof FB !== 'undefined' && FB !== null) {
-
-      FB.login(function(response) {
-        if (response.authResponse) {
-          console.log(getUserInfo()); // Get User Information.
-
-        } else {
-          console.log('Authorization failed.');
-        }
-      }, {
-        scope: 'publish_actions'
-      });
-
-
-    }
-
-
-  });
 
   $('.datepicker').datepicker({
     selectMonths: true, // Creates a dropdown to control month
