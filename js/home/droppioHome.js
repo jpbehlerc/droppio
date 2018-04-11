@@ -139,8 +139,10 @@ $(document).ready(function() {
                 }
               },
               selector: {
-                "$elemMatch": {
-                  "compatible": settings.bloodType
+                "compatible": {
+                  "$elemMatch": {
+                    "$eq": settings.bloodType
+                  }
                 },
                 "createdAt": {
                   "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
