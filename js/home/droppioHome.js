@@ -139,17 +139,15 @@ $(document).ready(function() {
                 }
               },
               selector: {
-                "compatible": {
-                  "$elemMatch": {
-                    "$eq": settings.bloodType
-                  }
+                "$elemMatch": {
+                  "compatible": settings.bloodType
                 },
-                //"createdAt": {
-                //  "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
-                //},
-                "hospital": {
-                  "$in": settings.nearbyHospitals
-                }
+                "createdAt": {
+                  "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
+                },
+                //"hospital": {
+                //  "$in": settings.nearbyHospitals
+                //}
 
               }
 
