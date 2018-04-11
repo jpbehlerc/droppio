@@ -139,17 +139,17 @@ $(document).ready(function() {
                 }
               },
               selector: {
-                "compatible": {
-                  "$elemMatch": {
-                    "$eq": settings.bloodType
-                  }
-                },
+                //"compatible": {
+                //  "$elemMatch": {
+                //    "$eq": settings.bloodType
+                //  }
+                //},
                 "createdAt": {
                   "$gt": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
+                },
+                "hospital": {
+                  "$in": settings.nearbyHospitals
                 }
-                //"hospital": {
-                //  "$in": settings.nearbyHospitals
-                //}
 
               }
 
