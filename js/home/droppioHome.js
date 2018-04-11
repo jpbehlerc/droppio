@@ -102,10 +102,8 @@ $(document).ready(function() {
 
           var docs = docs;
           var allPresent = true;
-          console.log(docs);
-          docs.forEach(function(doc) {
 
-            console.log(doc);
+          docs.forEach(function(doc) {
 
             if ('error' in doc) {
 
@@ -117,7 +115,7 @@ $(document).ready(function() {
 
           });
 
-
+          console.log(allPresent);
 
           if (allPresent) {
 
