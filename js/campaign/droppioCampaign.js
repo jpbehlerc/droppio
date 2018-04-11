@@ -323,14 +323,14 @@ $(document).ready(function() {
                 dni: campaign.dni
               }
             }).then(function(res) {
-              console.log(res);
+
               doc = res.docs.length ? res.docs[0] : false;
 
               if (doc) {
                 //Campaign with DNI .. already exists!
               } else {
                 campaignsDB.put(campaign).then(function() {
-                  console.log("alles gut!");
+                  //All good!
                 }).catch(function() {
                   // Something happened while creating campaign
                 });

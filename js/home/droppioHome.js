@@ -69,17 +69,6 @@ $(document).ready(function() {
 
 
 
-      campaignsDB.createIndex({
-        index: {
-          fields: ['hospital', 'bloodType', 'createdAt']
-        }
-      }).then(function(result) {
-        // handle result
-      }).catch(function(err) {
-        console.log(err);
-      });
-
-
       //Sync settings only then start campaign filtration
       settingsDB.sync(remote_settingsDB, {
 
@@ -128,7 +117,7 @@ $(document).ready(function() {
 
           });
 
-          console.log(allPresent);
+
           if (allPresent) {
 
             campaignsDB.replicate.from(remote_campaignsDB, {
