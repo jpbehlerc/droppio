@@ -41,7 +41,7 @@ $(document).ready(function() {
         heartbeat: true
       });
 
-      var remote_campaignsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/campaigns');
+      var remote_campaignsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/campaigns');
 
       var settingsDB = new PouchDB("settings" + dbUser, {
         auto_compaction: false,
