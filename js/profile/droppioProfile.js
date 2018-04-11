@@ -65,8 +65,9 @@ $(document).ready(function() {
 
         //We have to test the real behavior of this
         components = result.address_components;
+        console.log(components);
+
         info.province = components[components.length - 2].long_name;
-        console.log(components[components.length - 2]);
       }
 
     });
