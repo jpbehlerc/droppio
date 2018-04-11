@@ -63,8 +63,8 @@ $(document).ready(function() {
           result = results[0];
         }
 
-
-        info.province = result.address_components[address_components.length - 2].long_name;
+        components = result.address_components;
+        info.province = components[components.length - 2].long_name;
         console.log(info.province);
       }
 
