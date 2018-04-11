@@ -102,7 +102,6 @@ $(document).ready(function() {
         info.radius = $("#radius").val();
         info.province = $("#province").val();
 
-
         hospitalsDB.find({
           selector: {
             province: info.province
@@ -135,8 +134,6 @@ $(document).ready(function() {
           elems = info.toJSON();
           keys = Object.keys(elems);
 
-          console.log(elems);
-
           settingsDB.allDocs({
             include_docs: true,
             keys: keys
@@ -152,6 +149,7 @@ $(document).ready(function() {
                 }).catch(function(err) {
                   // Show some fancy warning :O
                 });
+                console.log(doc);
 
               } else {
 
