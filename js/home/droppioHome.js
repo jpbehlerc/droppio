@@ -68,7 +68,7 @@ $(document).ready(function() {
       var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@droppio.org:6489/algorithms');
 
       //Sync settings only then start campaign filtration
-      settingsDB.sync(remote_gDB, {
+      settingsDB.sync(remote_settingsDB, {
 
         live: true,
         retry: true,
