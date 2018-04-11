@@ -115,7 +115,7 @@ $(document).ready(function() {
 
           });
 
-
+          console.log(allPresent);
           if (allPresent) {
 
             campaignsDB.replicate.from(remote_campaignsDB, {
