@@ -159,6 +159,7 @@ $(document).ready(function() {
           }
 
         }).catch(function(info) {
+          console.log(info);
           console.log("Aha something nasty happened while syncing campaigns!");
         });
 
