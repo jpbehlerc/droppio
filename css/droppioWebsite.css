@@ -59,6 +59,11 @@ Buttons Color Class: #FFAB40 orange accent-2
     }
     body {
       color: #fff;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
     }
     .droppioRed {
       background: linear-gradient(45deg, #550e23, #c91249);

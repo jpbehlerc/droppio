@@ -200,6 +200,11 @@ Buttons Color Class: #21ebad
     	-webkit-animation: Gradient 15s ease infinite;
     	-moz-animation: Gradient 15s ease infinite;
     	animation: Gradient 15s ease infinite;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
     }
 
     @-webkit-keyframes Gradient {
