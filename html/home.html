@@ -115,10 +115,10 @@
             <!-- card actions -->
             <div class="card-action">
               <div class="col s6 m6 l6 center">
-                <a class="spread droppioCardButton"><i class="fas fa-share-alt"></i> Difundir</a>
+                <a  id="spread" class="droppioCardButton"><i class="fas fa-share-alt"></i> Difundir</a>
               </div>
               <div class="col s6 m6 l6 center">
-                <a class="donate droppioCardButton"><i class="fas fa-tint"></i> Donar</a>
+                <a id="donate" class="droppioCardButton"><i class="fas fa-tint"></i> Donar</a>
               </div>
             </div>
             <!-- card reveal -->
@@ -144,7 +144,12 @@
 <script type="text/javascript" src="../js/common/sweetalert2.min.js">
   var xrsf_token = {{ handler.xsrf_token }};
 </script>
+
+<script src="/js/common/moment.min.js"></script>
+<script src="/js/common/moment-timezone.min.js"></script>
+<script src="/js/common/moment-timezone-with-data.min.js"></script>
 <script src="../js/common/pouchdb.min.js"></script>
+<script src="../js/common/pouchdb.find.min.js"></script>
 <script type="text/javascript" src="../js/home/droppioHome.js"></script>
 
 </html>

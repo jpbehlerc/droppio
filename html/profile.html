@@ -112,14 +112,14 @@
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-birthday-cake"></i>
             <label for="birthdate">Fecha de Nacimiento</label>
-            <input type="text" id="birthdate" tabindex="6" class="datepicker" maxlength="50">
+            <input type="text" id="birthdate" tabindex="6" class="datepicker" maxlength="50" required>
           </div>
         </div>
         <!-- weight Input -->
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="fas prefix fa-weight"></i>
-            <input type="number" tabindex="7" id="weight" class="validate" maxlength="3">
+            <input type="number" tabindex="7" id="weight" class="validate" maxlength="3" required>
             <label for="weight">Peso</label>
           </div>
         </div>
@@ -129,6 +129,38 @@
             <i class="fas prefix fa-envelope"></i>
             <input type="email" tabindex="5" id="email" class="validate" maxlength="50">
             <label for="email">Email</label>
+          </div>
+        </div>
+
+        <!-- Blood Input -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="far prefix fa-map"></i>
+            <select id="province" tabindex="3" required>
+              <option value="" disabled selected>Provincia</option>
+              <option value="Mendoza">Mendoza</option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Catamarca">Catamarca</option>
+              <option value="Chaco">Chaco</option>
+              <option value="Chubut">Chubut</option>
+              <option value="Cordoba">Cordoba</option>
+              <option value="Corrientes">Corrientes</option>
+              <option value="Entre Rios">Entre Rios</option>
+              <option value="Formosa">Formosa</option>
+              <option value="Jujuy">Jujuy</option>
+              <option value="La Rioja">La Rioja</option>
+              <option value="Misiones">Misiones</option>
+              <option value="Neuquen">Neuquen</option>
+              <option value="Rio Negro">Rio Negro</option>
+              <option value="San Juan">San Juan</option>
+              <option value="San Luis">San Luis</option>
+              <option value="Santa Cruz">Santa Cruz</option>
+              <option value="Santa Fe">Santa Fe</option>
+              <option value="Santiago del Estero">Santiago del Estero</option>
+              <option value="Tierra del Fuego">Tierra del Fuego</option>
+              <option value="Tucuman">Tucuman</option>
+
+            </select>
           </div>
         </div>
 

@@ -44,40 +44,13 @@ $(document).ready(function() {
 
   }
 
-  //Get state/province from location
-  function storeProvince() {
 
-    var geocoder = new google.maps.Geocoder();
-    var latLon = new google.maps.LatLng(info.location.lat, info.location.lon);
 
-    geocoder.geocode({
-      'latLng': latLon
-    }, function(results, status) {
-
-      if (status == google.maps.GeocoderStatus.OK) {
-
-        var result;
-        if (results.length > 1) {
-          result = results[1];
-        } else {
-          result = results[0];
-        }
-
-        info.province = result.address_components[3].long_name;
-
-      }
-
-    });
-
-  }
 
   //Watch and store position in realtime
   navigator.geolocation.watchPosition(function(position) {
 
     storePosition(position);
-
-    if (!info.province)
-      storeProvince();
 
   });
 
@@ -127,80 +100,78 @@ $(document).ready(function() {
         info.weight = $("#weight").val();
         info.password = $("#password").val();
         info.radius = $("#radius").val();
+        info.province = $("#province").val();
 
-        if (info.province) {
+        hospitalsDB.find({
+          selector: {
+            province: info.province
+          }
+        }).then(function(result) {
 
-          hospitalsDB.find({
-            selector: {
-              province: info.province
+          var nearEnough = [];
+          var docs = 'docs' in result ? result.docs : false;
+          var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
+
+          if (docs) {
+
+            for (var key in docs) {
+
+              doc = docs[key];
+
+              var hospitalPosition = new google.maps.LatLng(doc.location.lat, doc.location.lon);
+
+              distance = google.maps.geometry.spherical.computeDistanceBetween(currentPosition, hospitalPosition) / 1000;
+
+              if (distance <= info.radius)
+                nearEnough.push(doc.name);
+
             }
-          }).then(function(result) {
 
-            var nearEnough = [];
-            var docs = 'docs' in result ? result.docs : false;
-            var currentPosition = new google.maps.LatLng(info.location.lat, info.location.lon);
+            info.nearbyHospitals = nearEnough;
 
-            if (docs) {
+          }
 
-              for (var key in docs) {
+          elems = info.toJSON();
+          keys = Object.keys(elems);
+          console.log(keys);
+          settingsDB.allDocs({
+            include_docs: true,
+            keys: keys
+          }).then(function(res) {
 
-                doc = docs[key];
+            res.rows.forEach(function(row) {
 
-                var hospitalPosition = new google.maps.LatLng(doc.location.lat, doc.location.lon);
+              if ('error' in row) {
 
-                distance = google.maps.geometry.spherical.computeDistanceBetween(currentPosition, hospitalPosition) / 1000;
+                settingsDB.put({
+                  '_id': row.key,
+                  'value': elems[row.key]
+                }).catch(function(err) {
+                  // Show some fancy warning :O
+                });
+                console.log(doc);
 
-                if (distance <= info.radius)
-                  nearEnough.push(doc.name);
+              } else {
 
+                doc = row.doc;
+                doc['value'] = elems[row.key];
+                console.log(doc);
+                settingsDB.put(doc).catch(function(err) {
+                  // Show some fancy warning :O
+                });
               }
 
-              info.nearbyHospitals = nearEnough;
-
-            }
-
-            elems = info.toJSON();
-            keys = Object.keys(elems);
-
-            console.log(elems);
-
-            settingsDB.allDocs({
-              include_docs: true,
-              keys: keys
-            }).then(function(res) {
-
-              res.rows.forEach(function(row) {
-
-                if ('error' in row) {
-
-                  settingsDB.put({
-                    '_id': row.key,
-                    'value': elems[row.key]
-                  }).catch(function(err) {
-                    // Show some fancy warning :O
-                  });
-
-                } else {
-
-                  doc = row.doc;
-                  doc['value'] = elems[row.key];
-                  console.log(doc);
-                  settingsDB.put(doc).catch(function(err) {
-                    // Show some fancy warning :O
-                  });
-                }
-
-              });
-
-            }).catch(function(err) {
-              // some paranormal shit happening here (show warning)
             });
 
+          }).catch(function(err) {
+            // some paranormal shit happening here (show warning)
           });
 
+        });
 
 
-        }
+
+
 
       });
 
@@ -264,26 +235,6 @@ $(document).ready(function() {
 
   });
 
-  $('#fbSwitch').click(function() {
-
-    if (typeof FB !== 'undefined' && FB !== null) {
-
-      FB.login(function(response) {
-        if (response.authResponse) {
-          console.log(getUserInfo()); // Get User Information.
-
-        } else {
-          console.log('Authorization failed.');
-        }
-      }, {
-        scope: 'publish_actions'
-      });
-
-
-    }
-
-
-  });
 
   $('.datepicker').datepicker({
     selectMonths: true, // Creates a dropdown to control month
