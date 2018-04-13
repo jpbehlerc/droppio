@@ -142,7 +142,11 @@ $(document).ready(function() {
 
               filter: function(doc, req) {
 
-                return doc.compatible.includes(req.query.bloodType);
+                var isCompatible = doc.compatible.includes(req.query.bloodType);
+                var isNear = req.query.nearbyHospitals.includes(doc.hospital);
+
+                return isCompatible && isNear;
+
               },
 
               query_params: {
