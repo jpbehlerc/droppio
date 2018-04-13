@@ -116,7 +116,7 @@ $(document).ready(function() {
             }
 
           });
-
+          console.log(docs);
 
           if (allPresent) {
 
