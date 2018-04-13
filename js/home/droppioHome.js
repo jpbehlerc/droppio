@@ -13,6 +13,17 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
+  var bloodID = {
+    4: 'O+'
+    1: 'A+'
+    2: 'B+'
+    3: 'AB+'
+    8: 'O-'
+    5: 'A-'
+    6: 'B-'
+    7: 'AB-'
+  }
+
   var notReady = {
     'campaigns': true,
   };
@@ -162,11 +173,30 @@ $(document).ready(function() {
 
             }).on('change', function(change) {
 
-              console.log(change);
-
               docs = change.docs;
 
-              res.rows.forEach(function(doc) {
+              docs.rows.forEach(function(doc) {
+
+                receiver = doc.name + ' ' + doc.lastname;
+                hospital = doc.hospital;
+                compatible = '';
+
+                doc.compatible.forEach(function(row) {
+
+                  compatible = compatible + bloodID[row] + ' ';
+                });
+
+
+                $('#casperCampaign #campaignReceiver').html(receiver);
+                $('#casperCampaign #campaignHospital').html(hospital);
+                $('#casperCampaign #campaignCompatibility').html(compatible);
+                $('#casperCampaign').css('display', 'block');
+
+                //Missing creator!
+                //$('#casperCampaign #campaignReceiver').html();
+                //Missing #donants
+                //$('#casperCampaign #campaignDonants').html('');
+
                 //
               });
               /*
