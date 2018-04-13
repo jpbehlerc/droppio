@@ -104,7 +104,7 @@ $(document).ready(function() {
 
           var docs = docs;
           var allPresent = true;
-          console.log(doc);
+          console.log(docs);
 
           docs.rows.forEach(function(doc) {
 
