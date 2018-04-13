@@ -162,11 +162,12 @@ $(document).ready(function() {
 
             }).on('change', function(change) {
 
+              console.log(change);
+
               docs = change.docs;
 
               res.rows.forEach(function(doc) {
-
-                console.log(doc);
+                //
               });
               /*
               $('#casperCampaign #campaignCreator').html('');
