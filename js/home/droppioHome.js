@@ -144,7 +144,7 @@ $(document).ready(function() {
 
                 var isCompatible = doc.compatible.includes(req.query.bloodType);
                 var isNear = req.query.nearbyHospitals.includes(doc.hospital);
-                var isValid = doc.createdAt > req.query.since;
+                var isValid = doc.createdAt > req.query.expiry;
 
                 return isCompatible && isNear && isValid;
 
@@ -153,7 +153,7 @@ $(document).ready(function() {
               query_params: {
                 bloodType: settings.bloodType,
                 nearbyHospitals: settings.nearbyHospitals,
-                since: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
+                expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
               }
 
             }).on('change', function(docs) {
