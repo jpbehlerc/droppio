@@ -100,21 +100,18 @@ $(document).ready(function() {
           include_docs: true,
           keys: keys
 
-        }).then(function(docs) {
+        }).then(function(res) {
 
-          var docs = docs;
           var allPresent = true;
-          console.log(docs);
 
-          docs.rows.forEach(function(doc) {
-
+          res.rows.forEach(function(doc) {
 
             if ('error' in doc) {
 
               allPresent = false;
             } else {
 
-              settings[doc._id] = doc.value;
+              settings[doc.id] = doc.value;
             }
 
           });
