@@ -107,6 +107,7 @@ $(document).ready(function() {
 
           docs.rows.forEach(function(doc) {
 
+            console.log(doc);
             if ('error' in doc) {
 
               allPresent = false;
@@ -116,7 +117,7 @@ $(document).ready(function() {
             }
 
           });
-          console.log(docs);
+
 
           if (allPresent) {
 
