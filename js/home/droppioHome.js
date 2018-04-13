@@ -23,169 +23,155 @@ $(document).ready(function() {
 
   }).done(function(data) {
 
-    data = JSON.parse(data);
+      data = JSON.parse(data);
 
-    respType = data['type'];
+      respType = data['type'];
 
-    if (respType == 'creds') {
+      if (respType == 'creds') {
 
-      dbUser = data['dbUser'];
-      dbPass = data['dbPass'];
-      dbAdminUser = data['dbAdminUser'];
-      dbAdminPass = data['dbAdminPass'];
+        dbUser = data['dbUser'];
+        dbPass = data['dbPass'];
+        dbAdminUser = data['dbAdminUser'];
+        dbAdminPass = data['dbAdminPass'];
 
-      //Init respective DBs
-      var campaignsDB = new PouchDB("campaigns", {
-        auto_compaction: false,
-        cache: false,
-        heartbeat: true
-      });
+        //Init respective DBs
+        var campaignsDB = new PouchDB("campaigns", {
+          auto_compaction: false,
+          cache: false,
+          heartbeat: true
+        });
 
-      var remote_campaignsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/campaigns');
+        var remote_campaignsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/campaigns');
 
-      var settingsDB = new PouchDB("settings" + dbUser, {
-        auto_compaction: false,
-        cache: false,
-        heartbeat: true
-      });
+        var settingsDB = new PouchDB("settings" + dbUser, {
+          auto_compaction: false,
+          cache: false,
+          heartbeat: true
+        });
 
-      var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
+        var remote_settingsDB = new PouchDB('https://' + dbUser + ':' + dbPass + '@alfredarg.com:6489/settings' + dbUser);
 
-      var statsDB = new PouchDB("stats" + dbUser, {
-        auto_compaction: false,
-        cache: false,
-        heartbeat: true
-      });
+        var statsDB = new PouchDB("stats" + dbUser, {
+          auto_compaction: false,
+          cache: false,
+          heartbeat: true
+        });
 
-      var remote_statsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/stats' + dbUser);
+        var remote_statsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/stats' + dbUser);
 
-      var algorithmsDB = new PouchDB("algorithms", {
-        auto_compaction: false,
-        cache: false,
-        heartbeat: true
-      });
+        var algorithmsDB = new PouchDB("algorithms", {
+          auto_compaction: false,
+          cache: false,
+          heartbeat: true
+        });
 
-      var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/algorithms');
+        var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/algorithms');
 
 
 
-      //Sync settings only then start campaign filtration
-      settingsDB.sync(remote_settingsDB, {
+        //Sync settings only then start campaign filtration
+        settingsDB.sync(remote_settingsDB, {
 
-        live: true,
-        retry: true,
-        back_off_function: function(delay) {
+          live: true,
+          retry: true,
+          back_off_function: function(delay) {
 
-          if (delay == 0) {
+            if (delay == 0) {
 
-            return 1000;
+              return 1000;
 
-          } else if (delay >= 1000 && delay < 1800000) {
+            } else if (delay >= 1000 && delay < 1800000) {
 
-            return delay * 1.5;
+              return delay * 1.5;
 
-          } else if (delay >= 1800000) {
+            } else if (delay >= 1800000) {
 
-            return delay * 1.1;
+              return delay * 1.1;
+
+            }
 
           }
 
-        }
+        }).on('paused', function(err) {
 
-      }).on('paused', function(err) {
+            var keys = ['bloodType', 'nearbyHospitals'];
 
-        var keys = ['bloodType', 'nearbyHospitals'];
+            settingsDB.allDocs({
+              include_docs: true,
+              keys: keys
 
-        settingsDB.allDocs({
-          include_docs: true,
-          keys: keys
+            }).then(function(docs) {
 
-        }).then(function(docs) {
+                var docs = docs;
+                var allPresent = true;
 
-          var docs = docs;
-          var allPresent = true;
+                docs.rows.forEach(function(doc) {
 
-          docs.rows.forEach(function(doc) {
+                  if ('error' in doc) {
 
-            if ('error' in doc) {
+                    allPresent = false;
+                  } else {
 
-              allPresent = false;
-            } else {
+                    settings[doc._id] = doc.value;
+                  }
 
-              settings[doc._id] = doc.value;
-            }
+                });
 
+
+                if (allPresent) {
+
+                  campaignsDB.replicate.from(remote_campaignsDB, {
+
+                      live: true,
+                      retry: true,
+                      back_off_function: function(delay) {
+
+                        if (delay == 0) {
+
+                          return 1000;
+
+                        } else if (delay >= 1000 && delay < 1800000) {
+
+                          return delay * 1.5;
+
+                        } else if (delay >= 1800000) {
+
+                          return delay * 1.1;
+
+                        }
+                      },
+
+                      selector: {
+                        compatible: {
+                          '$elemMatch': settings.bloodType
+
+                        }
+                      },
+                      createdAt: {
+                        '$gt': moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
+                      }
+                      /*
+                      hospital: {
+                        $in: settings.nearbyHospitals
+                      }
+                      */
+
+                    }
+
+
+                  }).on('change', function(docs) {
+                  console.log(docs);
+                });
+
+              }
+
+            }).catch(function(info) {
+            console.log(info);
+            console.log("Aha something nasty happened while syncing campaigns!");
           });
 
 
-          if (allPresent) {
-
-            campaignsDB.replicate.from(remote_campaignsDB, {
-
-              live: true,
-              retry: true,
-              back_off_function: function(delay) {
-
-                if (delay == 0) {
-
-                  return 1000;
-
-                } else if (delay >= 1000 && delay < 1800000) {
-
-                  return delay * 1.5;
-
-                } else if (delay >= 1800000) {
-
-                  return delay * 1.1;
-
-                }
-              },
-              /*
-              filter: function(doc, req) {
-
-                var isCompatible = doc.compatible.indexOf(req.query.bloodType) >= 0;
-                var hasHospital = req.query.nearbyHospitals.indexOf(doc.hospital) >= 0;
-                var valid = req.query.expiry < doc.createdAt;
-
-                return isCompatible && hasHospital && valid;
-
-              },
-              query_params: {
-                "bloodType": settings.bloodType,
-                "nearbyHospitals": settings.nearbyHospitals,
-                "expiry": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
-              }
-              */
-
-              selector: {
-                compatible: {
-                  $elemMatch: {
-                    $eq: settings.bloodType
-                  }
-                },
-                createdAt: {
-                  $gt: moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
-                },
-                hospital: {
-                  $in: settings.nearbyHospitals
-                }
-
-              }
-
-
-            }).on('change', function(docs) {
-              console.log(docs);
-            });
-
-          }
-
-        }).catch(function(info) {
-          console.log(info);
-          console.log("Aha something nasty happened while syncing campaigns!");
-        });
-
-
-      }).on('error', function(info) {
+        }).on('error', function(info) {
 
         console.log("Oops smth happened while trying to sync settings!");
 
@@ -249,87 +235,132 @@ $(document).ready(function() {
   });
 
 
-  // Page Selection
-  $('#home').click(function(e) {
-    e.preventDefault();
-    window.location = "https://droppio.org/home";
-  });
+// Page Selection
+$('#home').click(function(e) {
+  e.preventDefault();
+  window.location = "https://droppio.org/home";
+});
 
-  $('#campaign').click(function(e) {
-    e.preventDefault();
-    window.location = "https://droppio.org/campaign";
-  });
+$('#campaign').click(function(e) {
+  e.preventDefault();
+  window.location = "https://droppio.org/campaign";
+});
 
-  $('#profile').click(function(e) {
-    e.preventDefault();
-    window.location = "https://droppio.org/profile";
-  });
+$('#profile').click(function(e) {
+  e.preventDefault();
+  window.location = "https://droppio.org/profile";
+});
 
-  //$('#pickadate').pickadate();
-  $('.datepicker').datepicker({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: true,
-    min: [1901, 1, 1],
-    max: true,
-    Year: 2002,
-    selectYears: 1000,
-    labelMonthNext: 'Proximo Mes',
-    labelMonthPrev: 'Mes Anterior',
-    labelMonthSelect: 'Seleccione Mes',
-    labelYearSelect: 'Seleccione Año',
-    monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-    weekdaysLetter: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-    today: false,
-    clear: 'Borrar',
-    close: 'Cerrar'
-  });
+//$('#pickadate').pickadate();
+$('.datepicker').datepicker({
+  selectMonths: true, // Creates a dropdown to control month
+  selectYears: true,
+  min: [1901, 1, 1],
+  max: true,
+  Year: 2002,
+  selectYears: 1000,
+  labelMonthNext: 'Proximo Mes',
+  labelMonthPrev: 'Mes Anterior',
+  labelMonthSelect: 'Seleccione Mes',
+  labelYearSelect: 'Seleccione Año',
+  monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+  weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+  weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+  weekdaysLetter: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+  today: false,
+  clear: 'Borrar',
+  close: 'Cerrar'
+});
 
-  $('.timepicker').timepicker({
-    default: false, // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: true, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Borrar', // text for clear-button
-    canceltext: 'Cancelar', // Text for cancel-button
-    autoclose: true, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function() {} //Function for after opening timepicker
-  });
-  $('select').formSelect();
-  // Success Modal
-  $('.spread').click(function(e) {
+$('.timepicker').timepicker({
+  default: false, // Set default time: 'now', '1:30AM', '16:30'
+  fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
+  twelvehour: true, // Use AM/PM or 24-hour format
+  donetext: 'OK', // text for done-button
+  cleartext: 'Borrar', // text for clear-button
+  canceltext: 'Cancelar', // Text for cancel-button
+  autoclose: true, // automatic close timepicker
+  ampmclickable: true, // make AM PM clickable
+  aftershow: function() {} //Function for after opening timepicker
+}); $('select').formSelect();
+// Success Modal
+$('.spread').click(function(e) {
 
-    swal('Gracias!',
-      'Ademas de compartir puedes salvar a esta persona donando!.',
-      'success');
+  swal('Gracias!',
+    'Ademas de compartir puedes salvar a esta persona donando!.',
+    'success');
 
-  });
+});
 
-  $('.donate').click(function(e) {
+$('.donate').click(function(e) {
 
-    swal({
-      html: '<div class="row center"><div class="col s2 m2 l2"> <i class="fas fa-exclamation-circle ce" style="margin-top:0.5em; margin-left:-0.25em; font-size:2.5em; color:#c91249"></i></div><div class="col s10 m10 l10"><p class="left flow-text" style="text-align:left;color:#c91249">Tenga en cuenta que para donar usted debe:</p></div></div><div class="row" style="margin-top:-1em; text-align:left"><div class="col s2 m2 l2" style="margin-top:-1em"></div><div class="col s10 m10 l10"><ul><li style="margin-bottom:0.5em"> &bull; Pesar más de 50 kilos</li><li style="margin-bottom:0.5em"> &bull; Tener entre 18 y 65 años de edad</li><li style="margin-bottom:0.5em"> &bull; No haber padecido una enfermedad en los ultimos 7 días</li><li style="margin-bottom:0.5em"> &bull; Tener presión arterial normal</li><li style="margin-bottom:0.5em"> &bull; No habese hecho un tatuaje ni haber recibido alguna operacion en el ultimo año</li></ul></div></div></div></div><div class="row center"><div class="col s2 m2 l2"> <i class="fas fa-h-square" style="margin-top:0.5em; margin-left:-0.25em; font-size:2.5em; color:#c91249;"></i></div><div class="col s10 m10 l10"><p class="left flow-text" style="text-align:left; color:#c91249;">Presentarse en Hospital Español<span style="color:black;"> de 8hs a 12hs</span></p></div></div>',
-      showCancelButton: true,
-      confirmButtonText: 'Confirmar',
-      confirmButtonColor: '#ffab40',
-      cancelButtonText: 'Cancelar',
-      position: 'top-center'
+  swal({
+    html: '<div class="row center"><div class="col s2 m2 l2"> <i class="fas fa-exclamation-circle ce" style="margin-top:0.5em; margin-left:-0.25em; font-size:2.5em; color:#c91249"></i></div><div class="col s10 m10 l10"><p class="left flow-text" style="text-align:left;color:#c91249">Tenga en cuenta que para donar usted debe:</p></div></div><div class="row" style="margin-top:-1em; text-align:left"><div class="col s2 m2 l2" style="margin-top:-1em"></div><div class="col s10 m10 l10"><ul><li style="margin-bottom:0.5em"> &bull; Pesar más de 50 kilos</li><li style="margin-bottom:0.5em"> &bull; Tener entre 18 y 65 años de edad</li><li style="margin-bottom:0.5em"> &bull; No haber padecido una enfermedad en los ultimos 7 días</li><li style="margin-bottom:0.5em"> &bull; Tener presión arterial normal</li><li style="margin-bottom:0.5em"> &bull; No habese hecho un tatuaje ni haber recibido alguna operacion en el ultimo año</li></ul></div></div></div></div><div class="row center"><div class="col s2 m2 l2"> <i class="fas fa-h-square" style="margin-top:0.5em; margin-left:-0.25em; font-size:2.5em; color:#c91249;"></i></div><div class="col s10 m10 l10"><p class="left flow-text" style="text-align:left; color:#c91249;">Presentarse en Hospital Español<span style="color:black;"> de 8hs a 12hs</span></p></div></div>',
+    showCancelButton: true,
+    confirmButtonText: 'Confirmar',
+    confirmButtonColor: '#ffab40',
+    cancelButtonText: 'Cancelar',
+    position: 'top-center'
 
-    }).then(function(result) {
+  }).then(function(result) {
 
-      if (result.value) {
+    if (result.value) {
 
-        id = $(this).attr("id");
-        donation = {
-          '_id': info._id + '@' + id,
-          'name': info.name,
-          'lastName': info.LastName
-        };
+      id = $(this).attr("id");
+      donation = {
+        '_id': info._id + '@' + id,
+        'name': info.name,
+        'lastName': info.LastName
+      };
 
-        settingsDB.get('isAble').then(function(res) {
+      settingsDB.get('isAble').then(function(res) {
+
+        campaigns.put(donation).catch(function(err) {
+
+          swal({
+            title: 'Oops!',
+            text: 'Ocurrió un error al procesar la donación, por favor intente nuevamente :)',
+            type: 'error',
+            showConfirmButton: false,
+          });
+
+        });
+
+      }).catch(function(err) {
+
+        months = {
+          "January": '01',
+          "February": '02',
+          "March": '03',
+          "April": '04',
+          "May": '05',
+          "June": '06',
+          "July": '07',
+          "August": '08',
+          "September": '09',
+          "October": '10',
+          "November": '11',
+          "December": '12'
+        }
+
+        //Check if user can donate given settings, create flag isAble document
+        now = moment().tz("America/Argentina/Buenos_Aires");
+        birth = info.birthDate.split(" ");
+
+        day = parseInt(birth[0]) < 10 ? "0" + birth[0] : birth[0];
+        month = months[birth[1].split(",")[0]];
+        year = birth[2];
+
+        age = moment(year + "-" + day + "-" + month + " " + "00:00").diff(now, 'years');
+
+        weight = parseInt(info.weight);
+
+        if (age >= 18 && weight >= 50) {
+
+          settingsDB.put({
+            '_id': '_local/isAble'
+          });
 
           campaigns.put(donation).catch(function(err) {
 
@@ -342,102 +373,56 @@ $(document).ready(function() {
 
           });
 
-        }).catch(function(err) {
-
-          months = {
-            "January": '01',
-            "February": '02',
-            "March": '03',
-            "April": '04',
-            "May": '05',
-            "June": '06',
-            "July": '07',
-            "August": '08',
-            "September": '09',
-            "October": '10',
-            "November": '11',
-            "December": '12'
-          }
-
-          //Check if user can donate given settings, create flag isAble document
-          now = moment().tz("America/Argentina/Buenos_Aires");
-          birth = info.birthDate.split(" ");
-
-          day = parseInt(birth[0]) < 10 ? "0" + birth[0] : birth[0];
-          month = months[birth[1].split(",")[0]];
-          year = birth[2];
-
-          age = moment(year + "-" + day + "-" + month + " " + "00:00").diff(now, 'years');
-
-          weight = parseInt(info.weight);
-
-          if (age >= 18 && weight >= 50) {
-
-            settingsDB.put({
-              '_id': '_local/isAble'
-            });
-
-            campaigns.put(donation).catch(function(err) {
-
-              swal({
-                title: 'Oops!',
-                text: 'Ocurrió un error al procesar la donación, por favor intente nuevamente :)',
-                type: 'error',
-                showConfirmButton: false,
-              });
-
-            });
-
-          }
-
-        });
-
-        swal({
-          title: 'Genial!',
-          text: 'Estás a un paso de salvar a esta persona, sólo debes ir a donar',
-          type: 'success',
-          confirmButtonText: 'Ir a donar',
-          showCancelButton: true,
-          cancelButtonText: 'Iré luego'
-
-        }).then(function(result) {
-
-          console.log("Button value: " + result.value);
-
-          if (result.value)
-            window.location = "https://www.google.com/maps?&z=10&mrt=yp&t=m&q=-32.8996453,-68.878869,13";
-
-
-        });
-        // For more information about handling dismissals please visit
-        // https://sweetalert2.github.io/#handling-dismissals
-      } else if (result.dismiss === swal.DismissReason.cancel) {
-        // Shall we show a dismissal msj?
-      }
-    });
-
-  });
-
-
-  $('#spread').click(function() {
-
-    if (typeof FB !== 'undefined' && FB !== null) {
-
-      FB.login(function(response) {
-
-        if (response.status === 'connected') {
-          // Logged into your app and Facebook.
-        } else {
-          // The person is not logged into this app or we are unable to tell.
         }
-      }, {
-        scope: 'publish_actions'
+
       });
 
+      swal({
+        title: 'Genial!',
+        text: 'Estás a un paso de salvar a esta persona, sólo debes ir a donar',
+        type: 'success',
+        confirmButtonText: 'Ir a donar',
+        showCancelButton: true,
+        cancelButtonText: 'Iré luego'
 
+      }).then(function(result) {
+
+        console.log("Button value: " + result.value);
+
+        if (result.value)
+          window.location = "https://www.google.com/maps?&z=10&mrt=yp&t=m&q=-32.8996453,-68.878869,13";
+
+
+      });
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+    } else if (result.dismiss === swal.DismissReason.cancel) {
+      // Shall we show a dismissal msj?
     }
-
-
   });
+
+});
+
+
+$('#spread').click(function() {
+
+  if (typeof FB !== 'undefined' && FB !== null) {
+
+    FB.login(function(response) {
+
+      if (response.status === 'connected') {
+        // Logged into your app and Facebook.
+      } else {
+        // The person is not logged into this app or we are unable to tell.
+      }
+    }, {
+      scope: 'publish_actions'
+    });
+
+
+  }
+
+
+});
 
 });
