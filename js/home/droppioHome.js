@@ -13,6 +13,10 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
+  var notReady = {
+    'campaigns': true,
+  };
+
   var settings = new Settings();
 
 
@@ -116,8 +120,8 @@ $(document).ready(function() {
 
           });
 
-          console.log(allPresent);
-          if (allPresent) {
+
+          if (allPresent && notReady['campaigns']) {
 
             campaignsDB.replicate.from(remote_campaignsDB, {
 
@@ -156,14 +160,28 @@ $(document).ready(function() {
                 expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
               }
 
-            }).on('change', function(docs) {
-              console.log(docs);
+            }).on('change', function(change) {
+
+              docs = change.docs;
+
+              res.rows.forEach(function(doc) {
+
+                console.log(doc);
+              });
+              /*
+              $('#casperCampaign #campaignCreator').html('');
+              $('#casperCampaign #campaignReceiver').html('');
+              $('#casperCampaign #campaignHospital').html('');
+              $('#casperCampaign #campaignDonants').html('');
+              $('#casperCampaign #campaignCompatibilty').html('');
+              */
+
             });
 
           }
 
         }).catch(function(info) {
-          console.log(info);
+
           console.log("Aha something nasty happened while syncing campaigns!");
         });
 
