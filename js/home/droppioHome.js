@@ -106,17 +106,17 @@ $(document).ready(function() {
 
           res.rows.forEach(function(doc) {
 
-            if ('error' in doc) {
+            if ('error' in doc || doc.doc === null) {
 
               allPresent = false;
             } else {
-              console.log(doc);
-              settings[doc.id] = doc.value;
+
+              settings[doc.doc._id] = doc.doc.value;
             }
 
           });
 
-          console.log(settings);
+          console.log(allPresent);
           if (allPresent) {
 
             campaignsDB.replicate.from(remote_campaignsDB, {
