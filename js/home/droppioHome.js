@@ -183,7 +183,7 @@ $(document).ready(function() {
 
                 doc.compatible.forEach(function(row) {
 
-                  compatible = compatible + bloodID[row] + ' ';
+                  compatible += bloodID[row] + ' ';
                 });
 
 
