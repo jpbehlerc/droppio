@@ -104,10 +104,11 @@ $(document).ready(function() {
 
           var docs = docs;
           var allPresent = true;
+          console.log(doc);
 
           docs.rows.forEach(function(doc) {
 
-            console.log(doc);
+
             if ('error' in doc) {
 
               allPresent = false;
@@ -142,22 +143,15 @@ $(document).ready(function() {
                 }
               },
 
-              selector: {
-                compatible: {
-                  '$elemMatch': settings.bloodType
+              filter: function(doc, req) {
 
-                },
-                createdAt: {
-                  '$gt': moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
-                }
-                /*
-                hospital: {
-                  $in: settings.nearbyHospitals
-                }
-                */
+                return doc.compatible.includes(req.query.bloodType);
+              },
 
+              query_params: {
+                bloodType: settings.bloodType,
+                nearbyHospitals: settings.nearbyHospitals
               }
-
 
             }).on('change', function(docs) {
               console.log(docs);
