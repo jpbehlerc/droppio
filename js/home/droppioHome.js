@@ -187,9 +187,9 @@ $(document).ready(function() {
                 });
 
 
-                $('#casperCampaign #campaignReceiver').html(receiver);
-                $('#casperCampaign #campaignHospital').html(hospital);
-                $('#casperCampaign #campaignCompatibility').html(compatible);
+                $('#casperCampaign').find('#campaignReceiver').html(receiver);
+                $('#casperCampaign').find('#campaignHospital').html(hospital);
+                $('#casperCampaign').find('#campaignCompatibility').html(compatible);
                 $('#casperCampaign').css('display', 'block');
 
                 //Missing creator!
