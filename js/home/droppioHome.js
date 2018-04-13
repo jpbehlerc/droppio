@@ -110,7 +110,7 @@ $(document).ready(function() {
 
               allPresent = false;
             } else {
-
+              console.log(doc);
               settings[doc.id] = doc.value;
             }
 
