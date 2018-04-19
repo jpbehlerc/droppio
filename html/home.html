@@ -84,7 +84,7 @@
         </div>
       </div>
       <!-- Campaign Card -->
-      <div class="row">
+      <div id="casperCampaign" class="row" style="display:none">
         <div class="col s12 m12 l6">
           <div class="card white darken-1 sticky-action">
             <!-- Card Content -->
@@ -94,7 +94,7 @@
 
                 <div class="col s12 m12 l12">
                   <span class="card-title grey-text activator">
-                    <i class="fas fa-user-circle" style="font-size:1.3em; margin-top:0.25em"></i>&nbsp; <span style=" font-size:0.75em; position: absolute;">Juan Pablo Behler</span>
+                    <i id="campaignCreator" class="fas fa-user-circle" style="font-size:1.3em; margin-top:0.25em"></i>&nbsp; <span style=" font-size:0.75em; position: absolute;">Juan Pablo Behler</span>
                   <i class="material-icons right">more_vert</i>
                   </span>
                 </div>
@@ -106,10 +106,10 @@
               </div>
               <!-- Card Text -->
               <div class="row" style="margin:auto">
-                <p style="font-size:1.2em">Francisco Innocenti </p>
-                <p style="font-size:1.2em"><strong>Hospital Español</strong> de 8hs a 12hs</p>
-                <p style="font-size:1.2em">Donantes <strong>2/10 </strong></p>
-                <p style="font-size:1.2em">Grupos sanguineos <strong>A+ A- O+ O- AB-</strong></p>
+                <p id="campaignReceiver" style="font-size:1.2em">Francisco Innocenti </p>
+                <p id="campaignHospital" style="font-size:1.2em"><strong>Hospital Español</strong> de 8hs a 12hs</p>
+                <p id="campaignDonants" style="font-size:1.2em">Donantes <strong>2/10 </strong></p>
+                <p id="campaignCompatibilty" style="font-size:1.2em">Grupos sanguineos <strong>A+ A- O+ O- AB-</strong></p>
               </div>
             </div>
             <!-- card actions -->
@@ -150,6 +150,6 @@
 <script src="/js/common/moment-timezone-with-data.min.js"></script>
 <script src="../js/common/pouchdb.min.js"></script>
 <script src="../js/common/pouchdb.find.min.js"></script>
-<script type="text/javascript" src="../js/home/droppioHome.js"></script>
+<script type="text/javascript" src="../js/home/droppioHome.min.js"></script>
 
 </html>

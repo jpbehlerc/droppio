@@ -13,6 +13,21 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
+  var bloodID = {
+    4: 'O+'
+    1: 'A+'
+    2: 'B+'
+    3: 'AB+'
+    8: 'O-'
+    5: 'A-'
+    6: 'B-'
+    7: 'AB-'
+  }
+
+  var notReady = {
+    'campaigns': true,
+  };
+
   var settings = new Settings();
 
 
@@ -100,25 +115,24 @@ $(document).ready(function() {
           include_docs: true,
           keys: keys
 
-        }).then(function(docs) {
+        }).then(function(res) {
 
-          var docs = docs;
           var allPresent = true;
 
-          docs.rows.forEach(function(doc) {
+          res.rows.forEach(function(doc) {
 
-            if ('error' in doc) {
+            if ('error' in doc || doc.doc === null) {
 
               allPresent = false;
             } else {
 
-              settings[doc._id] = doc.value;
+              settings[doc.doc._id] = doc.doc.value;
             }
 
           });
 
 
-          if (allPresent) {
+          if (allPresent && notReady['campaigns']) {
 
             campaignsDB.replicate.from(remote_campaignsDB, {
 
@@ -140,47 +154,65 @@ $(document).ready(function() {
 
                 }
               },
-              /*
+
               filter: function(doc, req) {
 
-                var isCompatible = doc.compatible.indexOf(req.query.bloodType) >= 0;
-                var hasHospital = req.query.nearbyHospitals.indexOf(doc.hospital) >= 0;
-                var valid = req.query.expiry < doc.createdAt;
+                var isCompatible = doc.compatible.includes(req.query.bloodType);
+                var isNear = req.query.nearbyHospitals.includes(doc.hospital);
+                var isValid = doc.createdAt > req.query.expiry;
 
-                return isCompatible && hasHospital && valid;
+                return isCompatible && isNear && isValid;
 
               },
+
               query_params: {
-                "bloodType": settings.bloodType,
-                "nearbyHospitals": settings.nearbyHospitals,
-                "expiry": moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
+                bloodType: settings.bloodType,
+                nearbyHospitals: settings.nearbyHospitals,
+                expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
               }
+
+            }).on('change', function(change) {
+
+              docs = change.docs;
+
+              docs.rows.forEach(function(doc) {
+
+                receiver = doc.name + ' ' + doc.lastname;
+                hospital = doc.hospital;
+                compatible = '';
+
+                doc.compatible.forEach(function(row) {
+
+                  compatible += bloodID[row] + ' ';
+                });
+
+
+                $('#casperCampaign').find('#campaignReceiver').html(receiver);
+                $('#casperCampaign').find('#campaignHospital').html(hospital);
+                $('#casperCampaign').find('#campaignCompatibility').html(compatible);
+                $('#casperCampaign').css('display', 'block');
+
+                //Missing creator!
+                //$('#casperCampaign #campaignReceiver').html();
+                //Missing #donants
+                //$('#casperCampaign #campaignDonants').html('');
+
+                //
+              });
+              /*
+              $('#casperCampaign #campaignCreator').html('');
+              $('#casperCampaign #campaignReceiver').html('');
+              $('#casperCampaign #campaignHospital').html('');
+              $('#casperCampaign #campaignDonants').html('');
+              $('#casperCampaign #campaignCompatibilty').html('');
               */
 
-              selector: {
-                compatible: {
-                  $elemMatch: {
-                    $eq: settings.bloodType
-                  }
-                },
-                createdAt: {
-                  $gt: moment().tz("America/Argentina/Buenos_Aires").subtract('days', '30').valueOf()
-                },
-                hospital: {
-                  $in: settings.nearbyHospitals
-                }
-
-              }
-
-
-            }).on('change', function(docs) {
-              console.log(docs);
             });
 
           }
 
         }).catch(function(info) {
-          console.log(info);
+
           console.log("Aha something nasty happened while syncing campaigns!");
         });
 
