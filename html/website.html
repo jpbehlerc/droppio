@@ -19,18 +19,18 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Icon -->
   <link rel="icon" href="../img/tint.png" type="image/png">
-  <title> Droppio Website - a Blood Campaign Community App </title>
+  <title> Droppio para Salvar Vidas </title>
 </head>
 
 <body>
   <section id="background"></section>
-  <section id="presentation" class="content container parallax-container">
+  <section id="presentation" class="content container">
     <nav>
       <div class="nav-wrapper">
         <a href="#presentation" class="brand-logo"><i class="fas fa-tint"></i> Droppio</a>
         <ul class="right hide-on-med-and-down">
           <li><a href="#data">OpenData</a></li>
-          <li><a href="#signup">Registarse</a></li>
+          <li><a href="#signup" class="btn orange accent-2 waves-effect waves-light">Registrate</a></li>
           <li><a href="#aboutus">Sobre Nosotros</a></li>
           <li><a href="#versions">Versiones</a></li>
         </ul>
@@ -44,10 +44,18 @@
             <div class="card white lighten-1">
               <div class="card-content grey-text">
                 <span class="card-title black-text">Droppio para salvar vidas</span>
-                <p>La plataforma que ayuda a conectar a las personas indicadas para donar sangre. Un proyecto que además comparte su <b>Base de datos</b> y su <b>Codigo fuente</b> para futuros proyectos y análisis.</p>
+                <p>Hoy, la tecnología y las redes nos permiten conectarnos.<br> ¿Y si utilizamos estas posibilidades para campañas como la donación de sangre? <br>
+                  <b>Salvar vidas no puede esperar</b> y es por eso que Droppio te ayuda a emprender campañas de manera fácil y rápida.<br></p>
               </div>
               <div class="card-action">
-                <a href="#data" class="waves-effect waves-light btn orange accent-2">Saber más</a>
+                <a href="#presentation" class="waves-effect waves-light btn orange accent-2 activator">Saber más</a>
+              </div>
+              <div class="card-reveal grey-text">
+                <span class="card-title grey-text text-darken-4">Droppio es Abierto y Libre.<i class="material-icons right">close</i></span>
+                <p><b>¿Qué significa esto?</b> que Droppio está bajo Licencias <a href="https://es.wikipedia.org/wiki/Copyleft" target="_blank" class="blue-text"><b>CopyLeft</b></a>. Un tipo de licencias que tienen como objetivo preservar la información y el conocimiento a disposición de todos. Porque Droppio es nuestra, es de todos.</p>
+                <p><b>¿Para qué utilizar nuestra plataforma?</b>
+                <br>Por que utilizando Droppio colaboras en la donación de sangre y fomentas el nacimiento de un nuevo sistema de cooperacion incondicional.
+                <br>Podés utilizar el código de Droppio para futuras campañas solidarias. También se pueden utilizar nuestros datos para realizar estudios, análisis o lo que creas que puede favorecer a tu comunidad.</p>
               </div>
             </div>
           </div>
@@ -83,7 +91,8 @@
 
   <section id="data" class="content container">
     <div class="row paddingTop5 noMarginBottom">
-      <div class="col s12 m12 l6">
+      <!-- Image  -->
+      <div class="col s12 m12 l6 left">
         <img src="../img/droppiolist.png" class="droppioList responsive-img" data-scrolly-down="leFlyInBottom, delay:0.2s">
       </div>
       <!-- card Open Data-->
@@ -92,7 +101,7 @@
           <div class="card grey darken-3">
             <div class="card-content white-text">
               <span class="card-title"><b>Open Data </b><i class="fas fa-database droppioIcon right"></i></span>
-              <p><br>Como queremos un lugar mejor donde vivir y creemos en la transparencia de la informacion para el progreso y la confianza entre todos decidimos compartir la totalidad de nuestros datos.</p>
+              <p><br>Como queremos un lugar mejor donde vivir y creemos en la transparencia de la informacion y el conocimiento para el progreso de la humanidad, entre todos decidimos compartir la totalidad de nuestros datos.</p>
             </div>
             <div class="card-action">
               <a href="droppio.org/opendata" target="_blank">Ir a base de datos</a>
@@ -105,7 +114,7 @@
         <div class=" offset--l2 col s12 m12 l10">
           <div class="card grey darken-3">
             <div class="card-content white-text">
-              <span class="card-title"><b>Codigo Abierto </b><i class="fab fa-github droppioIcon right"></i></span>
+              <span class="card-title"><b>Software Libre y Codigo Abierto </b><i class="fab fa-github droppioIcon right"></i></span>
               <p><br>Además decidimos compartir nuestro codigo para que todos puedan <b> copiar, modificar </b>y/o<b> distribuir </b> nuestro codigo y así cualquiera pueda crear nuevas y mejoradas plataformas, website o aplicaciones que ayudarán al bien
                 comun.
               </p>
@@ -407,4 +416,5 @@
   <script src="../js/website/website.js" type="text/javascript" charset="utf-8"></script>
   <!-- Init scripts -->
 </body>
+
 </html>

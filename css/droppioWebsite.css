@@ -58,6 +58,10 @@ Buttons Color Class: #FFAB40 orange accent-2
       padding-top: 5em;
     }
     body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
       color: #fff;
       -webkit-user-select: none;
       -moz-user-select: none;
