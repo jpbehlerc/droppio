@@ -174,7 +174,7 @@ $(document).ready(function() {
             }).on('change', function(change) {
 
               docs = change.docs;
-
+              console.log(doc);
               docs.rows.forEach(function(doc) {
 
                 receiver = doc.name + ' ' + doc.lastname;
@@ -185,7 +185,7 @@ $(document).ready(function() {
 
                   compatible += bloodID[row] + ' ';
                 });
-                console.log(doc);
+
 
                 $('#casperCampaign').find('#campaignReceiver').html(receiver);
                 $('#casperCampaign').find('#campaignHospital').html(hospital);
