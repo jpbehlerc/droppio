@@ -111,6 +111,11 @@ Buttons Color Class: #FFAB40 orange accent-2
       color: #ffab40;
     }
 
+/* Modales */
+#signUpConfirm input {
+  color: #333 !important;
+}
+
 
 /* presentation */
 

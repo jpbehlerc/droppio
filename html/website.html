@@ -15,7 +15,7 @@
   <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
 
   <!-- Fonts -->
-  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Icon -->
   <link rel="icon" href="../img/tint.png" type="image/png">
@@ -88,7 +88,6 @@
       </div>
     </div>
   </section>
-
   <section id="data" class="content container">
     <div class="row paddingTop5 noMarginBottom">
       <!-- Image  -->
@@ -127,7 +126,6 @@
       </div>
     </div>
   </section>
-
   <section id="signup" class="content container">
     <div class="row paddingTop5 noMarginBottom">
       <!-- left side -->
@@ -159,7 +157,7 @@
                       <div class="separator">.</div>
                     </div>
                   </div>
-                  <form class="input-field col s12 m12 l12" action="#" method="post">
+                  <form id='register' class="input-field col s12 m12 l12" action="#" method="post">
                     <!-- Name Input -->
                     <div class="row">
                       <div class="input-field col s6 m6 l6">
@@ -209,7 +207,7 @@
                     <div class="row">
                       <div class="input-field col s12 m12 l12">
                         <i class="fas prefix fa-phone"></i>
-                        <input type="number" maxlength="15" id="phone" class="validate" required>
+                        <input type="number" maxlength="15" value="" id="phone" class="validate" required>
                         <label for="phone">Telefono</label>
                       </div>
                     </div>
@@ -224,8 +222,8 @@
                     </div>
                     <!-- Sign up button -->
                     <div class="row center">
-                      <button class="btn-large waves-effect waves-light center orange accent-2" type="submit" name="action">Comenzar</i>
-                        </button>
+                      <button class="btn-large waves-effect waves-light center orange accent-2 modal-trigger" href="#confirmSignUp" type="submit" name="action">Comenzar</i>
+                      </button>
                     </div>
                   </form>
                 </div>
@@ -236,8 +234,20 @@
         <div class="col s12 m12 l6"></div>
       </div>
     </div>
+    <!-- Modal Structure -->
+    <div id="confirmSignUp" class="modal">
+      <form action="">
+        <div class="modal-content grey-text text-darken-4">
+            <h5>Verifique antes de confirmar</h5>
+            <p id="confirmText">Esto no se debe ver</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</a>
+          <a href="#" class="modal-action waves-effect  orange accent-2 btn">Confirmar</a>
+        </div>
+      </form>
+    </div>
   </section>
-
   <section id="aboutus" class="content container">
     <div class="row paddingTop5 noMarginBottom">
       <!-- left Side -->
@@ -274,7 +284,6 @@
       </div>
     </div>
   </section>
-
   <section id="versions" class="content container">
     <div class="row paddingTop5 MarginBottom">
       <!-- left side -->
@@ -369,8 +378,6 @@
       </div>
     </div>
   </section>
-
-
   <footer class="page-footer">
     <div class="container">
       <div class="row">
