@@ -10,7 +10,6 @@ $(document).ready(function() {
       this.dni = false,
       this.hospital = false,
       this.hospitalHours = false,
-      this.duty = false,
       this.status = false,
       this.createdAt = false
 
@@ -86,6 +85,7 @@ $(document).ready(function() {
     6: [6, 8],
     7: [7, 5, 6, 8]
   }
+
 
   $.post("/registerTest", {
 
