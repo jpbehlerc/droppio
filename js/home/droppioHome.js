@@ -174,10 +174,10 @@ $(document).ready(function() {
             }).on('change', function(change) {
 
               docs = change.docs;
-
+              console.log(docs);
               docs.rows.forEach(function(doc) {
 
-                console.log(doc);
+
                 receiver = doc.name + ' ' + doc.lastname;
                 hospital = doc.hospital;
                 compatible = '';
