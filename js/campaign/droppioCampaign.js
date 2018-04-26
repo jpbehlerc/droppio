@@ -7,6 +7,7 @@ $(document).ready(function() {
       this.bloodType = false,
       this.name = false,
       this.lastname = false,
+      this.donors = false,
       this.dni = false,
       this.hospital = false,
       this.hospitalHours = false,
@@ -298,6 +299,7 @@ $(document).ready(function() {
             bloodType = $("#bloodType").val();
             dni = $("#dni").val();
             status = $("#status").val();
+            donors = $("#donors").val();
 
             hospital = $("#hospital").val();
 
@@ -308,6 +310,7 @@ $(document).ready(function() {
             campaign.name = name;
             campaign.lastname = lastname;
             campaign.bloodType = bloodType;
+            campaign.donors = donors;
             campaign.dni = dni;
             campaign.status = status;
             campaign.hospital = hospital;
