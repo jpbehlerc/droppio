@@ -33,7 +33,7 @@ $(document).ready(function() {
 
   $.post("/registerTest", {
 
-    _xsrf: getCookie('_xsrf'),
+    _xsrf: xsrf_token,
     type: "creds"
 
   }).done(function(data) {
@@ -185,7 +185,7 @@ $(document).ready(function() {
 
                   compatible += bloodID[row] + ' ';
                 });
-
+                console.log(doc);
 
                 $('#casperCampaign').find('#campaignReceiver').html(receiver);
                 $('#casperCampaign').find('#campaignHospital').html(hospital);
