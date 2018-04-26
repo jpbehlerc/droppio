@@ -173,8 +173,9 @@ $(document).ready(function() {
 
             }).on('change', function(change) {
 
+              console.log(change);
               docs = change.docs;
-              console.log(docs);
+
               docs.rows.forEach(function(doc) {
 
 
