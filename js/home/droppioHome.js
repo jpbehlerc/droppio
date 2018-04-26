@@ -14,14 +14,14 @@ $(document).ready(function() {
   }
 
   var bloodID = {
-    4: 'O+'
-    1: 'A+'
-    2: 'B+'
-    3: 'AB+'
-    8: 'O-'
-    5: 'A-'
-    6: 'B-'
-    7: 'AB-'
+    4: 'O+',
+    1: 'A+',
+    2: 'B+',
+    3: 'AB+',
+    8: 'O-',
+    5: 'A-',
+    6: 'B-',
+    7: 'AB-',
   }
 
   var notReady = {
