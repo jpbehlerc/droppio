@@ -172,11 +172,12 @@ $(document).ready(function() {
               }
 
             }).on('change', function(change) {
-              console.log(change);
+
               docs = change.docs;
 
               docs.rows.forEach(function(doc) {
 
+                console.log(doc);
                 receiver = doc.name + ' ' + doc.lastname;
                 hospital = doc.hospital;
                 compatible = '';
