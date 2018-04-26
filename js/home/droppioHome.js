@@ -172,9 +172,9 @@ $(document).ready(function() {
               }
             */
             }).on('change', function(change) {
-
+              console.log(change);
               docs = change.docs;
-              console.log(doc);
+
               docs.rows.forEach(function(doc) {
 
                 receiver = doc.name + ' ' + doc.lastname;
