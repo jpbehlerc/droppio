@@ -107,6 +107,18 @@
           </select>
           </div>
         </div>
+        <!-- #Donors Input -->
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="fas prefix fa-child"></i>
+            <select id="status">
+            <option value="" disabled selected>Cantidad de donantes</option>
+            {% for i in range(20) %}
+              <option value="{{i}}">{{i}}</option>
+            {% end %}
+          </select>
+          </div>
+        </div>
         <!-- DNI Input -->
         <div class="row" id="dniDiv">
           <div class="input-field col s12 m12 l12">
@@ -167,6 +179,7 @@
 <script src="/js/common/moment.min.js"></script>
 <script src="/js/common/moment-timezone.min.js"></script>
 <script src="/js/common/moment-timezone-with-data.min.js"></script>
+<script>
   var xsrf_token = "{{ handler.xsrf_token }}";
 </script>
 <script type="text/javascript" src="../js/campaign/droppioCampaign.min.js"></script>

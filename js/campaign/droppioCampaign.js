@@ -7,10 +7,10 @@ $(document).ready(function() {
       this.bloodType = false,
       this.name = false,
       this.lastname = false,
+      this.donors = false,
       this.dni = false,
       this.hospital = false,
       this.hospitalHours = false,
-      this.duty = false,
       this.status = false,
       this.createdAt = false
 
@@ -86,6 +86,7 @@ $(document).ready(function() {
     6: [6, 8],
     7: [7, 5, 6, 8]
   }
+
 
   $.post("/registerTest", {
 
@@ -298,6 +299,7 @@ $(document).ready(function() {
             bloodType = $("#bloodType").val();
             dni = $("#dni").val();
             status = $("#status").val();
+            donors = $("#donors").val();
 
             hospital = $("#hospital").val();
 
@@ -308,6 +310,7 @@ $(document).ready(function() {
             campaign.name = name;
             campaign.lastname = lastname;
             campaign.bloodType = bloodType;
+            campaign.donors = donors;
             campaign.dni = dni;
             campaign.status = status;
             campaign.hospital = hospital;
