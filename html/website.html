@@ -157,7 +157,7 @@
                       <div class="separator">.</div>
                     </div>
                   </div>
-                  <form id='register' class="input-field col s12 m12 l12" action="#" method="post">
+                  <form id="register" class="input-field col s12 m12 l12" method="post">
                     <!-- Name Input -->
                     <div class="row">
                       <div class="input-field col s6 m6 l6">
@@ -174,15 +174,15 @@
                     <div class="row">
                       <div class="input-field col s12 m12 l12">
                         <i class="fas prefix fa-tint"></i>
-                        <select>
+                        <select id="bloodType" required>
                             <option value="" disabled selected>Tipo de sangre</option>
                             <option value="1">A+</option>
-                            <option value="2">B+</option>
-                            <option value="3">AB+</option>
-                            <option value="4">O+</option>
                             <option value="5">A-</option>
+                            <option value="2">B+</option>
                             <option value="6">B-</option>
+                            <option value="3">AB+</option>
                             <option value="7">AB-</option>
+                            <option value="4">O+</option>
                             <option value="8">O-</option>
                         </select>
                       </div>
@@ -191,7 +191,7 @@
                     <div class="row">
                       <div class="input-field col s12 m12 l12">
                         <i class="fas prefix fa-id-card"></i>
-                        <input type="number" maxlength="20" id="dni" class="validate" required>
+                        <input type="number" maxlength="20" id="dni" class="validate" min="0" required>
                         <label for="dni">DNI o Numero Pasaporte</label>
                       </div>
                     </div>
@@ -207,7 +207,7 @@
                     <div class="row">
                       <div class="input-field col s12 m12 l12">
                         <i class="fas prefix fa-phone"></i>
-                        <input type="number" maxlength="15" value="" id="phone" class="validate" required>
+                        <input type="tel" maxlength="15" value="" id="phone" class="validate" required>
                         <label for="phone">Telefono</label>
                       </div>
                     </div>
@@ -222,7 +222,7 @@
                     </div>
                     <!-- Sign up button -->
                     <div class="row center">
-                      <button class="btn-large waves-effect waves-light center orange accent-2 modal-trigger" href="#confirmSignUp" type="submit" name="action">Comenzar</i>
+                      <button class="btn-large waves-effect waves-light center orange accent-2 modal-trigger" href="#confirmSignUp" type="submit">Comenzar</i>
                       </button>
                     </div>
                   </form>
@@ -238,7 +238,7 @@
     <div id="confirmSignUp" class="modal">
       <form action="">
         <div class="modal-content grey-text text-darken-4">
-            <h5>Verifique antes de confirmar</h5>
+            <h5 class="center">Verifique antes de confirmar</h5>
             <p id="confirmText">Esto no se debe ver</p>
         </div>
         <div class="modal-footer">
@@ -415,7 +415,7 @@
   </footer>
   <!-- General Scripts -->
   <script src="../js/common/countdown.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/common/jquery.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
   <script src="../js/common/scrolly.min.js" charset="utf-8" type="text/javascript"></script>
   <!-- Website scripts -->
