@@ -1,4 +1,9 @@
 /*
+Agregar pouchdb.min.js y pouchdb.authentication.min.js al website para que
+todo esto funcione!
+*/
+
+/*
 Aqui se crea la DB dentro del navegador, PouchDB utiliza IndexedDB que es una DB especial
 standard dentro de cada navegador. Como parametros le decimos que active la compactacion,
 desactive el cache (ultimos datos vs. rapidez al traerlos) y que envie un 'latido' o 'heartbeat'
