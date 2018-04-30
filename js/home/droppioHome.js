@@ -31,6 +31,7 @@ $(document).ready(function() {
   var settings = new Settings();
 
 
+
   $.post("/registerTest", {
 
     _xsrf: xsrf_token,
@@ -159,9 +160,9 @@ $(document).ready(function() {
 
                 var isCompatible = doc.compatible.includes(req.query.bloodType);
                 var isNear = req.query.nearbyHospitals.includes(doc.hospital);
-                //var isValid = doc.createdAt > req.query.expiry;
+                var isValid = doc.createdAt > req.query.expiry;
 
-                return isCompatible && isNear; // && isValid;
+                return isCompatible && isNear && isValid;
 
               },
 
