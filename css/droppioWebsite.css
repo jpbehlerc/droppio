@@ -241,6 +241,9 @@ Buttons Color Class: #FFAB40 orange accent-2
       transition-timing-function: ease;
       transition-delay: 0s;
     }
+    #versions .collapsible-header i {
+      width: 1em !important;
+    }
 
     #versions ul li .collapsible-header:hover {
       color: grey;
@@ -282,6 +285,23 @@ Buttons Color Class: #FFAB40 orange accent-2
 
     footer a:hover {
       color: #ffab40;
+    }
+    footer .logo {
+      width: 50%;
+      -webkit-filter: grayscale(100%);
+      -o-filter: grayscale(100%);
+      filter: grayscale(100%);
+      -webkit-transition: ease 1s;
+      -o-transition: ease 1s;
+      transition: ease 1s;
+    }
+    footer .logo:hover {
+      -webkit-filter: grayscale(0%);
+      -o-filter: grayscale(0%);
+      filter: grayscale(0%);
+      -webkit-transition: ease 1s;
+      -o-transition: ease 1s;
+      transition: ease 1s;
     }
     footer {
 
