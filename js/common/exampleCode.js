@@ -26,7 +26,7 @@ de JS, las mismas se ejecutan asincronamente o en paralelo y para cuando termina
 todo codigo dentro de la funcion dentro de ella. De esta manera no se bloquea cualquier notReady
 funcion que venga despues!
 */
-remoteRegisterDB.logIn('droppioTest', '2aab833be597064d').then(function(res) {
+remoteRegisterDB.logIn('test', '2aab833be597064d').then(function(res) {
 
 
   /*
