@@ -18,7 +18,7 @@ var registerDB = new PouchDB("droppioTest", {
 /*
 Aqui se conecta con la DB central, se crea droppioTest a modo de prueba
 */
-var remoteRegisterDB = new PouchDB('https://alfredarg.com:6489/droppioTest');
+var remoteRegisterDB = new PouchDB('https://alfredarg.com:6489/droppiotest');
 
 /*
 Autentificamos usando sesiones o cookies. Notar la sintaxis 'then', estas son Promesas
