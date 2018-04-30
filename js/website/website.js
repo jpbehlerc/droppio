@@ -9,11 +9,9 @@ $(document).ready(function() {
   $('.checkbox').click('input[checkbox]', function() {
     $('.modal').modal();
   });
-  $('#register').find('button').click(function(e) {
-    e.preventDefault();
+  $('#register').find('button').click(function() {
     console.log('gut');
     var data = {};
-    data._id = 'config';
     data.name = $('#name').val();
     data.lastname = $('#lastname').val();
     data.bloodType = $('#bloodType').val();
@@ -27,12 +25,11 @@ $(document).ready(function() {
 
     $('#confirmationButton').on('click', function() {
 
-      registerDB.put(data).then(function(result) {
-        //Escribio en la DB local con exito (la replicacion es automatica)
+      registerDB.post(data).then(function(result) {
+        M.toast({html: 'La Inscripcion en Droppio ha sido exitosa!', classes: 'green darken-2', displayLength: 2000});
       }).catch(function(err) {
-        //Algo raro paso al guardar en la DB local
+        M.toast({html: 'Ha ocurrido un error inesperado!', classes: 'red darken-2', displayLength: 2000});
       });
-
     });
 
   });
