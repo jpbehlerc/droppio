@@ -154,8 +154,7 @@ $(document).ready(function() {
                   return delay * 1.1;
 
                 }
-              }
-              /*,
+              },
               filter: function(doc, req) {
 
                 var isCompatible = doc.compatible.includes(req.query.bloodType);
@@ -171,7 +170,6 @@ $(document).ready(function() {
                 nearbyHospitals: settings.nearbyHospitals,
                 expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
               }
-              */
             }).on('change', function(change) {
 
               alert(JSON.stringify(doc));
