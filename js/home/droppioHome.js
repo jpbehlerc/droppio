@@ -13,6 +13,32 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
+  function drawHome() {
+
+    campaignsDB.allDocs({
+      include_docs: true,
+      keys: keys
+
+    }).then(function(res) {
+
+      var allPresent = true;
+
+      res.rows.forEach(function(docs) {
+
+        doc = docs.doc;
+
+        receiver = doc.name + ' ' + doc.lastname;
+
+        $('#casperCampaign').find('#campaignReceiver').html(receiver);
+
+      });
+
+    });
+
+  }
+
+  var keys = ['bloodType', 'nearbyHospitals'];
+
   var bloodID = {
     4: 'O+',
     1: 'A+',
@@ -26,11 +52,10 @@ $(document).ready(function() {
 
   var notReady = {
     'campaigns': true,
+    'settings': true,
   };
 
   var settings = new Settings();
-
-
 
   $.post("/registerTest", {
 
@@ -84,7 +109,6 @@ $(document).ready(function() {
       var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/algorithms');
 
 
-
       //Sync settings only then start campaign filtration
       settingsDB.sync(remote_settingsDB, {
 
@@ -110,114 +134,128 @@ $(document).ready(function() {
 
       }).on('paused', function(err) {
 
-        var keys = ['bloodType', 'nearbyHospitals'];
+        if (notReady['settings']) {
 
-        settingsDB.allDocs({
-          include_docs: true,
-          keys: keys
+          notReady['settings'] = false;
 
-        }).then(function(res) {
+          settingsDB.allDocs({
+            include_docs: true,
+            keys: keys
 
-          var allPresent = true;
+          }).then(function(res) {
 
-          res.rows.forEach(function(doc) {
+            var allPresent = true;
 
-            if ('error' in doc || doc.doc === null) {
+            res.rows.forEach(function(doc) {
 
-              allPresent = false;
-            } else {
+              if ('error' in doc || doc.doc === null) {
 
-              settings[doc.doc._id] = doc.doc.value;
-            }
+                allPresent = false;
+              } else {
 
-          });
-
-
-          if (allPresent && notReady['campaigns']) {
-
-            campaignsDB.replicate.from(remote_campaignsDB, {
-
-              live: true,
-              retry: true,
-              back_off_function: function(delay) {
-
-                if (delay == 0) {
-
-                  return 1000;
-
-                } else if (delay >= 1000 && delay < 1800000) {
-
-                  return delay * 1.5;
-
-                } else if (delay >= 1800000) {
-
-                  return delay * 1.1;
-
-                }
-              },
-              filter: function(doc, req) {
-
-                var isCompatible = doc.compatible.includes(req.query.bloodType);
-                var isNear = req.query.nearbyHospitals.includes(doc.hospital);
-                var isValid = doc.createdAt > req.query.expiry;
-
-                return isCompatible && isNear && isValid;
-
-              },
-
-              query_params: {
-                bloodType: settings.bloodType,
-                nearbyHospitals: settings.nearbyHospitals,
-                expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
+                settings[doc.doc._id] = doc.doc.value;
               }
-            }).on('change', function(change) {
-
-              alert(JSON.stringify(doc));
-              docs = change.docs;
-
-              docs.rows.forEach(function(doc) {
-
-
-                receiver = doc.name + ' ' + doc.lastname;
-                hospital = doc.hospital;
-                compatible = '';
-
-                doc.compatible.forEach(function(row) {
-
-                  compatible += bloodID[row] + ' ';
-                });
-
-
-                $('#casperCampaign').find('#campaignReceiver').html(receiver);
-                $('#casperCampaign').find('#campaignHospital').html(hospital);
-                $('#casperCampaign').find('#campaignCompatibility').html(compatible);
-                $('#casperCampaign').css('display', 'block');
-
-                //Missing creator!
-                //$('#casperCampaign #campaignReceiver').html();
-                //Missing #donants
-                //$('#casperCampaign #campaignDonants').html('');
-
-                //
-              });
-              /*
-              $('#casperCampaign #campaignCreator').html('');
-              $('#casperCampaign #campaignReceiver').html('');
-              $('#casperCampaign #campaignHospital').html('');
-              $('#casperCampaign #campaignDonants').html('');
-              $('#casperCampaign #campaignCompatibilty').html('');
-              */
 
             });
 
-          }
 
-        }).catch(function(info) {
-
-          console.log("Aha something nasty happened while syncing campaigns!");
-        });
+            if (allPresent) {
 
 
+              campaignsDB.replicate.from(remote_campaignsDB, {
+
+                live: true,
+                retry: true,
+                back_off_function: function(delay) {
+
+                  if (delay == 0) {
+
+                    return 1000;
+
+                  } else if (delay >= 1000 && delay < 1800000) {
+
+                    return delay * 1.5;
+
+                  } else if (delay >= 1800000) {
+
+                    return delay * 1.1;
+
+                  }
+                },
+
+                filter: function(doc, req) {
+
+                  var isCompatible = doc.compatible.includes(req.query.bloodType);
+                  var isNear = req.query.nearbyHospitals.includes(doc.hospital);
+                  var isValid = doc.createdAt > req.query.expiry;
+
+                  return isCompatible && isNear && isValid;
+
+                },
+
+                query_params: {
+                  bloodType: settings.bloodType,
+                  nearbyHospitals: settings.nearbyHospitals,
+                  expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
+                }
+
+              }).on('paused', function(change) {
+
+                if (notReady['campaigns']) {
+
+                  notReady['campaigns'] = false;
+
+                  drawHome();
+
+                }
+
+              }).on('change', function(change) {
+
+                docs = change.docs;
+
+                docs.rows.forEach(function(doc) {
+
+
+                  receiver = doc.name + ' ' + doc.lastname;
+                  hospital = doc.hospital;
+                  compatible = '';
+
+                  doc.compatible.forEach(function(row) {
+
+                    compatible += bloodID[row] + ' ';
+                  });
+
+
+                  $('#casperCampaign').find('#campaignReceiver').html(receiver);
+                  $('#casperCampaign').find('#campaignHospital').html(hospital);
+                  $('#casperCampaign').find('#campaignCompatibility').html(compatible);
+                  $('#casperCampaign').css('display', 'block');
+
+                  //Missing creator!
+                  //$('#casperCampaign #campaignReceiver').html();
+                  //Missing #donants
+                  //$('#casperCampaign #campaignDonants').html('');
+
+                  //
+                });
+                /*
+                $('#casperCampaign #campaignCreator').html('');
+                $('#casperCampaign #campaignReceiver').html('');
+                $('#casperCampaign #campaignHospital').html('');
+                $('#casperCampaign #campaignDonants').html('');
+                $('#casperCampaign #campaignCompatibilty').html('');
+                */
+
+              });
+
+            }
+
+          }).catch(function(info) {
+
+            console.log("Aha something nasty happened while syncing campaigns!");
+          });
+
+        }
       }).on('error', function(info) {
 
         console.log("Oops smth happened while trying to sync settings!");
