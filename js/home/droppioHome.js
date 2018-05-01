@@ -20,6 +20,7 @@ $(document).ready(function() {
       keys: keys
 
     }).then(function(res) {
+      $("#test").html(JSON.stringify(res));
 
       res.rows.forEach(function(docs) {
 
@@ -27,10 +28,12 @@ $(document).ready(function() {
 
         receiver = doc.name + ' ' + doc.lastname;
 
-        $('#test').html(receiver);
 
       });
 
+    }).catch(function(err) {
+
+      $("#test").html(JSON.stringify(err));
     });
 
   }
