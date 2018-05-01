@@ -26,9 +26,9 @@ $(document).ready(function() {
     $('#confirmationButton').on('click', function() {
 
       registerDB.post(data).then(function(result) {
-        M.toast({html: 'La Inscripcion en Droppio ha sido exitosa!', classes: 'green darken-2', displayLength: 2000});
+        M.toast({html: 'La Inscripcion en Droppio ha sido exitosa!', classes: 'green darken-2', displayLength: 4000});
       }).catch(function(err) {
-        M.toast({html: 'Ha ocurrido un error inesperado!', classes: 'red darken-2', displayLength: 2000});
+        M.toast({html: 'Ha ocurrido un error inesperado!', classes: 'red darken-2', displayLength: 4000});
       });
     });
 

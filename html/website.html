@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="mobile-web-app-capable" content="yes">
+  <title> Droppio para Salvar Vidas </title>
   <link rel="manifest" href="/json/manifest.json">
   <link rel="stylesheet" href="../css/cssanimation.css">
   <!-- Compiled and minified CSS -->
@@ -19,7 +20,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Icon -->
   <link rel="icon" href="../img/tint.png" type="image/png">
-  <title> Droppio para Salvar Vidas </title>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -226,6 +227,12 @@
                           <input type="checkbox" class="filled-in" required>
                           <span>Acepto <a href="#">Terminos y Condiciones.</a></span>
                         </label>
+                      </div>
+                    </div>
+                    <!-- Recaptcha -->
+                    <div class="row">
+                      <div class="col s12 center">
+                        <div class="g-recaptcha" data-sitekey="6LcNblYUAAAAAJwyE75rR-TfzV9oLVm2aTQKyPaF"></div>
                       </div>
                     </div>
                     <!-- Sign up button -->
