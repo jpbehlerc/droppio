@@ -15,12 +15,12 @@ $(document).ready(function() {
 
   function drawHome() {
 
-    $('#test').html('finished syncing');
     campaignsDB.allDocs({
       include_docs: true,
       keys: keys
 
     }).then(function(res) {
+      console.log('here');
 
       res.rows.forEach(function(docs) {
 
@@ -28,7 +28,6 @@ $(document).ready(function() {
 
         receiver = doc.name + ' ' + doc.lastname;
 
-        $('#test').html(receiver);
 
       });
 
