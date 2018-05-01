@@ -6,6 +6,11 @@ Buttons Color Class: #FFAB40 orange accent-2
 
 /* generals */
 
+    /* Border Radius */
+    .card, .collapsible, .collapsible li, .btn, .btn-flat, .btn-large, .modal, .dropdown-content{
+      border-radius: 25px !important;
+    }
+
     /* input fields */
     /* Textarea */
     input ,select , textarea{
@@ -124,10 +129,10 @@ Buttons Color Class: #FFAB40 orange accent-2
       color: #fff;
       z-index: -1;
       position: fixed;
-      background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
+      background: linear-gradient(-45deg, #9f0e39, #81082c);
       width: 100vw;
       height: 100vh;
-      background-size: 2000px 2000px;
+      background-size: 150vw 150vh;
       -webkit-animation: Gradient 15s ease infinite;
       -moz-animation: Gradient 15s ease infinite;
       animation: Gradient 15s ease infinite;

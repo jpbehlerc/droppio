@@ -10,6 +10,11 @@ Buttons Color Class: #21ebad
 
 /* form */
 
+    /* Border Radius */
+    .card, .collapsible, .collapsible li, .btn, .btn-flat, .btn-large, .modal, .dropdown-content {
+      border-radius: 25px !important;
+    }
+
     /* Textarea */
     input ,select , textarea, select:not(.picker__select--month, .picker__select--year){
     color: #fff !important;
