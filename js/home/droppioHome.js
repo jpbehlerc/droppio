@@ -21,15 +21,13 @@ $(document).ready(function() {
 
     }).then(function(res) {
 
-      var allPresent = true;
-
       res.rows.forEach(function(docs) {
 
         doc = docs.doc;
 
         receiver = doc.name + ' ' + doc.lastname;
 
-        $('#casperCampaign').find('#campaignReceiver').html(receiver);
+        $('#test').html(receiver);
 
       });
 
