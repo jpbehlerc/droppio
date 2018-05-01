@@ -154,8 +154,7 @@ $(document).ready(function() {
                   return delay * 1.1;
 
                 }
-              }
-              /*,
+              },
 
               filter: function(doc, req) {
 
@@ -172,15 +171,15 @@ $(document).ready(function() {
                 nearbyHospitals: settings.nearbyHospitals,
                 expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
               }
-              */
+
             }).on('change', function(change) {
 
-
+              console.log(doc);
               docs = change.docs;
 
               docs.rows.forEach(function(doc) {
 
-                console.log(doc);
+
                 receiver = doc.name + ' ' + doc.lastname;
                 hospital = doc.hospital;
                 compatible = '';
