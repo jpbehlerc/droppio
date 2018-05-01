@@ -20,7 +20,7 @@ $(document).ready(function() {
       keys: keys
 
     }).then(function(res) {
-      console.log('here');
+      $("#test").html(JSON.stringify(res.rows));
 
       res.rows.forEach(function(docs) {
 
