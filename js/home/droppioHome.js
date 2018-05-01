@@ -15,6 +15,7 @@ $(document).ready(function() {
 
   function drawHome() {
 
+    $('#test').html('finished syncing');
     campaignsDB.allDocs({
       include_docs: true,
       keys: keys
