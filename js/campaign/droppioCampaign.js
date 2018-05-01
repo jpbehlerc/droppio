@@ -101,8 +101,8 @@ $(document).ready(function() {
 
     if (respType == 'creds') {
 
-      var dbUser = data['dbUser'];
-      var dbPass = data['dbPass'];
+      var dbUser = data['dbAdminUser'];
+      var dbPass = data['dbAdminPass'];
 
       //Init respective DBs
       var settingsDB = new PouchDB("settings" + dbUser, {
