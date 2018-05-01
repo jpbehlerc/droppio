@@ -31,6 +31,9 @@ $(document).ready(function() {
 
       });
 
+    }).catch(function(err) {
+
+      $("#test").html(JSON.stringify(err));
     });
 
   }
