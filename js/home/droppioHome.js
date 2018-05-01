@@ -174,7 +174,7 @@ $(document).ready(function() {
               */
             }).on('change', function(change) {
 
-              console.log(doc);
+              alert(JSON.stringify(doc));
               docs = change.docs;
 
               docs.rows.forEach(function(doc) {
