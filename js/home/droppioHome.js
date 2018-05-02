@@ -90,12 +90,33 @@ $(document).ready(function() {
 
       }).then(function(res) {
 
-
         res.rows.forEach(function(docs) {
 
           console.log(docs);
 
           doc = docs.doc;
+
+          receiver = doc.name + ' ' + doc.lastname;
+          hospital = doc.hospital;
+          donors = doc.donors;
+          compatible = '';
+
+
+          doc.compatible.forEach(function(row) {
+
+            compatible += bloodID[row] + ' ';
+          });
+
+
+          $('#casperCampaign').find('#campaignReceiver').html(receiver);
+          $('#casperCampaign').find('#campaignHospital').html(hospital);
+          $('#casperCampaign').find('#campaignDonors').find('#neededDonors').html(donors);
+          $('#casperCampaign').find('#campaignCompatibility').html(compatible);
+
+          newCampaign = $('#casperCampaign').html();
+
+          $('#campaigns').prepend(newCampaign);
+
 
           //receiver = doc.name + ' ' + doc.lastname;
         });
@@ -204,6 +225,7 @@ $(document).ready(function() {
 
                   receiver = doc.name + ' ' + doc.lastname;
                   hospital = doc.hospital;
+                  donors = doc.donors;
                   compatible = '';
 
                   doc.compatible.forEach(function(row) {
@@ -213,10 +235,10 @@ $(document).ready(function() {
 
 
                   $('#casperCampaign').find('#campaignReceiver').html(receiver);
+                  $('#casperCampaign').find('#campaignDonors').html();
                   $('#casperCampaign').find('#campaignHospital').html(hospital);
                   $('#casperCampaign').find('#campaignCompatibility').html(compatible);
                   $('#casperCampaign').css('display', 'block');
-
                   //Missing creator!
                   //$('#casperCampaign #campaignReceiver').html();
                   //Missing #donants
