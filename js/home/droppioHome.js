@@ -91,15 +91,15 @@ $(document).ready(function() {
 
       }).then(function(res) {
 
-        $("#test").html(res);
+        console.log(res);
 
         res.rows.forEach(function(docs) {
-          $("#test").html(docs);
+
+          console.log(docs);
+
           doc = docs.doc;
 
           //receiver = doc.name + ' ' + doc.lastname;
-
-
         });
 
       }).catch(function(err) {
