@@ -87,11 +87,9 @@ $(document).ready(function() {
 
       campaignsDB.allDocs({
         include_docs: true,
-        keys: keys
 
       }).then(function(res) {
 
-        console.log(res);
 
         res.rows.forEach(function(docs) {
 
