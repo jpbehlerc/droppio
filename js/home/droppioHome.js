@@ -97,7 +97,7 @@ $(document).ready(function() {
           $("#test").html(docs);
           doc = docs.doc;
 
-          receiver = doc.name + ' ' + doc.lastname;
+          //receiver = doc.name + ' ' + doc.lastname;
 
 
         });
