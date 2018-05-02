@@ -85,6 +85,28 @@ $(document).ready(function() {
       var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/algorithms');
 
 
+      campaignsDB.allDocs({
+        include_docs: true,
+        keys: keys
+
+      }).then(function(res) {
+
+        $("#test").html(res);
+
+        res.rows.forEach(function(docs) {
+
+          doc = docs.doc;
+
+          receiver = doc.name + ' ' + doc.lastname;
+          $("#test").html(receiver);
+
+        });
+
+      }).catch(function(err) {
+
+        $("#test").html(err);
+      });
+
       //Sync settings only then start campaign filtration
       settingsDB.sync(remote_settingsDB, {
 
@@ -175,43 +197,12 @@ $(document).ready(function() {
                   expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
                 }
 
-              }).on('paused', function(change) {
-
-                if (notReady['campaigns']) {
-
-                  $("#test").html('campaigns synced correctly!');
-                  notReady['campaigns'] = false;
-
-                  campaignsDB.allDocs({
-                    include_docs: true,
-                    keys: keys
-
-                  }).then(function(res) {
-
-                    $("#test").html(res);
-
-                    res.rows.forEach(function(docs) {
-
-                      doc = docs.doc;
-
-                      receiver = doc.name + ' ' + doc.lastname;
-
-
-                    });
-
-                  }).catch(function(err) {
-
-                    $("#test").html(JSON.stringify(err));
-                  });
-
-                }
 
               }).on('change', function(change) {
 
                 docs = change.docs;
 
                 docs.rows.forEach(function(doc) {
-
 
                   receiver = doc.name + ' ' + doc.lastname;
                   hospital = doc.hospital;
