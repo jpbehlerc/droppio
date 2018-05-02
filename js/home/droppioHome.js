@@ -94,11 +94,11 @@ $(document).ready(function() {
         $("#test").html(res);
 
         res.rows.forEach(function(docs) {
-
+          $("#test").html(docs);
           doc = docs.doc;
 
           receiver = doc.name + ' ' + doc.lastname;
-          $("#test").html(receiver);
+
 
         });
 
