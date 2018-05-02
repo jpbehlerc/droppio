@@ -13,31 +13,6 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
-  function drawHome() {
-
-    campaignsDB.allDocs({
-      include_docs: true,
-      keys: keys
-
-    }).then(function(res) {
-      $("#test").html(JSON.stringify(res));
-
-      res.rows.forEach(function(docs) {
-
-        doc = docs.doc;
-
-        receiver = doc.name + ' ' + doc.lastname;
-
-
-      });
-
-    }).catch(function(err) {
-
-      $("#test").html(JSON.stringify(err));
-    });
-
-  }
-
   var keys = ['bloodType', 'nearbyHospitals'];
 
   var bloodID = {
@@ -204,9 +179,30 @@ $(document).ready(function() {
 
                 if (notReady['campaigns']) {
 
+                  $("#test").html('campaigns synced correctly!');
                   notReady['campaigns'] = false;
 
-                  drawHome();
+                  campaignsDB.allDocs({
+                    include_docs: true,
+                    keys: keys
+
+                  }).then(function(res) {
+
+                    $("#test").html(res);
+
+                    res.rows.forEach(function(docs) {
+
+                      doc = docs.doc;
+
+                      receiver = doc.name + ' ' + doc.lastname;
+
+
+                    });
+
+                  }).catch(function(err) {
+
+                    $("#test").html(JSON.stringify(err));
+                  });
 
                 }
 
