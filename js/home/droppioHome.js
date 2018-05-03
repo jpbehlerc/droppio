@@ -222,7 +222,7 @@ $(document).ready(function() {
 
                   console.log(docs[key]);
 
-                  doc = docs[key].doc;
+                  doc = docs[key];
 
                   receiver = doc.name + ' ' + doc.lastname;
                   hospital = doc.hospital;
