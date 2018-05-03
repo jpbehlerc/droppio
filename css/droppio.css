@@ -138,7 +138,7 @@ Buttons Color Class: #21ebad
     }
 
     .droppioNavElem{
-      color: #e7668d;
+      color: #e7668d !important;
      }
 
     .droppioNavElem:hover{
