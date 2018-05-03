@@ -97,6 +97,13 @@ $(document).ready(function() {
           receiver = doc.name + ' ' + doc.lastname;
           hospital = doc.hospital;
           donors = doc.donors;
+
+          totalTime = doc.status == 0 ? 30 : 15;
+
+          created = moment(doc.createdAt);
+          now = moment().tz("America/Argentina/Buenos_Aires").valueOf();
+          remaining = totalTime / now.subtract(created);
+          console.log(remaining);
           compatible = '';
 
           doc.compatible.forEach(function(row) {
