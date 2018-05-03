@@ -218,11 +218,11 @@ $(document).ready(function() {
                 console.log(change);
                 docs = change.docs;
 
-                docs.rows.forEach(function(doc) {
+                for (var key in docs) {
 
-                  console.log(change);
+                  console.log(docs[key]);
 
-                  doc = docs.doc;
+                  doc = docs[key].doc;
 
                   receiver = doc.name + ' ' + doc.lastname;
                   hospital = doc.hospital;
@@ -243,7 +243,7 @@ $(document).ready(function() {
 
                   $('#campaigns').append(newCampaign);
 
-                });
+                }
 
               });
 
