@@ -92,7 +92,7 @@ $(document).ready(function() {
 
         res.rows.forEach(function(docs) {
 
-          console.log(docs);
+
 
           doc = docs.doc;
 
@@ -101,12 +101,16 @@ $(document).ready(function() {
           donors = doc.donors;
           compatible = '';
 
+          console.log(receiver);
+          console.log(hospital);
+          console.log(donors);
+
 
           doc.compatible.forEach(function(row) {
 
             compatible += bloodID[row] + ' ';
           });
-
+          console.log(compatible);
 
           $('#casperCampaign').find('#campaignReceiver').html(receiver);
           $('#casperCampaign').find('#campaignHospital').html(hospital);
