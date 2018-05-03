@@ -99,11 +99,12 @@ $(document).ready(function() {
           donors = doc.donors;
 
           totalTime = doc.status == 0 ? 30 : 15;
+          console.log(totalTime);
 
           created = moment(doc.createdAt);
           now = moment().tz("America/Argentina/Buenos_Aires");
           remaining = totalTime / now.subtract(created);
-          console.log(remaining);
+
           compatible = '';
 
           doc.compatible.forEach(function(row) {
