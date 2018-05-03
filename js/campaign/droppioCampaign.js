@@ -361,7 +361,12 @@ $(document).ready(function() {
   // Date Picker
   $('.datepicker').datepicker({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    defaultDate: 'Ene 01, 1968',
+    setDefaultDate: true,
+    minDate: 'Ene 01, 1968'
+    months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    yearRange: 60,
+    selectYears: 60, // Creates a dropdown of 15 years to control year,
     today: 'Today',
     clear: 'Clear',
     close: 'Ok',

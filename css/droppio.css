@@ -16,8 +16,11 @@ Buttons Color Class: #21ebad
     }
 
     /* Textarea */
-    input ,select , textarea, select:not(.picker__select--month, .picker__select--year){
+    input ,select, .dropdown-trigger, textarea{
     color: #fff !important;
+    }
+    {
+      color: #fff !important;
     }
     /* label color */
     .input-field label {
