@@ -215,6 +215,7 @@ $(document).ready(function() {
 
               }).on('change', function(change) {
 
+                console.log(change);
                 docs = change.docs;
 
                 docs.rows.forEach(function(doc) {
