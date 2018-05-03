@@ -13,31 +13,6 @@ $(document).ready(function() {
     return r ? r[1] : false;
   }
 
-  function drawHome() {
-
-    campaignsDB.allDocs({
-      include_docs: true,
-      keys: keys
-
-    }).then(function(res) {
-      $("#test").html(JSON.stringify(res));
-
-      res.rows.forEach(function(docs) {
-
-        doc = docs.doc;
-
-        receiver = doc.name + ' ' + doc.lastname;
-
-
-      });
-
-    }).catch(function(err) {
-
-      $("#test").html(JSON.stringify(err));
-    });
-
-  }
-
   var keys = ['bloodType', 'nearbyHospitals'];
 
   var bloodID = {
@@ -109,6 +84,52 @@ $(document).ready(function() {
 
       var remote_algorithmsDB = new PouchDB('https://' + dbAdminUser + ':' + dbAdminPass + '@alfredarg.com:6489/algorithms');
 
+
+      campaignsDB.allDocs({
+        include_docs: true,
+
+      }).then(function(res) {
+
+        res.rows.forEach(function(docs) {
+
+          doc = docs.doc;
+
+          receiver = doc.name + ' ' + doc.lastname;
+          hospital = doc.hospital;
+          donors = doc.donors;
+
+          totalTime = doc.status == 0 ? 30 : 15;
+
+
+          created = moment(doc.createdAt);
+          now = moment().tz("America/Argentina/Buenos_Aires");
+
+          remaining = now.diff(created, 'days') / totalTime;
+          console.log(remaining);
+          compatible = '';
+
+          doc.compatible.forEach(function(row) {
+
+            compatible += bloodID[row] + ' ';
+          });
+
+          $('#casperCampaign').find('#campaignReceiver').html(receiver);
+          $('#casperCampaign').find('#campaignHospital').html(hospital);
+          $('#casperCampaign').find('#campaignDonors').find('#neededDonors').html(donors);
+          $('#casperCampaign').find('#campaignCompatibility').html(compatible);
+
+          newCampaign = $('#casperCampaign').html();
+
+          $('#campaigns').append(newCampaign);
+
+
+          //receiver = doc.name + ' ' + doc.lastname;
+        });
+
+      }).catch(function(err) {
+
+        $("#test").html(err);
+      });
 
       //Sync settings only then start campaign filtration
       settingsDB.sync(remote_settingsDB, {
@@ -200,25 +221,21 @@ $(document).ready(function() {
                   expiry: moment().tz("America/Argentina/Buenos_Aires").subtract(30, 'days').valueOf()
                 }
 
-              }).on('paused', function(change) {
-
-                if (notReady['campaigns']) {
-
-                  notReady['campaigns'] = false;
-
-                  drawHome();
-
-                }
 
               }).on('change', function(change) {
 
+                console.log(change);
                 docs = change.docs;
 
-                docs.rows.forEach(function(doc) {
+                for (var key in docs) {
 
+                  console.log(docs[key]);
+
+                  doc = docs[key];
 
                   receiver = doc.name + ' ' + doc.lastname;
                   hospital = doc.hospital;
+                  donors = doc.donors;
                   compatible = '';
 
                   doc.compatible.forEach(function(row) {
@@ -226,26 +243,16 @@ $(document).ready(function() {
                     compatible += bloodID[row] + ' ';
                   });
 
-
                   $('#casperCampaign').find('#campaignReceiver').html(receiver);
                   $('#casperCampaign').find('#campaignHospital').html(hospital);
+                  $('#casperCampaign').find('#campaignDonors').find('#neededDonors').html(donors);
                   $('#casperCampaign').find('#campaignCompatibility').html(compatible);
-                  $('#casperCampaign').css('display', 'block');
 
-                  //Missing creator!
-                  //$('#casperCampaign #campaignReceiver').html();
-                  //Missing #donants
-                  //$('#casperCampaign #campaignDonants').html('');
+                  newCampaign = $('#casperCampaign').html();
 
-                  //
-                });
-                /*
-                $('#casperCampaign #campaignCreator').html('');
-                $('#casperCampaign #campaignReceiver').html('');
-                $('#casperCampaign #campaignHospital').html('');
-                $('#casperCampaign #campaignDonants').html('');
-                $('#casperCampaign #campaignCompatibilty').html('');
-                */
+                  $('#campaigns').append(newCampaign);
+
+                }
 
               });
 

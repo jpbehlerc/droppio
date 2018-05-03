@@ -5,8 +5,7 @@ WORKDIR /usr/src/app
 RUN pip install --no-cache-dir \
     tornado \
     aiocouchdb \
-    requests \
-    numpy
+   
 
 VOLUME ../droppio /usr/src/app
 

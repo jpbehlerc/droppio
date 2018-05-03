@@ -56,9 +56,9 @@
   <!-- content -->
   <section class="content">
 
-    <div class="campaigns">
+    <div id="campaigns">
       <!-- Phone Card-->
-      <div class="row">
+      <div class="row" style="display:none">
         <div class=" col s12 m12 l12">
           <div class="card grey darken-3">
             <div class="card-content white-text">
@@ -84,10 +84,11 @@
         </div>
       </div>
       <div id="test">
-        
+
       </div>
       <!-- Ghost card, dont forget to change display to none -->
-      <div id="casperCampaign" class="row" style="display:block">
+      <div id="casperCampaign" style="display:block">
+        <div class="row">
         <div class="col s12 m12 l6">
           <div class="card white darken-1 sticky-action">
             <!-- Card Content -->
@@ -111,7 +112,7 @@
               <div class="row" style="margin:auto">
                 <p id="campaignReceiver" style="font-size:1.2em">Francisco Innocenti </p>
                 <p id="campaignHospital" style="font-size:1.2em"><strong>Hospital Español</strong> de 8hs a 12hs</p>
-                <p id="campaignDonants" style="font-size:1.2em">Donantes <strong>2/10 </strong></p>
+                <p id="campaignDonants" style="font-size:1.2em">Donantes <strong><span id="presentDonors">2</span>/<span id="neededDonors">10</span> </strong></p>
                 <p id="campaignCompatibilty" style="font-size:1.2em">Grupos sanguineos <strong>A+ A- O+ O- AB-</strong></p>
               </div>
             </div>
@@ -134,6 +135,7 @@
           </div>
 
         </div>
+      </div>
       </div>
     </div>
 
