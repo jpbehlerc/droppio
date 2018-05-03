@@ -92,8 +92,6 @@ $(document).ready(function() {
 
         res.rows.forEach(function(docs) {
 
-
-
           doc = docs.doc;
 
           receiver = doc.name + ' ' + doc.lastname;
@@ -113,7 +111,7 @@ $(document).ready(function() {
 
           newCampaign = $('#casperCampaign').html();
 
-          $('#campaigns').prepend(newCampaign);
+          $('#campaigns').append(newCampaign);
 
 
           //receiver = doc.name + ' ' + doc.lastname;
@@ -221,6 +219,8 @@ $(document).ready(function() {
 
                 docs.rows.forEach(function(doc) {
 
+                  doc = docs.doc;
+
                   receiver = doc.name + ' ' + doc.lastname;
                   hospital = doc.hospital;
                   donors = doc.donors;
@@ -231,26 +231,16 @@ $(document).ready(function() {
                     compatible += bloodID[row] + ' ';
                   });
 
-
                   $('#casperCampaign').find('#campaignReceiver').html(receiver);
-                  $('#casperCampaign').find('#campaignDonors').html();
                   $('#casperCampaign').find('#campaignHospital').html(hospital);
+                  $('#casperCampaign').find('#campaignDonors').find('#neededDonors').html(donors);
                   $('#casperCampaign').find('#campaignCompatibility').html(compatible);
-                  $('#casperCampaign').css('display', 'block');
-                  //Missing creator!
-                  //$('#casperCampaign #campaignReceiver').html();
-                  //Missing #donants
-                  //$('#casperCampaign #campaignDonants').html('');
 
-                  //
+                  newCampaign = $('#casperCampaign').html();
+
+                  $('#campaigns').append(newCampaign);
+
                 });
-                /*
-                $('#casperCampaign #campaignCreator').html('');
-                $('#casperCampaign #campaignReceiver').html('');
-                $('#casperCampaign #campaignHospital').html('');
-                $('#casperCampaign #campaignDonants').html('');
-                $('#casperCampaign #campaignCompatibilty').html('');
-                */
 
               });
 
