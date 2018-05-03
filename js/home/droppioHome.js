@@ -220,6 +220,8 @@ $(document).ready(function() {
 
                 docs.rows.forEach(function(doc) {
 
+                  console.log(change);
+
                   doc = docs.doc;
 
                   receiver = doc.name + ' ' + doc.lastname;
