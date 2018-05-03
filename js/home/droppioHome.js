@@ -101,16 +101,10 @@ $(document).ready(function() {
           donors = doc.donors;
           compatible = '';
 
-          console.log(receiver);
-          console.log(hospital);
-          console.log(donors);
-
-
           doc.compatible.forEach(function(row) {
 
             compatible += bloodID[row] + ' ';
           });
-          console.log(compatible);
 
           $('#casperCampaign').find('#campaignReceiver').html(receiver);
           $('#casperCampaign').find('#campaignHospital').html(hospital);
@@ -119,7 +113,7 @@ $(document).ready(function() {
 
           newCampaign = $('#casperCampaign').html();
 
-          $('#campaigns').prepend(newCampaign);
+          $('#campaigns').append(newCampaign);
 
 
           //receiver = doc.name + ' ' + doc.lastname;
