@@ -496,10 +496,16 @@ $(document).ready(function() {
 
   });
 
-  html2canvas(document.querySelector(".spread")).then(function(canvas) {
-    $('body').append(canvas);
 
+  $('#casperImage').html2canvas();
+  var queue = html2canvas.Parse();
+  var canvas = html2canvas.Renderer(queue, {
+    elements: {
+      length: 1
+    }
   });
+  var img = canvas.toDataURL();
+  window.open(img);
 
   $('.spread').click(function() {
 
