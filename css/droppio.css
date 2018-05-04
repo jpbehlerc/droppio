@@ -203,13 +203,8 @@ Buttons Color Class: #21ebad
     	width: 100wh;
     	height: 90vh;
     	color: #fff;
-<<<<<<< HEAD
       background: linear-gradient(-45deg, #9f0e39, #81082c);
-    	background-size: 200% 200%;
-=======
-    	background: linear-gradient(-45deg, #81082c, #ce2557, #81082c, #ce2557);
     	background-size: 2000px 2000px;
->>>>>>> 5c44d3efb93b3c20c4c9f0fd3fca3f81ae13ef48
     	-webkit-animation: Gradient 15s ease infinite;
     	-moz-animation: Gradient 15s ease infinite;
     	animation: Gradient 15s ease infinite;
@@ -226,7 +221,7 @@ Buttons Color Class: #21ebad
     	color: #fff;
     	background-color: linear-gradient(-45deg, #81082c, #ce2557, #81082c, #ce2557);
     	background-size: 500px 500px;
-    	
+
     }
 
 
