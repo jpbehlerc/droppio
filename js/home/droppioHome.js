@@ -496,6 +496,10 @@ $(document).ready(function() {
 
   });
 
+  html2canvas(document.querySelector(".spread")).then(function(canvas) {
+    document.body.appendChild(canvas)
+
+  });
 
   $('.spread').click(function() {
 
@@ -517,10 +521,7 @@ $(document).ready(function() {
     }
 
     */
-    html2canvas(this).then(function(canvas) {
-      document.body.appendChild(canvas)
 
-    });
   });
 
 });
