@@ -497,7 +497,7 @@ $(document).ready(function() {
   });
 
   html2canvas(document.querySelector(".spread")).then(function(canvas) {
-    console.log(canvas);
+    $('body').append(canvas);
 
   });
 
