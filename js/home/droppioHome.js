@@ -105,7 +105,7 @@ $(document).ready(function() {
           now = moment().tz("America/Argentina/Buenos_Aires");
 
           remaining = now.diff(created, 'days') / totalTime;
-          console.log(remaining);
+
           compatible = '';
 
           doc.compatible.forEach(function(row) {
