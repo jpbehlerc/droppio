@@ -497,7 +497,7 @@ $(document).ready(function() {
   });
 
 
-  $('#spread').click(function() {
+  $('a#spread').click(function() {
 
     /*
     if (typeof FB !== 'undefined' && FB !== null) {
