@@ -224,16 +224,9 @@ Buttons Color Class: #21ebad
     	width: 500px;
     	height: 500px;
     	color: #fff;
-    	background: linear-gradient(-45deg, #81082c, #ce2557, #81082c, #ce2557);
+    	background-color: linear-gradient(-45deg, #81082c, #ce2557, #81082c, #ce2557);
     	background-size: 500px 500px;
-    	-webkit-animation: Gradient 5s ease infinite;
-    	-moz-animation: Gradient 5s ease infinite;
-    	animation: Gradient 5s ease infinite;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      -o-user-select: none;
-      user-select: none;
+    	
     }
 
 
