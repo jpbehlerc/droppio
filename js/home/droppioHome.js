@@ -122,7 +122,6 @@ $(document).ready(function() {
 
           $('#campaigns').append(newCampaign);
 
-
           //receiver = doc.name + ' ' + doc.lastname;
         });
 
@@ -500,6 +499,7 @@ $(document).ready(function() {
 
   $('#spread').click(function() {
 
+    /*
     if (typeof FB !== 'undefined' && FB !== null) {
 
       FB.login(function(response) {
@@ -516,7 +516,11 @@ $(document).ready(function() {
 
     }
 
+    */
+    html2canvas($(this)).then(function(canvas) {
+      document.body.appendChild(canvas)
 
+    });
   });
 
 });
