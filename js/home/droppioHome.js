@@ -497,16 +497,13 @@ $(document).ready(function() {
   });
 
 
-  $('#casperImage').html2canvas();
-  var queue = html2canvas.Parse();
-  var canvas = html2canvas.Renderer(queue, {
-    elements: {
-      length: 1
-    }
-  });
-  var img = canvas.toDataURL();
-  window.open(img);
+  var html2obj = html2canvas($('#casperImage'));
 
+  var queue = html2obj.parse();
+  var canvas = html2obj.render(queue);
+  var img = canvas.toDataURL();
+
+  window.open(img);
   $('.spread').click(function() {
 
     /*
