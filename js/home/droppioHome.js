@@ -517,7 +517,7 @@ $(document).ready(function() {
     }
 
     */
-    html2canvas($(this)).then(function(canvas) {
+    html2canvas(this).then(function(canvas) {
       document.body.appendChild(canvas)
 
     });
