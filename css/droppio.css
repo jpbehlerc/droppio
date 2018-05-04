@@ -195,7 +195,7 @@ Buttons Color Class: #21ebad
     	width: 100wh;
     	height: 90vh;
     	color: #fff;
-    	background: linear-gradient(-45deg, #550e23, #c91249, #550e23, #c91249);
+    	background: linear-gradient(-45deg, #81082c, #ce2557, #81082c, #ce2557);
     	background-size: 2000px 2000px;
     	-webkit-animation: Gradient 15s ease infinite;
     	-moz-animation: Gradient 15s ease infinite;
@@ -207,7 +207,22 @@ Buttons Color Class: #21ebad
       user-select: none;
     }
 
-    
+    .droppioBackground {
+    	width: 500px;
+    	height: 500px;
+    	color: #fff;
+    	background: linear-gradient(-45deg, #81082c, #ce2557, #81082c, #ce2557);
+    	background-size: 500px 500px;
+    	-webkit-animation: Gradient 5s ease infinite;
+    	-moz-animation: Gradient 5s ease infinite;
+    	animation: Gradient 5s ease infinite;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+
 
     @-webkit-keyframes Gradient {
     	0% {
