@@ -499,7 +499,7 @@ $(document).ready(function() {
 
   html2canvas($('#casperImage'), {
     onrendered: function(canvas) {
-      var img = canvas.toDataURL()
+      var img = canvas.toDataURL("image/png")
       window.open(img);
     }
   });
