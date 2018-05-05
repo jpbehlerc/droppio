@@ -41,8 +41,6 @@ import requests
 logging.basicConfig(format='Droppio [%(levelname)s][%(asctime)s]:  %(message)s', stream=sys.stdout, datefmt='%m-%d-%Y %I:%M:%S %p')
 faulthandler.enable(file=open('/var/log/droppio.debug',mode='a'))
 
-fakeSessions = deque()
-
 mails = deque()
 
 #sys.excepthook = handle_exception
@@ -294,6 +292,25 @@ class home(tornado.web.RequestHandler):
     def get(self):
 
         self.render("home.html")
+        
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
+
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
+
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
 class profile(tornado.web.RequestHandler):
@@ -328,6 +345,24 @@ class profile(tornado.web.RequestHandler):
 
         self.render("profile.html")
 
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
+
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
+
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
 class campaign(tornado.web.RequestHandler):
@@ -368,6 +403,26 @@ class campaign(tornado.web.RequestHandler):
             pass
 
         self.render("campaign.html")
+
+
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
+
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
+
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
 class register(tornado.web.RequestHandler):
