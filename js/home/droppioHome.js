@@ -33,7 +33,7 @@ $(document).ready(function() {
 
   var settings = new Settings();
 
-  $.post("/registerTest", {
+  $.post("/home", {
 
     _xsrf: xsrf_token,
     type: "creds"
