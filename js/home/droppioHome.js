@@ -41,7 +41,7 @@ $(document).ready(function() {
   }).done(function(data) {
 
     data = JSON.parse(data);
-
+    console.log(data);
     respType = data['type'];
 
     if (respType == 'creds') {
