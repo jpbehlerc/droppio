@@ -301,7 +301,7 @@ class home(tornado.web.RequestHandler):
         requestType = requestType if requestType == 'creds' else False
 
         print(tornado.escape.xhtml_escape(self.current_user))
-        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
 
         user = user.split(':')
         dbUser = user[0]
