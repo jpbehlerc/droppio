@@ -33,7 +33,7 @@ $(document).ready(function() {
 
   var settings = new Settings();
 
-  $.post("/home", {
+  $.post("/register", {
 
     _xsrf: xsrf_token,
     type: "creds"
@@ -179,9 +179,7 @@ $(document).ready(function() {
 
             });
 
-
             if (allPresent) {
-
 
               campaignsDB.replicate.from(remote_campaignsDB, {
 
