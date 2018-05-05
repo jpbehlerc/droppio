@@ -363,7 +363,7 @@ $(document).ready(function() {
     selectMonths: true, // Creates a dropdown to control month
     defaultDate: 'Ene 01, 1968',
     setDefaultDate: true,
-    minDate: 'Ene 01, 1968'
+    minDate: 'Ene 01, 1968',
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     yearRange: 60,
     selectYears: 60, // Creates a dropdown of 15 years to control year,
