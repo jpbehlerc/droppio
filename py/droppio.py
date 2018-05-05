@@ -300,7 +300,7 @@ class home(tornado.web.RequestHandler):
         requestType = requestType if requestType == 'creds' else False
 
 
-        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
 
         user = user.split(':')
         dbUser = user[0]
@@ -352,7 +352,7 @@ class profile(tornado.web.RequestHandler):
         requestType = requestType if requestType == 'creds' else False
 
 
-        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
 
         user = user.split(':')
         dbUser = user[0]
@@ -412,7 +412,7 @@ class campaign(tornado.web.RequestHandler):
         requestType = requestType if requestType == 'creds' else False
 
 
-        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
 
         user = user.split(':')
         dbUser = user[0]
@@ -435,7 +435,7 @@ class register(tornado.web.RequestHandler):
         requestType = requestType if requestType == 'creds' else False
 
 
-        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
 
         user = user.split(':')
         dbUser = user[0]
