@@ -196,9 +196,9 @@ class sign(tornado.web.RequestHandler):
 
             if name and lastname and bloodType and email:
 
-
                 self.set_secure_cookie("droppioSession", "droppiotest:droppiotest&droppiotest:droppiotest",expires_days=365)
                 self.write(json_encode({'type':'success'}))
+
             '''
             email = self.get_argument('email',default=False)
             name = self.get_argument('name',default=False)
@@ -293,14 +293,13 @@ class home(tornado.web.RequestHandler):
 
         self.render("home.html")
 
-
     @authenticated
     def post(self):
 
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'creds' else False
 
-        print(tornado.escape.xhtml_escape(self.current_user))
+
         user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
 
         user = user.split(':')
@@ -341,14 +340,59 @@ class profile(tornado.web.RequestHandler):
             logging.error("HTTP Error: {0}".format(args[0]))
 
 
-    #@authenticated
+    @authenticated
     def get(self):
 
         self.render("profile.html")
 
+    @authenticated
+    def post(self):
+
+        requestType = self.get_argument('type',default=False)
+        requestType = requestType if requestType == 'creds' else False
+
+
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
+
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
+
+        self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
+
 
 class campaign(tornado.web.RequestHandler):
 
+    def get_current_user(self):
+
+        self.cookie = self.get_secure_cookie('droppioSession')
+        return self.cookie
+
+
+    def write_error(self,*args,**kw):
+
+        if len(args) == 1:
+
+            self.write("HTTP Error {}".format(args[0]))
+
+        elif len(args) > 1:
+
+            logging.error("HTTP Error {0}: {1}".format(args[0],args[1]))
+
+        elif hasattr(kw,'exc_info'):
+
+            logging.error("HTTP Error: {0}".format(kw['exc_info'][1]))
+
+        else:
+
+            logging.error("HTTP Error: {0}".format(args[0]))
+
+
+    @authenticated
     def get(self):
 
         try:
@@ -360,29 +404,30 @@ class campaign(tornado.web.RequestHandler):
 
         self.render("campaign.html")
 
-class registerTest(tornado.web.RequestHandler):
 
-
+    @authenticated
     def post(self):
 
         requestType = self.get_argument('type',default=False)
         requestType = requestType if requestType == 'creds' else False
 
-        dbUser = '4568e0f48a7225eff2caf9430ac6e2e0623a868c3e69ebea1273c1a9'
-        dbPass = '%s%s'%(dbUser,self.settings['salt'])
+        print(tornado.escape.xhtml_escape(self.current_user))
 
-        dbAdminUser = self.settings['db']['user']
-        dbAdminPass = self.settings['db']['pass']
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
+
+        user = user.split(':')
+        dbUser = user[0]
+        dbPass = user[1]
+
+        admin = admin.split(':')
+        dbAdminUser = admin[0]
+        dbAdminPass = admin[1]
 
         self.write(json_encode({'type':'creds','dbUser':dbUser,'dbPass':dbPass, 'dbAdminUser':dbAdminUser, 'dbAdminPass':dbAdminPass}))
 
 
 class register(tornado.web.RequestHandler):
 
-    def get_current_user(self):
-
-        self.cookie = self.get_secure_cookie('droppioSession')
-        return self.cookie
 
     @authenticated
     def post(self):
@@ -391,7 +436,7 @@ class register(tornado.web.RequestHandler):
         requestType = requestType if requestType == 'creds' else False
 
 
-        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&")
+        user,admin = tornado.escape.xhtml_escape(self.current_user).split("&amp;")
 
         user = user.split(':')
         dbUser = user[0]
@@ -458,7 +503,6 @@ if __name__ == '__main__':
         handlers.append((r"/", landing))
         handlers.append((r"/sign", sign))
         handlers.append((r"/register", register))
-        handlers.append((r"/registerTest", registerTest))
         handlers.append((r"/campaign", campaign))
         handlers.append((r"/profile", profile))
         handlers.append((r"/policies", policies))

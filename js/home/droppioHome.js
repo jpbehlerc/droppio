@@ -179,9 +179,7 @@ $(document).ready(function() {
 
             });
 
-
             if (allPresent) {
-
 
               campaignsDB.replicate.from(remote_campaignsDB, {
 
