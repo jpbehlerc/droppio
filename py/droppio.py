@@ -136,7 +136,7 @@ class sign(tornado.web.RequestHandler):
             pwd = self.get_argument('password',default=False)
             ip = self.request.headers.get("X-Real-Ip")
 
-            if email and pwd:
+            if email == 'tester@nahual.uy' and pwd == 'fundacion':
 
                 self.set_secure_cookie("droppioSession", "droppiotest:droppiotest&droppiotest:droppiotest",expires_days=365)
                 self.write(json_encode({'type':'success'}))
