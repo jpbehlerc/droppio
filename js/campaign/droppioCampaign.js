@@ -94,7 +94,7 @@ $(document).ready(function() {
     type: "creds"
 
   }).done(function(data) {
-    console.log(data);
+
     data = JSON.parse(data);
 
     respType = data['type'];
