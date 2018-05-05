@@ -496,7 +496,9 @@ $(document).ready(function() {
 
   });
 
-
+  $('.hideThisCard').on('click',function() {
+    $(this).closest('.row').hide('normal');
+  });
   $('#casperImage').html2canvas({
     onrendered: function(canvas) {
       var img = canvas.toDataURL("image/png")
