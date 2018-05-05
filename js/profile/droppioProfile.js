@@ -53,7 +53,7 @@ $(document).ready(function() {
   });
 
 
-  $.post("/registerTest", {
+  $.post("/profile", {
 
     _xsrf: xsrf_token,
     type: "creds"
@@ -236,8 +236,8 @@ $(document).ready(function() {
 
   $('.datepicker').datepicker({
     selectMonths: true, // Creates a dropdown to control month
-    monthsShort:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-    months:['January','February','March','April','May','June','July','August','September','October','November','December'],
+    monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     yearRange: 60,
     selectYears: 60, // Creates a dropdown of 15 years to control year,
     maxYear: 1999,

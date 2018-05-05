@@ -88,7 +88,7 @@ $(document).ready(function() {
   }
 
 
-  $.post("/registerTest", {
+  $.post("/campaign", {
 
     _xsrf: getCookie('_xsrf'),
     type: "creds"
@@ -364,7 +364,7 @@ $(document).ready(function() {
     defaultDate: 'Ene 01, 1968',
     setDefaultDate: true,
     minDate: 'Ene 01, 1968'
-    months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     yearRange: 60,
     selectYears: 60, // Creates a dropdown of 15 years to control year,
     today: 'Today',
