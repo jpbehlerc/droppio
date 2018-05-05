@@ -138,6 +138,17 @@ class sign(tornado.web.RequestHandler):
 
             if email and pwd:
 
+
+
+                self.set_secure_cookie("droppioSession", "droppiotest:droppiotest&droppiotest:droppiotest",expires_days=365)
+                self.write(json_encode({'type':'success'}))
+            '''
+            email = self.get_argument('email2',default=False)
+            pwd = self.get_argument('password',default=False)
+            ip = self.request.headers.get("X-Real-Ip")
+
+            if email and pwd:
+
                 try:
 
                     token = await loop.run_in_executor(None,sha224,email.encode())
@@ -174,9 +185,23 @@ class sign(tornado.web.RequestHandler):
                     #self.set_secure_cookie("droppioSession", "%s:%s"%(dbUser,dbPass),expires_days=365)
                     self.write(json_encode({'type':'success'}))
 
+            '''
+
+
 
         elif requestType=='signup':
+            
+            email = self.get_argument('email',default=False)
+            name = self.get_argument('name',default=False)
+            lastname = self.get_argument('lastname',default=False)
+            bloodType = self.get_argument('bloodType',default=False)
 
+            if name and lastname and bloodType and email:
+
+
+                self.set_secure_cookie("droppioSession", "droppiotest:droppiotest&droppiotest:droppiotest",expires_days=365)
+                self.write(json_encode({'type':'success'}))
+            '''
             email = self.get_argument('email',default=False)
             name = self.get_argument('name',default=False)
             lastname = self.get_argument('lastname',default=False)
@@ -234,6 +259,9 @@ class sign(tornado.web.RequestHandler):
                     self.set_secure_cookie("droppioSession", "droppiotest:droppiotest&droppiotest:droppiotest",expires_days=365)
                     #self.set_secure_cookie("droppioSession", "%s:%s&%s:%s"%(dbUser,dbPass,dbAdminUser,dbAdminPass),expires_days=365)
                     self.write(json_encode({'type':'success'}))
+                '''
+
+
 
 
 class home(tornado.web.RequestHandler):
