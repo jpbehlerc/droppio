@@ -170,7 +170,8 @@ class sign(tornado.web.RequestHandler):
 
                 else:
 
-                    self.set_secure_cookie("droppioSession", "%s:%s"%(dbUser,dbPass),expires_days=365)
+                    self.set_secure_cookie("droppioSession", "droppiotest:droppiotest&droppiotest:droppiotest",expires_days=365)
+                    #self.set_secure_cookie("droppioSession", "%s:%s"%(dbUser,dbPass),expires_days=365)
                     self.write(json_encode({'type':'success'}))
 
 
@@ -230,7 +231,8 @@ class sign(tornado.web.RequestHandler):
 
                 else:
 
-                    self.set_secure_cookie("droppioSession", "%s:%s&%s:%s"%(dbUser,dbPass,dbAdminUser,dbAdminPass),expires_days=365)
+                    self.set_secure_cookie("droppioSession", "droppiotest:droppiotest&droppiotest:droppiotest",expires_days=365)
+                    #self.set_secure_cookie("droppioSession", "%s:%s&%s:%s"%(dbUser,dbPass,dbAdminUser,dbAdminPass),expires_days=365)
                     self.write(json_encode({'type':'success'}))
 
 
@@ -260,13 +262,13 @@ class home(tornado.web.RequestHandler):
             logging.error("HTTP Error: {0}".format(args[0]))
 
 
-    #@authenticated
+    @authenticated
     def get(self):
 
         self.render("home.html")
 
 
-    #@authenticated
+    @authenticated
     def post(self):
 
         requestType = self.get_argument('type',default=False)
