@@ -497,8 +497,15 @@ $(document).ready(function() {
   });
 
   $('.hideThisCard').on('click',function() {
-    $(this).closest('.row').hide('normal');
-  });
+    var el = $(this);
+    el.closest('.row').hide('normal');
+    var toastHTML = '<span>Carta Ocultada</span><button class="btn-flat toast-action">Undo</button>';
+    M.toast({html: toastHTML, classes: 'rounded'});
+    $('.toast-action').on('click', function () {
+    el.closest('.row').show('slow');
+    $(this).closest('#toast-container').fadeOut(800);
+    });
+    });
   $('#casperImage').html2canvas({
     onrendered: function(canvas) {
       var img = canvas.toDataURL("image/png")
