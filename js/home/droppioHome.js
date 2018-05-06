@@ -1,20 +1,30 @@
 $(document).ready(function() {
 
   //Init pouchDB
+
+  // hide Card Function
+  function hideCard() {
+    var el = $(this);
+    el.closest('.row').hide('normal');
+    var toastHTML = '<span>Carta Ocultada</span><button class="btn-flat toast-action">Undo</button>';
+    M.toast({html: toastHTML, classes: 'rounded'});
+    $('.toast-action').on('click', function () {
+    el.closest('.row').show('slow');
+    $(this).closest('#toast-container').fadeOut(800);
+    });
+    }
   function Settings() {
 
     this.bloodType = false,
       this.radius = false
 
-  };
-
+  }
   function getCookie(name) {
     var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
     return r ? r[1] : false;
   }
 
   var keys = ['bloodType', 'nearbyHospitals'];
-
   var bloodID = {
     4: 'O+',
     1: 'A+',
@@ -25,12 +35,10 @@ $(document).ready(function() {
     6: 'B-',
     7: 'AB-',
   }
-
   var notReady = {
     'campaigns': true,
     'settings': true,
   };
-
   var settings = new Settings();
 
   $.post("/home", {
@@ -362,7 +370,6 @@ $(document).ready(function() {
     clear: 'Borrar',
     close: 'Cerrar'
   });
-
   $('.timepicker').timepicker({
     default: false, // Set default time: 'now', '1:30AM', '16:30'
     fromnow: 0, // set default time to * milliseconds from now (using with default = 'now')
@@ -494,16 +501,7 @@ $(document).ready(function() {
 
   });
 
-  $('.hideThisCard').on('click',function() {
-    var el = $(this);
-    el.closest('.row').hide('normal');
-    var toastHTML = '<span>Carta Ocultada</span><button class="btn-flat toast-action">Undo</button>';
-    M.toast({html: toastHTML, classes: 'rounded'});
-    $('.toast-action').on('click', function () {
-    el.closest('.row').show('slow');
-    $(this).closest('#toast-container').fadeOut(800);
-    });
-    });
+  $('.hideThisCard').on('click',hideCard);
   $('#casperImage').html2canvas({
     onrendered: function(canvas) {
       var img = canvas.toDataURL("image/png")
